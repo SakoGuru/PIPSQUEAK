@@ -20,7 +20,6 @@
     "browserify": "^8.1.3",
     "codemirror": "^4.12.0",
     "jquery": "^2.1.3",
-    "nw": "^0.12.0-alpha2",
-    "popcorn": "0.0.3"
+    "nw": "^0.12.0-alpha2"
   }
 }

@@ -17,7 +17,7 @@ var squeak = (function() {
 		listOfActions.push(actionNode);
 	};
 	
-	//deletes a node from the list.  Probably needs a bit of tweaking, for instance ability to undo deletes.
+	//deletes a node from the list.  
 	pub.deleteAction = function(remId) {
 		var i = 0,
 			ii = 0;
@@ -25,24 +25,20 @@ var squeak = (function() {
 			console.log("Id was not found");
 			return false;
 		}
-		//simple, but not quick. they're in order so binary search might be better, need to look into how stack works with JS
-		for(i=0; i<id; i += 1) {
-			if(listOfActions[i].id === remId) {
-				//increase the ids of all higher nodes
-				for(ii = i+1;ii<id;ii += 1) {
-					listOfActions[ii].id = listOfActions[ii].id-1;
-				}
-				//delete the node
-				listOfActions.splice(i,1);
-				id -= 1;
-				return true;
-			}
+		//since the id starts at 1 and were keeping them in order theres no need to search for an id.
+			//increase the ids of all higher nodes
+		for(ii = remId;ii<id;ii += 1) {
+			listOfActions[ii].id = listOfActions[ii].id-1;
 		}
+		//delete the node
+		listOfActions.splice(remId-1,1);
+		id -= 1;
+		return true;
 		console.log("Id was not found");
 		return false;
 	};
 	
-	//undo a change.
+	//undo a change. Probably needs a bit of tweaking, for instance ability to undo deletes. 
 	pub.undo = function() {
 		if (id <= 0) return false;
 		id -= 1;

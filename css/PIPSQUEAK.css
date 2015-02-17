@@ -1,0 +1,61 @@
+
+			div.center {
+				text-align: center;
+			}
+		
+			.mid {
+				margin: 0 auto;
+			}
+		
+			.vid {
+				width: 100% !important;
+				position:relative !important;
+			}
+			
+			/*from codemirror*/
+			
+			.breakpoints {width: .8em;}
+			.breakpoint { color: #822; }
+			.CodeMirror {border: 1px solid #aaa;}
+			
+			/*end codemirror*/
+			
+			.ui-dialog,
+			.ui-dialog,
+			.ui-widget,
+			.ui-widget-content,
+			.ui-corner-all,
+			.dialogBox,
+			.ui-draggable,
+			.ui-resizable {
+				/*background: url("../images/dialogBox/purple_design.jpg");*/
+				background: #E0EAF8;
+				color: black;/*#003200; #59955C #326632; #003300; #59955C;*/
+				font-family: 'ABeeZee', 'sans-serif';
+				font-size: large;
+				/*border-color: #6094DB; /*#202020;*/
+				border-radius: 20px;
+				/*border-width: 4px;
+				font-weight: bold;
+				text-shadow: 1px 1px black;*/
+			}
+			
+			.ui-widget {
+				box-shadow: 10px 10px 5px #202020;
+			}
+			
+			.ui-dialog-titlebar-close {
+				box-shadow: none;
+			}
+			
+			.ui-dialog-titlebar {
+				/*background: url("../images/dialogBox/water_drop.jpg");*/
+				background: #6682b5;
+				color: white;
+				font-family: 'ABeeZee', 'sans-serif';
+				font-size: x-large;
+				text-align: center;
+				text-shadow: 1px 1px #003300;
+				font-weight: bold;
+			}
+			

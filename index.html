@@ -17,6 +17,7 @@
                 <link rel="stylesheet" href="node_modules/jquery-ui/themes/smoothness/jquery-ui.css">
                 <script src="node_modules/jquery-ui/jquery-ui.js"></script>	
                 <script src="js/fileupload.js"></script>	
+
 	
 		<!--bootstrap (must come before jquery b/c close button won't show otherwise)-->
 		<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -42,16 +43,10 @@
 		
 		<!--focus.js-->
 		<script src="js/focus.js"></script>
-		
 	</head>
 	<body ng-controller="TestController as test">
 	
 <!--header-->
-<script> 
-global.document = window.document;
-global.navigator = window.navigator;
-require('jquery-ui');
-</script>
 <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -222,6 +217,6 @@ code.
 <!--/main-->
 
 <footer class="text-center">PIPSQUEAK potential layout?</footer>
-
+	
 	</body>
 </html>

@@ -1,10 +1,11 @@
-			$(document).ready(function(){
+			var $ = require('jquery');					
+			global.document = window.document;
+			global.navigator = window.navigator;
+			require('jquery-ui');
 				
-				global.document = window.document;
-				global.navigator = window.navigator;
-				require('jquery');
-				require('jquery-ui');				
+			$(document).ready(function(global){
 				
+			
 				var editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
 					lineNumbers: true,
 					gutters: ["CodeMirror-linenumbers", "breakpoints"]
@@ -37,7 +38,6 @@
 				},500)
 				
 				//end jsfiddle 
-				
 				$("#dialog").dialog({
 					autoOpen: false,
 					show: {
@@ -49,6 +49,7 @@
 						duration: 1000
 					}
 				});
+				
 				
 				function duration(){
 				

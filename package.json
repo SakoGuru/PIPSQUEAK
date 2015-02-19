@@ -16,6 +16,8 @@
   "license": "",
   "dependencies": {
     "angular": "^1.3.13",
+    "blueimp-file-upload": "^9.9.3",
+    "blueimp-file-upload-node": "^2.1.0",
     "bootstrap": "^3.3.2",
     "browserify": "^8.1.3",
     "codemirror": "^4.12.0",

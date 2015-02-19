@@ -1,5 +1,9 @@
-
 			$(document).ready(function(){
+				
+				global.document = window.document;
+				global.navigator = window.navigator;
+				require('jquery');
+				require('jquery-ui');				
 				
 				var editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
 					lineNumbers: true,

@@ -9,6 +9,13 @@
 		<meta charset="utf-8">
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		
+		<!--jquery-->
+                <script src="node_modules/jquery/dist/jquery.min.js"></script>
+                <script src="node_modules/blueimp-file-upload/js/jquery.fileupload.js"</script>
+                <!--jquery ui external css and js links-->
+                <link rel="stylesheet" href="node_modules/jquery-ui/themes/smoothness/jquery-ui.css">
+                <script src="node_modules/jquery-ui/jquery-ui.js"></script>		
 	
 		<!--bootstrap (must come before jquery b/c close button won't show otherwise)-->
 		<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -18,15 +25,6 @@
 		<!--bootstrap template-->
 		<script src="js/scripts.js"></script>
 		<link href="css/styles.css" rel="stylesheet">
-		
-		<!--jquery-->
-		<script src="node_modules/jquery/dist/jquery.min.js"></script>
-		<!--jquery ui external css and js links-->
-		<link rel="stylesheet" href="node_modules/jquery-ui/themes/smoothness/jquery-ui.css">
-		<script src="node_modules/jquery-ui/jquery-ui.js"></script>
-		<!--file upload links-->
-		<script src="node_modules/blueimp-file-upload/js/jquery.fileupload.js"></script>
-		<script src="js/fileupload.js"></script>
 
 		<!--angular.js-->
 		<script src="node_modules/angular/angular.min.js"></script>
@@ -48,7 +46,11 @@
 	<body ng-controller="TestController as test">
 	
 <!--header-->
-
+<script> 
+global.document = window.document;
+global.navigator = window.navigator;
+require('jquery-ui');
+</script>
 <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
 	<div class="container-fluid">
 		<div class="navbar-header">

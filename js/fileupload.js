@@ -11,3 +11,13 @@ $(function uploadFile() {
         }
     });
 });
+
+  function chooseFile(name) {
+    var chooser = document.querySelector(name);
+    chooser.addEventListener("change", function(evt) {
+      console.log(this.value);
+    }, false);
+
+    chooser.click();  
+  }
+  chooseFile('#fileDialog');

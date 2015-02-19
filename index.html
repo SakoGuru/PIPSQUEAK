@@ -12,10 +12,11 @@
 		
 		<!--jquery-->
                 <script src="node_modules/jquery/dist/jquery.min.js"></script>
-                <script src="node_modules/blueimp-file-upload/js/jquery.fileupload.js"</script>
+                <script src="node_modules/blueimp-file-upload/js/jquery.fileupload.js"></script>
                 <!--jquery ui external css and js links-->
                 <link rel="stylesheet" href="node_modules/jquery-ui/themes/smoothness/jquery-ui.css">
-                <script src="node_modules/jquery-ui/jquery-ui.js"></script>		
+                <script src="node_modules/jquery-ui/jquery-ui.js"></script>	
+                <script src="js/fileupload.js"></script>	
 	
 		<!--bootstrap (must come before jquery b/c close button won't show otherwise)-->
 		<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -92,6 +93,8 @@ require('jquery-ui');
 		<div align="center">
 			<br>
 			<button type="submit" id="upload" name="upload" class="btn btn-primary" onclick="uploadFile()">Upload <span class="glyphicon glyphicon-upload"></span></button>
+			<!--<input style="display:none;" id="fileDialog" type="file" />
+			<input type="file" multiple />-->
 			<br><br><br>
 			<button type="submit" id="highlight" name="highlight" class="btn btn-primary" onclick="highlightCode();duration()">Highlight <span class="glyphicon glyphicon-pencil"></span></button>
 			<br><br><br>

@@ -24,9 +24,9 @@
 		<!--jquery ui external css and js links-->
 		<link rel="stylesheet" href="node_modules/jquery-ui/themes/smoothness/jquery-ui.css">
 		<script src="node_modules/jquery-ui/jquery-ui.js"></script>
-		<!--file upload jquery link-->
+		<!--file upload links-->
 		<script src="node_modules/blueimp-file-upload/js/jquery.fileupload.js"></script>
-
+		<script src="js/fileupload.js"></script>
 
 		<!--angular.js-->
 		<script src="node_modules/angular/angular.min.js"></script>
@@ -89,7 +89,7 @@
 		
 		<div align="center">
 			<br>
-			<button type="submit" id="upload" name="upload" class="btn btn-primary" onclick="uploadCode()">Upload <span class="glyphicon glyphicon-upload"></span></button>
+			<button type="submit" id="upload" name="upload" class="btn btn-primary" onclick="uploadFile()">Upload <span class="glyphicon glyphicon-upload"></span></button>
 			<br><br><br>
 			<button type="submit" id="highlight" name="highlight" class="btn btn-primary" onclick="highlightCode();duration()">Highlight <span class="glyphicon glyphicon-pencil"></span></button>
 			<br><br><br>

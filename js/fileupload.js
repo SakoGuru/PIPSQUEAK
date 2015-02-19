@@ -1,7 +1,7 @@
 require('blueimp-file-upload');
 
 // Basic file upload capability
-$(function () {
+$(function uploadFile() {
     $('#fileupload').fileupload({
         dataType: 'json',
         done: function (e, data) {

@@ -69,10 +69,7 @@ var squeak = (function () {
             };
             highlight = function (line, startTime, endTime) {
 				//the code will be the css we decide to use for highlight
-				var out = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime 
-					+ ",\n\tonStart: function() {\n\t\t$(.class"+line+").html(\"highlight\")\n\t}\n});";
-					
-				console.log(out);
+				//use jquery .css, but need to figure out how we want a highlight to look.
                 return true;
             };
             strike = function (line, startTime, endTime) {

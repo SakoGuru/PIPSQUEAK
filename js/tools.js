@@ -13,7 +13,7 @@ var squeak = (function () {
         var actionNode = {};
         id += 1;
         //add additional actions names here
-        if (action !== 'strike' && action !== 'highlight') {
+        if (action !== 'strike' && action !== 'highlight' && action != 'focus') {
             throw action + " is not an allowed action";
         }
         actionNode.tool = action;
@@ -68,10 +68,23 @@ var squeak = (function () {
                 return false;
             };
             highlight = function (line, startTime, endTime) {
-                return false;
+				//the code will be the css we decide to use for highlight
+				var out = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime 
+					+ ",\n\tonStart: function() {\n\t\t$(.class"+line+").html(\"highlight\")\n\t}\n});";
+					
+				console.log(out);
+                return true;
             };
             strike = function (line, startTime, endTime) {
-                return false;
+				//need to determine how were finding a line, adding a class to each line.
+				//for strike we'll need a pop for start time, and then a pop for end time.
+				//start will strike the code, end will unstrike the code.
+				var code = $("" + line +"").html(),
+					start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
+					+ ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').html(\"<s>\" + $(\'"+line+"\').html() + \"</s>\")\n\t}\n});",
+					end = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
+					+ ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').html(\"" + code + "\")\n\t}\n});";
+                return true;
             };
             annotate = function (line, startTime, endTime) {
                 return false;

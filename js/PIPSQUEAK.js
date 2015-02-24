@@ -2,24 +2,29 @@
 			global.document = window.document;
 			global.navigator = window.navigator;
 			require('jquery-ui');
-				
+			
 			$(document).ready(function(global){
 				
 			
 				var editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
 					lineNumbers: true,
-					gutters: ["CodeMirror-linenumbers", "breakpoints"]
+					gutters: ["CodeMirror-linenumbers", "annotation-gutter"]
 				});
 				
-				editor.on("gutterClick", function(cm, n) {
+				/*editor.on("gutterClick", function(cm, n) {
 					var info = cm.lineInfo(n);
 					cm.setGutterMarker(n, "breakpoints", info.gutterMarkers ? null : makeMarker());
+				});*/
+				
+				editor.on("gutterContextMenu", function(cm, n) {
+					var info = cm.lineInfo(n);
+					cm.setGutterMarker(n, "annotation-gutter", info.gutterMarkers ? null : makeMarker());
 				});
 
-				function makeMarker() {
+				function makeMarker(src, type) {
 					var marker = document.createElement("div");
 					marker.style.color = "#822";
-					marker.innerHTML = "*";
+					marker.innerHTML = "<a href=" + src + "><span class='glyphicon glyphicon-" + type + "'></span></a>";
 					return marker;
 				}
 				
@@ -29,25 +34,25 @@
 				
 				$(function(){
 					$('#currentTime').html($('#video_container').find('video').get(0).load());
-					$('#currentTime').html($('#video_container').find('video').get(0).play());
-				})
+					//$('#currentTime').html($('#video_container').find('video').get(0).play());
+				});
 				setInterval(function(){
 					$('#currentTime').html($('#video_container').find('video').get(0).currentTime);
 					$('#totalTime').html($('#video_container').find('video').get(0).duration);  
 
-				},500)
+				},500);
 				
 				//end jsfiddle 
 				$("#dialog").dialog({
-					autoOpen: false,
-					show: {
+					autoOpen: false
+					/*show: {
 						effect: "blind",
 						duration: 1000
 					},
 					hide: {
 						effect: "explode",
 						duration: 1000
-					}
+					}*/
 				});
 				
 				
@@ -113,7 +118,30 @@
 					
 				});
 				
+				$('#annotateDropMenu li a').click(function() {
+					var selText = $(this).text();
+					$('#annotateType').html(selText+' <span class="caret"></span>');
+					$('#annotateType').val(selText);
+				});
 				
+				$('#annotateSubmit').click(function() {
+					$('#annotateModal').modal('hide');
+					
+					var line = parseInt($('#annotateLine').val()) - 1;
+					var src = $('#annotateSource').val();
+					var type = $('#annotateType').val();
+					var sendToBackend = [line, src, type];
+					
+					var typeGlyph = "info-sign";
+					if (type == "Video") {
+						typeGlyph = "facetime-video";
+					} else if (type == "Picture") {
+						typeGlyph = "picture";
+					} else if (type == "Article") {
+						typeGlyph = "book";
+					}
+					editor.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
+				});
 				
 			});
 

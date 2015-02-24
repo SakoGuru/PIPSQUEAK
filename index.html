@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-	<head ng-app="lectureEditor">
+	<head>
 	
 		<title>PIPSQUEAK</title>
 		
@@ -12,11 +12,10 @@
 		
 		<!--jquery-->
                 <script src="node_modules/jquery/dist/jquery.min.js"></script>
-               <!-- <script src="node_modules/blueimp-file-upload/js/jquery.fileupload.js"></script>-->
+                <script src="node_modules/blueimp-file-upload/js/jquery.fileupload.js"></script>
                 <!--jquery ui external css and js links-->
-                <script src="node_modules/jquery-ui/jquery-ui.js"></script>	
                 <link rel="stylesheet" href="node_modules/jquery-ui/themes/smoothness/jquery-ui.css">
-                <script src="js/jQuery-File-Upload-9.9.3/js/jquery.fileupload.js"></script>
+                <script src="node_modules/jquery-ui/jquery-ui.js"></script>	
                 <script src="js/fileupload.js"></script>	
 
 	
@@ -89,8 +88,8 @@
 		<div align="center">
 			<br>
 			<button type="submit" id="upload" name="upload" class="btn btn-primary" onclick="uploadFile()">Upload <span class="glyphicon glyphicon-upload"></span></button>
-			<!--<input style="display:none;" id="fileDialog" type="file" />-->
-			
+			<!--<input style="display:none;" id="fileDialog" type="file" />
+			<input type="file" multiple />-->
 			<br><br><br>
 			<button type="submit" id="highlight" name="highlight" class="btn btn-primary" onclick="highlightCode();duration()">Highlight <span class="glyphicon glyphicon-pencil"></span></button>
 			<br><br><br>
@@ -98,7 +97,7 @@
 			<br><br><br>
 			<button type="submit"id="fade" name="fade" class="btn btn-primary" onclick="fadeCode()">Fade <span class="glyphicon glyphicon-edit"></span></button>
 			<br><br><br>
-			<button type="submit"id="annotate" name="annotate" class="btn btn-primary" onclick="annotateCode()">Annotation <span class="glyphicon glyphicon-edit"></span></button> 
+			<button type="button" id="annotaet" name="annotate" class="btn btn-primary" data-toggle="modal" data-target="#annotateModal">Annotation</button>
 		</div>
 		
 
@@ -167,6 +166,49 @@
 		</div>
 		
 		<!--/end popup to get duration-->
+		
+		<!--popup for annotation-->
+		<div class="modal fade" id="annotateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="annontateModalLabel">Add Annotation</h4>
+			  </div>
+			  <div class="modal-body">
+				<form>
+				  <div class="form-group">
+					<label class="control-label">Line:</label>
+					<input type="text" class="form-control" id="annotateLine" placeholder="Line Number">
+				  </div>
+				  <div class="form-group">
+					<label class="control-label">Source:</label>
+					<input type="text" class="form-control" id="annotateSource" placeholder="Source URL">
+				  </div>
+				  <div class="dropdown">
+				  	<label class="control-label">Type:</label>
+  					<button class="btn btn-default dropdown-toggle" id="annotateType" name="annotationType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            		Choose one...
+            		<span class="caret"></span>
+            		</button>
+            		<ul id="annotateDropMenu" class="dropdown-menu">
+                  		<li><a href="#">Video</a></li>
+                 		<li><a href="#">Picture</a></li>
+                  		<li><a href="#">Article</a></li>
+                  		<li><a href="#">Other</a></li>
+            		</ul>
+				</div>
+				<br>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button id="annotateSubmit" type="button" class="btn btn-primary">Add</button>
+			  	</div>
+				</form>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		<!--end popup for annotation-->
 			  
 		<!--codemirror-->
               
@@ -177,7 +219,6 @@ Here is
 some sample
 code.
 			</textarea> 
-			<input type="file" onchange="loadFile(this)">
 		</div>
 			  
 		<!--/codemirror-->
@@ -220,7 +261,7 @@ code.
 
 <!--/main-->
 
-<footer class="text-center">PIPSQUEAK potential layout?</footer>
+	<footer class="text-center">PIPSQUEAK potential layout?</footer>
 	
 	</body>
 </html>

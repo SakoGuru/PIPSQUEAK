@@ -1,3 +1,4 @@
+
 			var $ = require('jquery');					
 			global.document = window.document;
 			global.navigator = window.navigator;
@@ -5,6 +6,7 @@
 			
 			$(document).ready(function(global){
 				
+				//create codemirror instance and add gutter marks
 			
 				var editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
 					lineNumbers: true,
@@ -43,51 +45,61 @@
 				},500);
 				
 				//end jsfiddle 
-				$("#dialog").dialog({
-					autoOpen: false
-					/*show: {
+				
+				$("#dialog").dialog({ //configuring dialog box options
+					/*
+					autoOpen: false,
+					show: {
 						effect: "blind",
 						duration: 1000
 					},
 					hide: {
 						effect: "explode",
 						duration: 1000
-					}*/
+					}
+					*/
 				});
 				
 				
-				function duration(){
+				function duration(){ //all code editing functions call this to open dialog box and get duration from user input
 				
+					video.pause();
 					$("#dialog").dialog("option", "width", 600);
 					$("#dialog").dialog("option", "title", "Hello!");
 					$("#dialog").dialog("open");
 				
 				}
 				
-				var doc = editor.getDoc();
-				var cursor = doc.getCursor(); //gets cursor location
-				var line = doc.getLine(cursor.line); //grabs line cursor is on
-
-				/*
-				var startLine = doc.getCursor(start:"head");
-				var endLine = codemirror.getCursor(false);
+				$("#answer").click(function() { //perform checks on user input and give (current time, tool, duration, and text to edit) to backend
 				
-				editor.getSelectedRange = function() {
-					return { from: doc.getCursor(true), to: doc.getCursor(false) };
-				};
-				
-				var lines = editor.getSelectedRange;
-				*/
-				$("#answer").click(function() {
-				
+					var error = "";
 					var dur = $("#dur").val();
-					var tool = $("#tool").html();
-					var grabTime = $('#currentTime').html();
+					
+					if ($.isNumeric(dur) != true) { //is input numeric
+						error = "Error: please enter the number of seconds."
+						$("#printInfo").html(error);
+						exit();
+					}
+					else if (dur > (Number(document.getElementById("totalTime").innerHTML) - Number(document.getElementById("currentTime").innerHTML))) {
+						//is input less than time left in video
+						error = "Error: duration entered exceeds length of film."
+						$("#printInfo").html(error);
+						exit();
+					}
+					else {
+						$("#dialog").dialog("close");
+						var tool = $("#tool").html();
+						var grabTime = $('#currentTime').html();
+						
+						//get currently selected text from codemirror editor
+						var doc = editor.getDoc(); //get the editor document
+						var editText = doc.getSelection(); //get selected text
 					
 //************************************THIS IS THE VARIABLE TO SEND TO THE BACK END************************************
-					var sendToBackend = [grabTime, tool, dur, line];
+						var sendToBackend = [grabTime, tool, dur, editText];
 					
-					$("#printInfo").html(sendToBackend);
+						$("#printInfo").html(sendToBackend);
+					}
 				
 				});
 				

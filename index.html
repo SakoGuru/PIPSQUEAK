@@ -12,10 +12,11 @@
 		
 		<!--jquery-->
                 <script src="node_modules/jquery/dist/jquery.min.js"></script>
-                <script src="node_modules/blueimp-file-upload/js/jquery.fileupload.js"></script>
+               <!-- <script src="node_modules/blueimp-file-upload/js/jquery.fileupload.js"></script>-->
                 <!--jquery ui external css and js links-->
-                <link rel="stylesheet" href="node_modules/jquery-ui/themes/smoothness/jquery-ui.css">
                 <script src="node_modules/jquery-ui/jquery-ui.js"></script>	
+                <link rel="stylesheet" href="node_modules/jquery-ui/themes/smoothness/jquery-ui.css">
+                <script src="js/jQuery-File-Upload-9.9.3/js/jquery.fileupload.js"></script>
                 <script src="js/fileupload.js"></script>	
 
 	
@@ -88,8 +89,8 @@
 		<div align="center">
 			<br>
 			<button type="submit" id="upload" name="upload" class="btn btn-primary" onclick="uploadFile()">Upload <span class="glyphicon glyphicon-upload"></span></button>
-			<!--<input style="display:none;" id="fileDialog" type="file" />
-			<input type="file" multiple />-->
+			<!--<input style="display:none;" id="fileDialog" type="file" />-->
+			
 			<br><br><br>
 			<button type="submit" id="highlight" name="highlight" class="btn btn-primary" onclick="highlightCode();duration()">Highlight <span class="glyphicon glyphicon-pencil"></span></button>
 			<br><br><br>
@@ -176,6 +177,7 @@ Here is
 some sample
 code.
 			</textarea> 
+			<input type="file" onchange="loadFile(this)">
 		</div>
 			  
 		<!--/codemirror-->

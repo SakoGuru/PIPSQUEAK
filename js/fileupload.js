@@ -1,23 +1,20 @@
-require('blueimp-file-upload');
+var $ = require('jquery');					
+			global.document = window.document;
+			global.navigator = window.navigator;
+			require('jquery-ui');
 
-// Basic file upload capability
-$(function uploadFile() {
-    $('#fileupload').fileupload({
-        dataType: 'json',
-        done: function (e, data) {
-            $.each(data.result.files, function (index, file) {
-                $('<p/>').text(file.name).appendTo(document.body);
-            });
-        }
-    });
-});
-
-  function chooseFile(name) {
-    var chooser = document.querySelector(name);
-    chooser.addEventListener("change", function(evt) {
-      console.log(this.value);
-    }, false);
-
-    chooser.click();  
-  }
-  chooseFile('#fileDialog');
+// Uploads user file and loads it into CodeMirror editor
+function loadFile(input) {
+	var editor = CodeMirror.fromTextArea(document.getElementById('codearea'), {
+		mode: 'text/html',
+		tabMode: 'indent',
+		lineNumbers: true,
+		lineWrapping: true,
+		autoCloseTags: true
+	});
+	var reader = new FileReader();
+	reader.onload = function(e) {
+		editor.setValue(e.target.result);
+	}
+	reader.readAsText(input.files[0]);
+}

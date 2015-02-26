@@ -2,8 +2,8 @@
 var squeak = (function () {
     'use strict';
     var pub = {},
-        listOfActions = [],
         id = 0,
+        listOfActions = [],
         writeListToFrontend;
     //adds an action to the list of actions
     pub.addAction = function (startLine, endLine, startTime, endTime, action) {
@@ -18,13 +18,14 @@ var squeak = (function () {
             console.log("The end time cannot be before the start time");
             return false;
         }
-        var actionNode = {};
-        id += 1;
         //add additional actions names here
         if (action !== 'strike' && action !== 'highlight' && action != 'focus') {
             throw action + " is not an allowed action"; 
         }
+        
         for(i = startLine; i <= endLine; i++) {
+            var actionNode = {}; //ugly, but it works
+            id += 1;
             actionNode.tool = action;
             actionNode.line = i;
             actionNode.startTime = startTime;
@@ -32,6 +33,7 @@ var squeak = (function () {
             actionNode.id = id;
             listOfActions.push(actionNode);
         }
+        writeListToFrontend();
     };
     //deletes a node from the list.  
     pub.deleteAction = function (remId) {
@@ -48,6 +50,7 @@ var squeak = (function () {
         //delete the node
         listOfActions.splice(remId - 1, 1);
         id -= 1;
+        writeListToFrontend();
         return true;
     };
     //TODO - fix this so it can undo deletes, and add a redo. will need at least 1 more "stack" (array)
@@ -58,16 +61,19 @@ var squeak = (function () {
         }
         id -= 1;
         listOfActions.splice(id, 1);
+        writeListToFrontend();
         return true;
     };
 
-    //TODO - finish writing this to the frontend
+    //function that writes the list to the running frontend display
     writeListToFrontend = function () {
         var i;
+
+        //clear the table - extremely hamfisted
+        $('.actionsTable').html("<thead><tr><th>Line #</th><th>Time</th><th>Tool</th></tr></thead><tbody></tbody>");
         //run through the list.
         for(i = 0; i < listOfActions.length; i++) {
-            //TODO - for each list entry write the pertinent stufff to the table, make a new table row. 
-            $('.actionsTable > tbody:last').append('<tr><td>' + listOfActions[i].startTime + ' - ' + listOfActions[i].endTime + '</td><td>'+listOfActions[i].tool+'</td></tr>');
+            $('.actionsTable > tbody:last').append('<tr><td>' + listOfActions[i].line + '</td><td>' + listOfActions[i].startTime + ' - ' + listOfActions[i].endTime + '</td><td>'+listOfActions[i].tool+'</td></tr>');
         }        
         return true;
     }

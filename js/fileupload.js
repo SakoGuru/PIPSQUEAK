@@ -18,3 +18,27 @@ function loadFile(input) {
 	}
 	reader.readAsText(input.files[0]);
 }
+
+// Uploads user video file and loads it into CodeMirror editor
+function loadVideo() {
+	var fullPath = document.getElementById("myFile").value;
+	if (fullPath) {
+		var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+		var filename = fullPath.substring(startIndex);
+		if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+			filename = filename.substring(1);
+		}
+	}
+
+	var player = document.getElementById("video");
+	var mp4vid = document.getElementById("mp4");
+	var webmvid = document.getElementById("webm");
+	var ogvvid = document.getElementById("ogv");
+	alert(fullPath);
+	alert(filename);
+	$(mp4vid).attr('src', "file://" + "../videos/" + filename);
+	$(webmvid).attr('src', "file://" + "../videos/" + filename);
+	$(ogvvid).attr('src', "file://" + "../videos/" + filename);
+	player.load();
+	player.play(); 
+}

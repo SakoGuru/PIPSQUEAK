@@ -87,9 +87,7 @@
 		
 		<div align="center">
 			<br>
-			<button type="submit" id="upload" name="upload" class="btn btn-primary" onclick="uploadFile()">Upload <span class="glyphicon glyphicon-upload"></span></button>
-			<!--<input style="display:none;" id="fileDialog" type="file" />
-			<input type="file" multiple />-->
+<!--			<button type="submit" id="upload" name="upload" class="btn btn-primary" onclick="uploadFile()">Upload <span class="glyphicon glyphicon-upload"></span></button> -->
 			<br><br><br>
 			<button type="submit" id="highlight" name="highlight" class="btn btn-primary" onclick="highlightCode();duration()">Highlight <span class="glyphicon glyphicon-pencil"></span></button>
 			<br><br><br>
@@ -131,6 +129,7 @@
 							
 						Your browser does not support HTML5 video.
 					</video>
+					<input type="file" id="myFile" onchange="loadVideo()">
 					</div>
 					
 					<div>Current Time : <span  id="currentTime">0</span></div> <!--jsfiddle-->
@@ -248,6 +247,7 @@ Here is
 some sample
 code.
 			</textarea> 
+			<input type="file" onchange="loadFile(this)">
 		</div>
 			  
 		<!--/codemirror-->

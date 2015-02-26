@@ -88,17 +88,29 @@
 					}
 					else {
 						$("#dialog").dialog("close");
-						var tool = $("#tool").html();
-						var grabTime = $('#currentTime').html();
-						
+						var action = $("#tool").html();
+						var startTime = $('#currentTime').html();
+						startTime = Number(startTime);
+						var endTime = startTime + Number(dur);
 						//get currently selected text from codemirror editor
 						var doc = editor.getDoc(); //get the editor document
-						var editText = doc.getSelection(); //get selected text
-					
+						//var editText = doc.getSelection(); //get ALL selected text
+						var startLine = (doc.getCursor("head").line + 1); //get line of highlighted text that moves when you press shift+arrow (add 1 b/c it's an array)
+						var endLine = (doc.getCursor("anchor").line + 1);	//get line of highlighted text that stays the same (add 1 b/c it's an array)
+						
+						if(startLine > endLine){ //check if startLine is greater than endLine, if so switch the two
+							var temp = startLine;
+							startLine = endLine;
+							endLine = temp;
+						}
+
 //************************************THIS IS THE VARIABLE TO SEND TO THE BACK END************************************
-						var sendToBackend = [grabTime, tool, dur, editText];
+						//var sendToBackend = [ startLine, " ", endLine, " ", startTime, " ", endTime, " ",action]; //print to test output
 					
-						$("#printInfo").html(sendToBackend);
+						//$("#printInfo").html(sendToBackend); //print to test output
+						
+						squeak.addAction( startLine, endLine, startTime, endTime, action );
+						
 					}
 				
 				});

@@ -31,12 +31,9 @@ function loadVideo() {
 	}
 
 	var player = document.getElementById("video");
-	var mp4vid = document.getElementById("mp4");
 	var webmvid = document.getElementById("webm");
 	var ogvvid = document.getElementById("ogv");
-	alert(fullPath);
-	alert(filename);
-	$(mp4vid).attr('src', fullPath);
+
 	$(webmvid).attr('src', fullPath);
 	$(ogvvid).attr('src', fullPath);
 	player.load();

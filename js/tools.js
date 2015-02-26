@@ -3,9 +3,17 @@ var squeak = (function () {
     'use strict';
     var pub = {},
         listOfActions = [],
-        id = 0;
+        id = 0,
+        writeListToFrontend;
     //adds an action to the list of actions
-    pub.addAction = function (line, startTime, endTime, action) {
+    pub.addAction = function (startLine, endLine, startTime, endTime, action) {
+        var i;
+        endLine = endLine == null ? startLine : endLine;
+        if(endLine < startLine) {
+            i = endLine;
+            endline = startLine;
+            startLine = endLine;
+        }
         if (startTime > endTime) {
             console.log("The end time cannot be before the start time");
             return false;
@@ -14,14 +22,16 @@ var squeak = (function () {
         id += 1;
         //add additional actions names here
         if (action !== 'strike' && action !== 'highlight' && action != 'focus') {
-            throw action + " is not an allowed action";
+            throw action + " is not an allowed action"; 
         }
-        actionNode.tool = action;
-        actionNode.line = line;
-        actionNode.startTime = startTime;
-        actionNode.endTime = endTime;
-        actionNode.id = id;
-        listOfActions.push(actionNode);
+        for(i = startLine; i <= endLine; i++) {
+            actionNode.tool = action;
+            actionNode.line = i;
+            actionNode.startTime = startTime;
+            actionNode.endTime = endTime;
+            actionNode.id = id;
+            listOfActions.push(actionNode);
+        }
     };
     //deletes a node from the list.  
     pub.deleteAction = function (remId) {
@@ -50,6 +60,17 @@ var squeak = (function () {
         listOfActions.splice(id, 1);
         return true;
     };
+
+    //TODO - finish writing this to the frontend
+    writeListToFrontend = function () {
+        var i;
+        //run through the list.
+        for(i = 0; i < listOfActions.length; i++) {
+            //TODO - for each list entry write the pertinent stufff to the table, make a new table row. 
+            $('.actionsTable > tbody:last').append('<tr><td>' + listOfActions[i].startTime + ' - ' + listOfActions[i].endTime + '</td><td>'+listOfActions[i].tool+'</td></tr>');
+        }        
+        return true;
+    }
     //TODO - most of this.
     //need on for publishes that runs through and call the functions that will actually write the changes.
     //will need to pull the video and codemirror segment and write those to the output template in the right places

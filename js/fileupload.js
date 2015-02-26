@@ -19,7 +19,7 @@ function loadFile(input) {
 	reader.readAsText(input.files[0]);
 }
 
-// Uploads user video file and loads it into CodeMirror editor
+// Uploads user video file and loads it into video player
 function loadVideo() {
 	var fullPath = document.getElementById("myFile").value;
 	if (fullPath) {
@@ -36,9 +36,9 @@ function loadVideo() {
 	var ogvvid = document.getElementById("ogv");
 	alert(fullPath);
 	alert(filename);
-	$(mp4vid).attr('src', "file://" + "../videos/" + filename);
-	$(webmvid).attr('src', "file://" + "../videos/" + filename);
-	$(ogvvid).attr('src', "file://" + "../videos/" + filename);
+	$(mp4vid).attr('src', fullPath);
+	$(webmvid).attr('src', fullPath);
+	$(ogvvid).attr('src', fullPath);
 	player.load();
 	player.play(); 
 }

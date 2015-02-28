@@ -164,17 +164,17 @@
 				<div id="contentBox">
 					<div id="tool" hidden></div>
 					<label class="control-label">Please enter the duration of the selected function:</label>
+				<form id="durationForm">
 					<input type="text" name="dur" id="dur" class="form-control" maxlength = 20 placeholder="Duration (in seconds)" required="" autofocus>
+				</form>
 				</div>
 				<br>
-				<form>
-					<div class="modal-footer">
-						<!--<span id = "error"></span>-->
-						<span id="error"></span>
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button id="durationSubmit" type="button" class="btn btn-primary">Add</button>
-					</div>
-				</form>
+				<div class="modal-footer">
+					<!--<span id = "error"></span>-->
+					<span id="error"></span>
+					<button id="durationClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button id="durationSubmit" type="button" class="btn btn-primary">Add</button>
+				</div>
 			  </div>
 			</div>
 		  </div>

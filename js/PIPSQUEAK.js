@@ -46,6 +46,19 @@
 				
 				//end jsfiddle 
 				
+				$('#durationModal').on('shown.bs.modal', function () {
+					$('#dur').focus();
+				})
+				
+				$('#annotateModal').on('shown.bs.modal', function () {
+					$('#annotateLine').focus();
+				})
+				
+				$('#durationClose').click(function() {
+					$("#error").html("");
+					document.getElementById("durationForm").reset();
+				});
+				
 				$('#durationSubmit').click(function() {
 				
 					var error = "";
@@ -65,6 +78,8 @@
 					else {
 						
 						$("#durationModal").modal('hide');
+						$("#error").html("");
+						document.getElementById("durationForm").reset();
 						var action = $("#tool").html();
 						var startTime = $('#currentTime').html();
 						startTime = Number(startTime);

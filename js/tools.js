@@ -73,7 +73,7 @@ var squeak = (function () {
         $('.actionsTable').html("<thead><tr><th>Line #</th><th>Time</th><th>Tool</th></tr></thead><tbody></tbody>");
         //run through the list.
         for(i = 0; i < listOfActions.length; i++) {
-            $('.actionsTable > tbody:last').append('<tr><td>' + listOfActions[i].line + '</td><td>' + listOfActions[i].startTime + ' - ' + listOfActions[i].endTime + '</td><td>'+listOfActions[i].tool+'</td></tr>');
+            $('.actionsTable > tbody:last').append('<tr><td>' + listOfActions[i].line + '</td><td>' + listOfActions[i].startTime.toFixed(2) + ' - ' + listOfActions[i].endTime.toFixed(2) + '</td><td>'+listOfActions[i].tool+'</td></tr>');
         }        
         return true;
     }

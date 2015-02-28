@@ -46,31 +46,7 @@
 				
 				//end jsfiddle 
 				
-				$("#dialog").dialog({ //configuring dialog box options
-					/*
-					autoOpen: false,
-					show: {
-						effect: "blind",
-						duration: 1000
-					},
-					hide: {
-						effect: "explode",
-						duration: 1000
-					}
-					*/
-				});
-				
-				
-				function duration(){ //all code editing functions call this to open dialog box and get duration from user input
-				
-					video.pause();
-					$("#dialog").dialog("option", "width", 600);
-					$("#dialog").dialog("option", "title", "Hello!");
-					$("#dialog").dialog("open");
-				
-				}
-				
-				$("#answer").click(function() { //perform checks on user input and give (current time, tool, duration, and text to edit) to backend
+				$('#durationSubmit').click(function() {
 				
 					var error = "";
 					var dur = $("#dur").val();
@@ -87,16 +63,19 @@
 						exit();
 					}
 					else {
-						$("#dialog").dialog("close");
+						
+						$("#durationModal").modal('hide');
 						var action = $("#tool").html();
 						var startTime = $('#currentTime').html();
 						startTime = Number(startTime);
 						var endTime = startTime + Number(dur);
-						//get currently selected text from codemirror editor
+						
+						//begin get currently selected text from codemirror editor
 						var doc = editor.getDoc(); //get the editor document
-						//var editText = doc.getSelection(); //get ALL selected text
+						//var editText = doc.getSelection(); //get ALL selected text (save for later use)
 						var startLine = (doc.getCursor("head").line + 1); //get line of highlighted text that moves when you press shift+arrow (add 1 b/c it's an array)
 						var endLine = (doc.getCursor("anchor").line + 1);	//get line of highlighted text that stays the same (add 1 b/c it's an array)
+						//end get selected text
 						
 						if(startLine > endLine){ //check if startLine is greater than endLine, if so switch the two
 							var temp = startLine;
@@ -105,9 +84,9 @@
 						}
 
 //************************************THIS IS THE VARIABLE TO SEND TO THE BACK END************************************
-						//var sendToBackend = [ startLine, " ", endLine, " ", startTime, " ", endTime, " ",action]; //print to test output
+						var sendToBackend = [ startLine, " ", endLine, " ", startTime, " ", endTime, " ",action]; //print to test output
 					
-						//$("#printInfo").html(sendToBackend); //print to test output
+						$("#printInfo").html(sendToBackend); //print to test output
 						
 						squeak.addAction( startLine, endLine, startTime, endTime, action );
 						
@@ -118,21 +97,21 @@
 				$("#highlight").click(function() {
 				
 					$("#tool").html("highlight");
-					duration();
+					video.pause();
 				
 				});
 				
 				$("#focus").click(function() {
 				
 					$("#tool").html("focus");
-					duration();
+					video.pause();
 				
 				});
 				
 				$("#fade").click(function() {
 				
 					$("#tool").html("fade");
-					duration();
+					video.pause();
 				
 				});
 				

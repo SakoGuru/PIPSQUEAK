@@ -88,11 +88,11 @@
 		
 		<div align="center">
 			<br>
-			<button type="submit" id="highlight" name="highlight" class="btn btn-primary btn-block" onclick="highlightCode();duration()">Highlight <span class="glyphicon glyphicon-pencil"></span></button>
+			<button type="submit" id="highlight" name="highlight" class="btn btn-primary btn-block" onclick="highlightCode()" data-toggle="modal" data-target="#durationModal">Highlight <span class="glyphicon glyphicon-pencil"></span></button>
 			<br>
-			<button type="submit" id="focus" name="focus" class="btn btn-primary btn-block" onclick="focusCode()">Focus <span class="glyphicon glyphicon-screenshot"></span></button>			
+			<button type="submit" id="focus" name="focus" class="btn btn-primary btn-block" onclick="focusCode()" data-toggle="modal" data-target="#durationModal">Focus <span class="glyphicon glyphicon-screenshot"></span></button>			
 			<br>
-			<button type="submit"id="fade" name="fade" class="btn btn-primary btn-block" onclick="fadeCode()">Fade <span class="glyphicon glyphicon-edit"></span></button>			
+			<button type="submit"id="fade" name="fade" class="btn btn-primary btn-block" onclick="fadeCode()" data-toggle="modal" data-target="#durationModal">Fade <span class="glyphicon glyphicon-edit"></span></button>			
 			<br>
 			<button type="button" id="annotaet" name="annotate" class="btn btn-primary btn-block" data-toggle="modal" data-target="#annotateModal">Annotation</button>
 		</div>
@@ -145,41 +145,20 @@
 		
 		<!--popup to get duration-->
 
-		<div id="dialog">
-		
-			<div class="center">
-				<div id="mid" class="form-group">
-					<div id="contentBox">
-						<div id="tool" hidden></div>
-						<p>	Please enter the duration of the selected function:</p>
-						<br>
-						<input type="text" name="dur" id="dur" style = "width: 200px; height: 30px;" class="form-control mid" maxlength = 20 placeholder="Answer here" required="" autofocus>
-						<br>
-						<button id="answer" type="submit" name="answer" class="btn btn-primary">Answer</button>
-					</div>
-				</div>
-			</div>
-		
-		</div>
-<!--	
 		<div class="modal fade" id="durationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 			<div class="modal-content">
 			  <div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="durationModalLabel">Specify Duration</h4>
+				<h4 class="modal-title" id="durationModalLabel">Add Duration</h4>
 			  </div>
 			  <div class="modal-body">
-				<div id="mid" class="form-group">
-					<div id="contentBox">
-						<div id="tool" hidden></div>
-						<p>	Please enter the duration of the selected function:</p>
-						<br>
-						<input type="text" name="dur" id="dur" style = "width: 200px; height: 30px;" class="form-control mid" maxlength = 20 placeholder="Answer here" required="" autofocus>
-						<br>
-						<button id="answer" type="submit" name="answer" class="btn btn-primary">Answer</button>
-					</div>
+				<div id="contentBox">
+					<div id="tool" hidden></div>
+					<p>	Please enter the duration of the selected function:</p>
+					<input type="text" name="dur" id="dur" style = "width: 200px; height: 30px;" class="form-control" maxlength = 20 placeholder="Answer here" required="" autofocus>
 				</div>
+				<br>
 				<form>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -190,7 +169,7 @@
 			</div>
 		  </div>
 		</div>
--->
+
 		<!--/end popup to get duration-->
 		
 		<!--popup for annotation-->
@@ -266,7 +245,7 @@ code.
 	  
 		<table class="table table-striped actionsTable">
 			<thead>
-				<tr><th>Line #</th><th>Time</th><th>Tool</th></tr>
+				<tr><th>Line #</th><th>Time (s)</th><th>Tool</th></tr>
 			</thead>
 			<tbody>
 			</tbody>

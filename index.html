@@ -92,9 +92,17 @@
 			<br>
 			<button type="submit" id="focus" name="focus" class="btn btn-primary btn-block" onclick="focusCode()" data-toggle="modal" data-target="#durationModal">Focus <span class="glyphicon glyphicon-screenshot"></span></button>			
 			<br>
-			<button type="submit"id="fade" name="fade" class="btn btn-primary btn-block" onclick="fadeCode()" data-toggle="modal" data-target="#durationModal">Fade <span class="glyphicon glyphicon-edit"></span></button>			
+			<button type="submit"id="fadeOut" name="fadeOut" class="btn btn-primary btn-block" onclick="fadeOutCode()" data-toggle="modal" data-target="#durationModal">Fade Out <span class="glyphicon glyphicon-edit"></span></button>			
 			<br>
-			<button type="button" id="annotaet" name="annotate" class="btn btn-primary btn-block" data-toggle="modal" data-target="#annotateModal">Annotation</button>
+			<button type="submit"id="fadeIn" name="fadeIn" class="btn btn-primary btn-block" onclick="fadeInCode()" data-toggle="modal" data-target="#durationModal">Fade In <span class="glyphicon glyphicon-edit"></span></button>	
+			<br>
+			<button type="button" id="annotate" name="annotate" class="btn btn-primary btn-block" data-toggle="modal" data-target="#annotateModal">Annotation</button>
+			<br>
+			<button type="submit"id="strikethrough" name="strikethrough" class="btn btn-primary btn-block" onclick="strikethroughCode()" data-toggle="modal" data-target="#durationModal">Strikethrough</button>	
+			<br>
+			<button type="submit"id="anchor" name="anchor" class="btn btn-primary btn-block" onclick="anchorCode()" data-toggle="modal" data-target="#durationModal">Anchor</button>	
+			<br>
+			<button type="submit"id="autoScroll" name="autoScroll" class="btn btn-primary btn-block" onclick="autoScrollCode()" data-toggle="modal" data-target="#durationModal">AutoScroll</button>	
 		</div>
 		
 
@@ -155,12 +163,14 @@
 			  <div class="modal-body">
 				<div id="contentBox">
 					<div id="tool" hidden></div>
-					<p>	Please enter the duration of the selected function:</p>
-					<input type="text" name="dur" id="dur" style = "width: 200px; height: 30px;" class="form-control" maxlength = 20 placeholder="Answer here" required="" autofocus>
+					<label class="control-label">Please enter the duration of the selected function:</label>
+					<input type="text" name="dur" id="dur" class="form-control" maxlength = 20 placeholder="Duration (in seconds)" required="" autofocus>
 				</div>
 				<br>
 				<form>
 					<div class="modal-footer">
+						<!--<span id = "error"></span>-->
+						<span id="error"></span>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						<button id="durationSubmit" type="button" class="btn btn-primary">Add</button>
 					</div>

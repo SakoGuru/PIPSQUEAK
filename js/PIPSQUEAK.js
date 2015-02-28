@@ -53,13 +53,13 @@
 					
 					if ($.isNumeric(dur) != true) { //is input numeric
 						error = "Error: please enter the number of seconds."
-						$("#printInfo").html(error);
+						$("#error").html(error);
 						exit();
 					}
 					else if (dur > (Number(document.getElementById("totalTime").innerHTML) - Number(document.getElementById("currentTime").innerHTML))) {
 						//is input less than time left in video
 						error = "Error: duration entered exceeds length of film."
-						$("#printInfo").html(error);
+						$("#error").html(error);
 						exit();
 					}
 					else {
@@ -84,9 +84,9 @@
 						}
 
 //************************************THIS IS THE VARIABLE TO SEND TO THE BACK END************************************
-						var sendToBackend = [ startLine, " ", endLine, " ", startTime, " ", endTime, " ",action]; //print to test output
+						//var sendToBackend = [ startLine, " ", endLine, " ", startTime, " ", endTime, " ",action]; //print to test output
 					
-						$("#printInfo").html(sendToBackend); //print to test output
+						//$("#printInfo").html(sendToBackend); //print to test output
 						
 						squeak.addAction( startLine, endLine, startTime, endTime, action );
 						
@@ -108,17 +108,18 @@
 				
 				});
 				
-				$("#fade").click(function() {
+				$("#fadeOut").click(function() {
 				
-					$("#tool").html("fade");
+					$("#tool").html("fadeOut");
 					video.pause();
 				
 				});
 				
-				$("#upload").click(function() {
+				$("#fadeIn").click(function() {
 				
-					$("#printInfo").html("upload");
-					
+					$("#tool").html("fadeIn");
+					video.pause();
+				
 				});
 				
 				$('#annotateDropMenu li a').click(function() {
@@ -144,6 +145,33 @@
 						typeGlyph = "book";
 					}
 					editor.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
+				});
+				
+				$("#strikethrough").click(function() {
+				
+					$("#tool").html("strikethrough");
+					video.pause();
+				
+				});
+				
+				$("#anchor").click(function() {
+				
+					$("#tool").html("anchor");
+					video.pause();
+				
+				});
+				
+				$("#autoScroll").click(function() {
+				
+					$("#tool").html("autoScroll");
+					video.pause();
+				
+				});
+				
+				$("#upload").click(function() {
+				
+					$("#printInfo").html("upload");
+					
 				});
 				
 			});

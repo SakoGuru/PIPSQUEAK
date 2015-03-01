@@ -2,6 +2,10 @@ div.center {
 	text-align: center;
 }
 
+.buttons {
+	width: 200px;
+}
+
 .mid {
 	margin: 0 auto;
 }

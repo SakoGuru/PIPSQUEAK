@@ -54,6 +54,10 @@
 					$('#annotateLine').focus();
 				})
 				
+				$('#myFile').click(function() {
+					loadVideo();
+				});
+				
 				$('#durationClose').click(function() {
 					$("#error").html("");
 					document.getElementById("durationForm").reset();

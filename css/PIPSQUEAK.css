@@ -2,8 +2,14 @@ div.center {
 	text-align: center;
 }
 
+div.buttons  button {
+	width: 200px;
+	height: 35px;
+}
+
 .buttons {
 	width: 200px;
+	height: 35px;
 }
 
 .mid {
@@ -13,6 +19,26 @@ div.center {
 .vid {
 	width: 100% !important;
 	position:relative !important;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 35px;
+    font-size: 200px;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
 }
 
 /*from codemirror*/

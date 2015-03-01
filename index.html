@@ -88,7 +88,7 @@
 		
 		<div>
 			<div class="buttons">
-				<button type="submit" id="highlight" name="highlight" class="btn btn-primary btn-block" onclick="highlightCode()" data-toggle="modal" data-target="#durationModal">Highlight <span class="glyphicon glyphicon-pencil"></span></button>
+				<button type="submit" id="highlight" name="highlight" class="btn btn-primary btn-block buttons" onclick="highlightCode()" data-toggle="modal" data-target="#durationModal">Highlight <span class="glyphicon glyphicon-pencil"></span></button>
 				<br>
 				<button type="submit" id="focus" name="focus" class="btn btn-primary btn-block" onclick="focusCode()" data-toggle="modal" data-target="#durationModal">Focus <span class="glyphicon glyphicon-screenshot"></span></button>			
 				<br>
@@ -96,13 +96,13 @@
 				<br>
 				<button type="submit"id="fadeIn" name="fadeIn" class="btn btn-primary btn-block" onclick="fadeInCode()" data-toggle="modal" data-target="#durationModal">Fade In <span class="glyphicon glyphicon-edit"></span></button>	
 				<br>
-				<button type="button" id="annotate" name="annotate" class="btn btn-primary btn-block" data-toggle="modal" data-target="#annotateModal">Annotation</button>
+				<button type="button" id="annotate" name="annotate" class="btn btn-primary btn-block" data-toggle="modal" data-target="#annotateModal">Annotation </button>
 				<br>
-				<button type="submit"id="strikethrough" name="strikethrough" class="btn btn-primary btn-block" onclick="strikethroughCode()" data-toggle="modal" data-target="#durationModal">Strikethrough</button>	
+				<button type="submit"id="strikethrough" name="strikethrough" class="btn btn-primary btn-block" onclick="strikethroughCode()" data-toggle="modal" data-target="#durationModal">Strikethrough </button>	
 				<br>
-				<button type="submit"id="anchor" name="anchor" class="btn btn-primary btn-block" onclick="anchorCode()" data-toggle="modal" data-target="#durationModal">Anchor</button>	
+				<button type="submit"id="anchor" name="anchor" class="btn btn-primary btn-block" onclick="anchorCode()" data-toggle="modal" data-target="#durationModal">Anchor </button>	
 				<br>
-				<button type="submit"id="autoScroll" name="autoScroll" class="btn btn-primary btn-block" onclick="autoScrollCode()" data-toggle="modal" data-target="#durationModal">AutoScroll</button>	
+				<button type="submit"id="autoScroll" name="autoScroll" class="btn btn-primary btn-block" onclick="autoScrollCode()" data-toggle="modal" data-target="#durationModal">AutoScroll </button>	
 			</div>
 		</div>
 		
@@ -128,18 +128,25 @@
 			
                     <div id="video_container"> <!--jsfiddle-->
 					
-					<video class="vid" id="video" controls>
+						<video class="vid" id="video" controls>
 						
 							<source type="video/webm" src="http://media.w3.org/2010/05/sintel/trailer.webm" id="webm"></source> 
 							<source type="video/ogg" src="http://media.w3.org/2010/05/sintel/trailer.ogv" id="ogv"></source>
 							
-						Your browser does not support HTML5 video.
-					</video>
-					<input type="file" id="myFile" onchange="loadVideo()">
+							Your browser does not support HTML5 video.
+						</video>
+						
+						<span class="btn btn-success btn-file buttons" id="uploadVid">
+							<p style="display: inline; position: relative; z-index: 1" class="mid">Upload Video </p><span style="position: relative; z-index: 1" class="glyphicon glyphicon-upload"></span>
+							<input style="z-index: 2" type="file" id="myFile" onchange="loadVideo()" class="btn btn-default btn-block buttons">
+						</span>
+						<br>
+						<br>
+						
 					</div>
 					
-					<div style="font-weight: bold">Current Time: <span  id="currentTime">0</span></div> <!--jsfiddle-->
-					<div style="font-weight: bold">Total Time: <span id="totalTime">0</span></div> <!--jsfiddle-->
+					<div>Current Time: <span  id="currentTime">0</span></div> <!--jsfiddle-->
+					<div>Total Time: <span id="totalTime">0</span></div> <!--jsfiddle-->
 					<!--/end jsfiddle code-->
 
 					<div id = "printInfo"></div>
@@ -229,12 +236,22 @@
               
 		<div class="panel panel-default">
 			<div class="panel-heading"><h4>CodeMirror</h4></div>
+			<div id="video_container">
+			<div style="position: relative; padding-left: 15px; padding-right: 15px; padding-top: 15px;">
 			<textarea id="codearea" name="codearea">
 Here is
 some sample
 code.
 			</textarea> 
-			<input type="file" onchange="loadFile(this)">
+			</div>
+			<div style="padding-top: 5px; padding-left: 15px">
+			<span class="btn btn-success btn-file buttons" id="uploadCode">
+				<p style="display: inline; position: relative; z-index: 1" class="mid">Upload Code </p><span style="position: relative; z-index: 1" class="glyphicon glyphicon-upload"></span>
+				<input style="z-index: 2" type="file" id="myFile" onchange="loadFile(this)" class="btn btn-default btn-block buttons">
+			</span>
+			</div>
+			<br>
+			</div>
 		</div>
 			  
 		<!--/codemirror-->

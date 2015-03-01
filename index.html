@@ -11,13 +11,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		
 		<!--jquery-->
-                <script src="node_modules/jquery/dist/jquery.min.js"></script>
-               <!-- <script src="node_modules/blueimp-file-upload/js/jquery.fileupload.js"></script> -->
-                <!--jquery ui external css and js links-->
-                <link rel="stylesheet" href="node_modules/jquery-ui/themes/smoothness/jquery-ui.css">
-                <script src="node_modules/jquery-ui/jquery-ui.js"></script>	
-                <script src="js/fileupload.js"></script>	
-
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+        <!-- <script src="node_modules/blueimp-file-upload/js/jquery.fileupload.js"></script> -->
+		
+        <!--jquery-ui-->
+        <link rel="stylesheet" href="node_modules/jquery-ui/themes/smoothness/jquery-ui.css">
+        <script src="node_modules/jquery-ui/jquery-ui.js"></script>	
+        <script src="js/fileupload.js"></script>	
+		
+		<!--popcornjs-->
+		<script src="http://popcornjs.org/code/dist/popcorn-complete.js"></script>
 	
 		<!--bootstrap (must come before jquery b/c close button won't show otherwise)-->
 		<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -96,13 +99,13 @@
 				<br>
 				<button type="submit"id="fadeIn" name="fadeIn" class="btn btn-primary btn-block" onclick="fadeInCode()" data-toggle="modal" data-target="#durationModal">Fade In <span class="glyphicon glyphicon-edit"></span></button>	
 				<br>
-				<button type="button" id="annotate" name="annotate" class="btn btn-primary btn-block" data-toggle="modal" data-target="#annotateModal">Annotation </button>
+				<button type="button" id="annotate" name="annotate" class="btn btn-primary btn-block" data-toggle="modal" data-target="#annotateModal">Annotation <span class="glyphicon glyphicon-comment"></span></button>
 				<br>
-				<button type="submit"id="strikethrough" name="strikethrough" class="btn btn-primary btn-block" onclick="strikethroughCode()" data-toggle="modal" data-target="#durationModal">Strikethrough </button>	
+				<button type="submit"id="strikethrough" name="strikethrough" class="btn btn-primary btn-block" onclick="strikethroughCode()" data-toggle="modal" data-target="#durationModal">Strikethrough <span class="glyphicon glyphicon-minus"></span></button>
 				<br>
-				<button type="submit"id="anchor" name="anchor" class="btn btn-primary btn-block" onclick="anchorCode()" data-toggle="modal" data-target="#durationModal">Anchor </button>	
+				<button type="submit"id="anchor" name="anchor" class="btn btn-primary btn-block" onclick="anchorCode()" data-toggle="modal" data-target="#durationModal">Anchor <span class="glyphicon glyphicon-lock"></span></button>	
 				<br>
-				<button type="submit"id="autoScroll" name="autoScroll" class="btn btn-primary btn-block" onclick="autoScrollCode()" data-toggle="modal" data-target="#durationModal">AutoScroll </button>	
+				<button type="submit"id="autoScroll" name="autoScroll" class="btn btn-primary btn-block" onclick="autoScrollCode()" data-toggle="modal" data-target="#durationModal">AutoScroll <span class="glyphicon glyphicon-resize-vertical"></span></button>	
 			</div>
 		</div>
 		
@@ -149,7 +152,12 @@
 					<div>Total Time: <span id="totalTime">0</span></div> <!--jsfiddle-->
 					<!--/end jsfiddle code-->
 
-					<div id = "printInfo"></div>
+					<!--tests-->
+					
+
+					<div id = "printInfo"></div> <!--for testing output to backend-->
+					<div id = "test1" class="strikethrough"></div> <!--for testing popcornjs-->
+					<!--end tests-->
 					
 			</div>
 		</div>
@@ -244,13 +252,15 @@ some sample
 code.
 			</textarea> 
 			</div>
-			<div style="padding-top: 5px; padding-left: 15px">
+			<div style="padding-top: 5px; padding-left: 15px; padding-right: 15px">
 			<span class="btn btn-success btn-file buttons" id="uploadCode">
 				<p style="display: inline; position: relative; z-index: 1" class="mid">Upload Code </p><span style="position: relative; z-index: 1" class="glyphicon glyphicon-upload"></span>
 				<input style="z-index: 2" type="file" id="myFile" onchange="loadFile(this)" class="btn btn-default btn-block buttons">
 			</span>
-			</div>
 			<br>
+			<br>
+			
+			</div>
 			</div>
 		</div>
 			  
@@ -293,13 +303,13 @@ code.
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-3">
-				<button type="submit" id="save" name="save" class="btn btn-primary btn-block buttons" onclick="saveCode()">Save</button>	
+				<button type="submit" id="save" name="save" class="btn btn-primary btn-block buttons" onclick="saveCode()">Save <span class="glyphicon glyphicon-save"></span></button>	
 			</div> <!--end left column-->
 			<div class="col-md-6">
 			</div> <!--end middle column-->
 			<div class="col-sm-3">
 				<div align="right">
-					<button type="submit" align="right" id="publish" name="publish" class="btn btn-primary btn-block buttons" onclick="publishCode()">Publish</button>	
+					<button type="submit" align="right" id="publish" name="publish" class="btn btn-primary btn-block buttons" onclick="publishCode()">Publish <span class="glyphicon glyphicon-new-window"></span></button>	
 				</div>
 			</div> <!--end right column-->
 		</div>

@@ -6,6 +6,11 @@
 			
 			$(document).ready(function(global){
 				
+				
+				//create global variables
+				var startLine;
+				var endLine;
+				
 				//create codemirror instance and add gutter marks
 			
 				var editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
@@ -92,8 +97,8 @@
 						//begin get currently selected text from codemirror editor
 						var doc = editor.getDoc(); //get the editor document
 						//var editText = doc.getSelection(); //get ALL selected text (save for later use)
-						var startLine = (doc.getCursor("head").line + 1); //get line of highlighted text that moves when you press shift+arrow (add 1 b/c it's an array)
-						var endLine = (doc.getCursor("anchor").line + 1);	//get line of highlighted text that stays the same (add 1 b/c it's an array)
+						startLine = (doc.getCursor("head").line + 1); //get line of highlighted text that moves when you press shift+arrow (add 1 b/c it's an array)
+						endLine = (doc.getCursor("anchor").line + 1);	//get line of highlighted text that stays the same (add 1 b/c it's an array)
 						//end get selected text
 						
 						if(startLine > endLine){ //check if startLine is greater than endLine, if so switch the two
@@ -103,7 +108,7 @@
 						}
 
 //************************************THIS IS THE VARIABLE TO SEND TO THE BACK END************************************
-						//var sendToBackend = [ startLine, " ", endLine, " ", startTime, " ", endTime, " ",action]; //print to test output
+						var sendToBackend = [ startLine, " ", endLine, " ", startTime, " ", endTime, " ",action]; //print to test output
 					
 						//$("#printInfo").html(sendToBackend); //print to test output
 						
@@ -186,11 +191,47 @@
 					video.pause();
 				
 				});
+							
+				$("#publish").click(function() {
+					//sendToBackend = [ startLine, " ", endLine, " ", startTime, " ", endTime, " ",action] (for reference)
 				
-				$("#upload").click(function() {
-				
-					$("#printInfo").html("upload");
+					var doc = editor.getDoc(); //get the editor document
+					var startText = doc.getLineHandle(startLine - 1).text;
 					
+					//var res = startText.concat(endText); //proof of concept for grabbing text from selected lines
+					
+					var res = "\n***start test (text from selected line(s) will show below)*** \n\n";
+					for(i = startLine - 1; i <= endLine - 1; i++) {
+						var res = res.concat(doc.getLineHandle(i).text);
+						var res = res.concat("\n");
+					}
+					res = res.concat("\n***end test*** \n\n");
+
+					$("#printInfo").html(res); //print to test output
+					
+					$("#printInfo").addClass("strikethrough");
+					
+					//var finalText = $("#printInfo").html().addClass("strikethrough");
+			
+					doc.replaceRange(res, {line: startLine - 1, ch: 0}, {line: endLine, ch: 0});
+					//editor.replaceRange(startLine, { line: editor.lastLine() + 1, ch:0 });
+					//maybe use "doc.setSelection" for autoscroll function
+					// to append text to end of codemirror: "editor.replaceRange( text, { line: editor.lastLine() + 1, ch:0 });"
+				});
+
+				//popcornjs example
+				
+				var pop = Popcorn( "#video" );
+				
+				pop.code({
+					start: 1,
+					end: 3,
+					onStart: function( options ) {
+						document.getElementById( "test1" ).innerHTML = "Yes";
+					},
+					onEnd: function( options ) {
+						document.getElementById( "test1" ).innerHTML = "No";
+					}
 				});
 				
 			});

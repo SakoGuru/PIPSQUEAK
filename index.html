@@ -138,8 +138,8 @@
 					<input type="file" id="myFile" onchange="loadVideo()">
 					</div>
 					
-					<div>Current Time : <span  id="currentTime">0</span></div> <!--jsfiddle-->
-					<div>Total time : <span id="totalTime">0</span></div> <!--jsfiddle-->
+					<div style="font-weight: bold">Current Time: <span  id="currentTime">0</span></div> <!--jsfiddle-->
+					<div style="font-weight: bold">Total Time: <span id="totalTime">0</span></div> <!--jsfiddle-->
 					<!--/end jsfiddle code-->
 
 					<div id = "printInfo"></div>
@@ -272,7 +272,12 @@ code.
 
 <!--/main-->
 
-	<footer class="text-center">PIPSQUEAK potential layout?</footer>
+	<footer>
+		<div class="text-center" style="padding-left: 1%; display:inline">MIT License</div>
+		<div class="text-right" style="padding-right: 1%; float: right; display:inline">
+			<button type="submit"id="publish" name="publish" class="btn btn-primary btn-block" onclick="publishCode()" style="verticle-align: middle">Publish</button>	
+		</div>
+	</footer>
 	
 	</body>
 </html>

@@ -1,6 +1,10 @@
 /*popcorn classes*/
 
-.strikethrough {
+.popReset {
+	text-decoration: none !important;
+}
+
+.popStrikethrough {
 	text-decoration: line-through;
 }
 

@@ -4,12 +4,20 @@
 			global.navigator = window.navigator;
 			require('jquery-ui');
 			
+				var startLine;
+				var endLine;
+				var startTime;
+				var endTime;
+			
 			$(document).ready(function(global){
 				
 				
 				//create global variables
+				
 				var startLine;
 				var endLine;
+				var startTime;
+				var endTime;
 				
 				//create codemirror instance and add gutter marks
 			
@@ -90,9 +98,9 @@
 						$("#error").html("");
 						document.getElementById("durationForm").reset();
 						var action = $("#tool").html();
-						var startTime = $('#currentTime').html();
+						startTime = $('#currentTime').html();
 						startTime = Number(startTime);
-						var endTime = startTime + Number(dur);
+						endTime = startTime + Number(dur);
 						
 						//begin get currently selected text from codemirror editor
 						var doc = editor.getDoc(); //get the editor document
@@ -100,15 +108,15 @@
 						startLine = (doc.getCursor("head").line + 1); //get line of highlighted text that moves when you press shift+arrow (add 1 b/c it's an array)
 						endLine = (doc.getCursor("anchor").line + 1);	//get line of highlighted text that stays the same (add 1 b/c it's an array)
 						//end get selected text
-						
+
 						if(startLine > endLine){ //check if startLine is greater than endLine, if so switch the two
 							var temp = startLine;
 							startLine = endLine;
 							endLine = temp;
 						}
 
-//************************************THIS IS THE VARIABLE TO SEND TO THE BACK END************************************
-						var sendToBackend = [ startLine, " ", endLine, " ", startTime, " ", endTime, " ",action]; //print to test output
+//************************************THIS IS WHERE WE SEND THE INFO TO THE BACK END************************************
+						//var sendToBackend = [ startLine, " ", endLine, " ", startTime, " ", endTime, " ",action]; //print to test output
 					
 						//$("#printInfo").html(sendToBackend); //print to test output
 						
@@ -193,44 +201,47 @@
 				});
 							
 				$("#publish").click(function() {
-					//sendToBackend = [ startLine, " ", endLine, " ", startTime, " ", endTime, " ",action] (for reference)
-				
+					$("#printInfo").html("published");
+					//console.log(startTime);
+					//console.log(endTime);
 					var doc = editor.getDoc(); //get the editor document
-					var startText = doc.getLineHandle(startLine - 1).text;
+					//doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "strikethrough"});
 					
-					//var res = startText.concat(endText); //proof of concept for grabbing text from selected lines
+					var pop = Popcorn( "#video" );
+				
+					pop.code({
+						start: startTime,
+						end: endTime,
+						onStart: function( options ) {
+							doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "popStrikethrough"});
+						},
+						onEnd: function( options ) {
+							doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "popReset"});
+						}
+					});
 					
-					var res = "\n***start test (text from selected line(s) will show below)*** \n\n";
-					for(i = startLine - 1; i <= endLine - 1; i++) {
-						var res = res.concat(doc.getLineHandle(i).text);
-						var res = res.concat("\n");
-					}
-					res = res.concat("\n***end test*** \n\n");
-
-					$("#printInfo").html(res); //print to test output
-					
-					$("#printInfo").addClass("strikethrough");
-					
-					//var finalText = $("#printInfo").html().addClass("strikethrough");
-			
-					doc.replaceRange(res, {line: startLine - 1, ch: 0}, {line: endLine, ch: 0});
-					//editor.replaceRange(startLine, { line: editor.lastLine() + 1, ch:0 });
+					//for future maybe
 					//maybe use "doc.setSelection" for autoscroll function
 					// to append text to end of codemirror: "editor.replaceRange( text, { line: editor.lastLine() + 1, ch:0 });"
+				
 				});
 
-				//popcornjs example
-				
+				//popcornjs example not working (startTime and end Time variables not accessible here)
+				console.log(startTime);
+				console.log(endTime);
+				//$("#test1").html("test area");
+				$("#test1").html(endTime);
+
 				var pop = Popcorn( "#video" );
 				
 				pop.code({
-					start: 1,
-					end: 3,
+					start: startTime,
+					end: endTime,
 					onStart: function( options ) {
-						document.getElementById( "test1" ).innerHTML = "Yes";
+						document.getElementById( "test1" ).innerHTML = "Start Popcornjs";
 					},
 					onEnd: function( options ) {
-						document.getElementById( "test1" ).innerHTML = "No";
+						document.getElementById( "test1" ).innerHTML = "Stop Popcornjs";
 					}
 				});
 				

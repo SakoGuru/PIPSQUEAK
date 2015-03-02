@@ -19,7 +19,7 @@ var squeak = (function () {
             return false;
         }
         //add additional actions names here
-        if (action !== 'strike' && action !== 'highlight' && action != 'focus') {
+        if (action !== 'strike' && action !== 'highlight' && action !== 'focus' && action !== 'fadeIn' && action !== 'fadeOut' && action !== 'anchor' && action !== 'autoScroll') {
             throw action + " is not an allowed action"; 
         }
         
@@ -89,7 +89,11 @@ var squeak = (function () {
             var focus,
                 highlight,
                 strike,
-                annotate;
+                annotate,
+                fadeIn,
+                fadeOut,
+                anchor,
+                autoScroll;
              //TODO - actual worker functions
             focus = function (line, startTime, endTime) {
                 return false;
@@ -113,6 +117,18 @@ var squeak = (function () {
             annotate = function (line, startTime, endTime) {
                 return false;
             };
+            fadeIn = function (line, startTime, endTime) {
+                return false;
+            };
+            fadeOut = function (line, startTime, endTime) {
+                return false;
+            };
+            anchor = function (line, startTime, endTime) {
+                return false;
+            };
+            autoScroll = function (line, startTime, endTime) {
+                return false;
+            };
             //body of runAction
             if (action === 'strike') {
                 //call strike function
@@ -130,7 +146,29 @@ var squeak = (function () {
                 //call annotate function
                 console.log("Annotating line " + line + " from time " + startTime + " to time " + endTime + ".");
                 console.log(annotate(line, startTime, endTime));
-            } else {
+
+            } else if (action === 'fadeOut') {
+                //call fadeOut function
+                console.log("Fading out line " + line + " from time " + startTime + " to time " + endTime + ".");
+                console.log(fadeOut(line, startTime, endTime));
+
+            } else if (action === 'fadeIn') {
+                //call fadeIn function
+                console.log("Fading in line " + line + " from time " + startTime + " to time " + endTime + ".");
+                console.log(fadeIn(line, startTime, endTime));
+
+            } else if (action === 'anchor') {
+                //call anchor function
+                console.log("Anchoring? line " + line + " from time " + startTime + " to time " + endTime + ".");
+                console.log(anchor(line, startTime, endTime));
+
+            } else if (action === 'autoScroll') {
+                //call autoScroll function
+                console.log("Scrolling? line " + line + " from time " + startTime + " to time " + endTime + ".");
+                console.log(autoScroll(line, startTime, endTime));
+
+            }
+            else {
                 console.log(action + " is not an accepted action in function runAction");
                 return false;
             }

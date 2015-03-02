@@ -13,12 +13,17 @@
 	text-decoration: line-through;
 }
 
+@-webkit-keyframes highlight-fade {   
+   0% {background: none;}
+   100% {background: yellow;}
+}
 .highlight {
-	background-color: yellow;
+	-webkit-animation: highlight-fade 0.5s ease-in;
+	background: yellow;
 }
 
 .focus {
-	transition: font-size 2s;
+	transition: font-size 0.5s ease-in;
 	font-size: 200%;
 	vertical-align: text-middle;
 }

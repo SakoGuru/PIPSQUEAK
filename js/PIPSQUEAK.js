@@ -4,10 +4,11 @@
 			global.navigator = window.navigator;
 			require('jquery-ui');
 			
-				var startLine;
-				var endLine;
-				var startTime;
-				var endTime;
+			var startLine;
+			var endLine;
+			var startTime;
+			var endTime;
+			var action;
 			
 			$(document).ready(function(global){
 				
@@ -97,7 +98,7 @@
 						$("#durationModal").modal('hide');
 						$("#error").html("");
 						document.getElementById("durationForm").reset();
-						var action = $("#tool").html();
+						action = $("#tool").html();
 						startTime = $('#currentTime').html();
 						startTime = Number(startTime);
 						endTime = startTime + Number(dur);
@@ -213,10 +214,45 @@
 						start: startTime,
 						end: endTime,
 						onStart: function( options ) {
-							doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "popStrikethrough"});
+							if (action == "fadeIn") {
+								$("#codeMirror").css({
+									"transform": "scale(1.2,1.2)",
+									"transition": "transform 2s"
+								});
+							}
+							else if (action == "focus") {
+								$("#codeMirror").css({
+									"font-size": "200%",
+									"text-align": "center",
+									"transition": "font-size 2s, text-align 2s"
+								});
+								//doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: action});
+								doc.markText({line: 0, ch: 0}, {line: startLine - 1, ch: 0}, {className: "hidden"});
+								doc.markText({line: endLine, ch: 0}, {line: editor.lastLine() + 1, ch: 0}, {className: "hidden"});
+							}
+							else {
+								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: action});
+							}
 						},
 						onEnd: function( options ) {
-							doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "popReset"});
+							if (action == "fadeIn") {
+								$("#codeMirror").css({
+									"transform": "scale(1.0,1.0)",
+									"transition": "transform 2s"
+								});
+							}
+							else if (action == "focus") {
+								doc.markText({line: 0, ch: 0}, {line: startLine - 1, ch: 0}, {className: "popReset"});
+								doc.markText({line: endLine, ch: 0}, {line: editor.lastLine() + 1, ch: 0}, {className: "popReset"});
+								$("#codeMirror").css({
+									"font-size": "100%",
+									"text-align": "left",
+									"transition": "text-align 2s, font-size 2s"
+								});
+							}
+							else {
+								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "popReset"});
+							}
 						}
 					});
 					

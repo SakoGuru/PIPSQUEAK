@@ -2,10 +2,30 @@
 
 .popReset {
 	text-decoration: none !important;
+	background-color: initial !important;
+	font-size: initial !important;
+	display: initial !important;
+	visibility: visible !important;
+	vertical-align: initial !important;
 }
 
-.popStrikethrough {
+.strikethrough {
 	text-decoration: line-through;
+}
+
+.highlight {
+	background-color: yellow;
+}
+
+.focus {
+	transition: font-size 2s;
+	font-size: 200%;
+	vertical-align: text-middle;
+}
+
+.hidden {
+	display: none;
+	visibility: hidden;
 }
 
 /*end popcorn classes*/

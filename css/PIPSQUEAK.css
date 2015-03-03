@@ -1,5 +1,13 @@
 /*popcorn classes*/
 
+.codeMirror {
+	transition: transform 2s, text-align 2s, text-decoration 2s, background-color 2s, font-size 2s, display 2s, visibility 2s, vertical-align 2s;
+}
+
+.change {
+
+}
+
 .popReset {
 	text-decoration: none !important;
 	background-color: initial !important;
@@ -18,14 +26,24 @@
 }
 
 .focus {
-	transition: font-size 2s;
+	/*
+	position: relative;
+	left: 50%;
+	*/
 	font-size: 200%;
-	vertical-align: text-middle;
+	text-align: center;
+}
+
+.fadeOut {
+	font-size: 0%;
 }
 
 .hidden {
+	transform: scale(0,0);
+	/*
 	display: none;
 	visibility: hidden;
+	*/
 }
 
 /*end popcorn classes*/

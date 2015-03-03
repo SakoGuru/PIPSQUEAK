@@ -206,6 +206,7 @@
 					//console.log(startTime);
 					//console.log(endTime);
 					var doc = editor.getDoc(); //get the editor document
+					doc.markText({line: 0, ch: 0}, {line: editor.lastLine() + 1, ch: 0}, {className: "codeMirror"}); //idea was to add transition to all lines in codemirror, but it didn't work
 					//doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "strikethrough"});
 					
 					var pop = Popcorn( "#video" );
@@ -215,20 +216,27 @@
 						end: endTime,
 						onStart: function( options ) {
 							if (action == "fadeIn") {
-								$("#codeMirror").css({
-									"transform": "scale(1.2,1.2)",
-									"transition": "transform 2s"
+								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "change"});
+								$(".change").css({
+									"font-size": "100%"
+								});
+							}
+							else if (action == "fadeOut") {
+								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "change"});
+								$(".change").css({
+									"font-size": "0%"
 								});
 							}
 							else if (action == "focus") {
 								$("#codeMirror").css({
 									"font-size": "200%",
-									"text-align": "center",
-									"transition": "font-size 2s, text-align 2s"
+									"text-align": "center"
 								});
-								//doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: action});
-								doc.markText({line: 0, ch: 0}, {line: startLine - 1, ch: 0}, {className: "hidden"});
-								doc.markText({line: endLine, ch: 0}, {line: editor.lastLine() + 1, ch: 0}, {className: "hidden"});
+								doc.markText({line: 0, ch: 0}, {line: startLine - 1, ch: 0}, {className: "change"});
+								doc.markText({line: endLine, ch: 0}, {line: editor.lastLine() + 1, ch: 0}, {className: "change"});
+								$(".change").css({
+									"font-size": "0%"
+								});
 							}
 							else {
 								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: action});
@@ -236,18 +244,23 @@
 						},
 						onEnd: function( options ) {
 							if (action == "fadeIn") {
-								$("#codeMirror").css({
-									"transform": "scale(1.0,1.0)",
-									"transition": "transform 2s"
+								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "change"});
+								$(".change").css({
+									"font-size": "0%"
 								});
+							}
+							else if (action == "fadeOut") {
+								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "change"});
+								$(".change").css({
+									"font-size": "100%"
+								});		
 							}
 							else if (action == "focus") {
 								doc.markText({line: 0, ch: 0}, {line: startLine - 1, ch: 0}, {className: "popReset"});
 								doc.markText({line: endLine, ch: 0}, {line: editor.lastLine() + 1, ch: 0}, {className: "popReset"});
 								$("#codeMirror").css({
 									"font-size": "100%",
-									"text-align": "left",
-									"transition": "text-align 2s, font-size 2s"
+									"text-align": "left"
 								});
 							}
 							else {

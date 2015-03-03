@@ -1,3 +1,6 @@
+//(c) Scott Gavin, PIPSQUEAK 2015
+//requires JQuery, filesystem.js
+
 //the way this works is that squeak is basically a namespace, and any "pub.x" items are made public, whereas the rest are private to the namespace
 var squeak = (function () {
     'use strict';
@@ -83,7 +86,9 @@ var squeak = (function () {
     pub.publish = function () {
         var i,
             sinAction,
-            runAction;
+            runAction,
+            popcornFile = "";
+        initialize();
         runAction = function (line, startTime, endTime, action) {
         //only runAction can call the worker functions
             var focus,
@@ -109,9 +114,11 @@ var squeak = (function () {
 				//start will strike the code, end will unstrike the code.
 				var code = $("" + line +"").html(),
 					start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
-					+ ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').html(\"<s>\" + $(\'"+line+"\').html() + \"</s>\")\n\t}\n});",
+					+ ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').html(\"<s>\" + $(\'"+line+"\').html() + \"</s>\")\n\t}\n});\n",
 					end = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
-					+ ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').html(\"" + code + "\")\n\t}\n});";
+					+ ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').html(\"" + code + "\")\n\t}\n});\n";
+                popcornFile += start;
+                popcornFile += end;
                 return true;
             };
             annotate = function (line, startTime, endTime) {
@@ -185,6 +192,8 @@ var squeak = (function () {
             }
         }
         //TODO - write the edited code and the video to a template file
+        console.log(popcornFile);
+        writeFile("./publish/js/pop.js",popcornFile);
         return true;
     };
     //just a tester function

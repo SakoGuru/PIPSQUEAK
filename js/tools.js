@@ -191,13 +191,21 @@ var squeak = (function () {
         };
         //when they hit publish run through the codemirror div and assign each individual LINE to an array location, with arr[0] being empty for simplicity 
         //TODO - read in codemirror portion and parse into individual lines for wrapping or class adding.
+        var start, end;
         for (i = 0; i < id; i += 1) {
             //if i remember right this is more efficient that calling to the array each time, but i could be wrong
             sinAction = listOfActions[i];
-            if (runAction(sinAction.line, sinAction.startTime, sinAction.endTime, sinAction.tool) === false) {
+            start = "pop.code ({\n\tstart: " + sinAction.startTime + ",\n\tend: " + sinAction.startTime 
+                    + ",\n\tonStart: function() {\n\t\t$(\'"+sinAction.line+"\').addClass(\"" + sinAction.tool + "\")\n\t}\n});\n";
+            end = "pop.code ({\n\tstart: " + sinAction.endTime + ",\n\tend: " + sinAction.endTime 
+                    + ",\n\tonStart: function() {\n\t\t$(\'"+sinAction.line+"\').removeClass(\"" + sinAction.tool + "\")\n\t}\n});\n";
+            popcornFile += start;
+            popcornFile += end;
+            /*if (runAction(sinAction.line, sinAction.startTime, sinAction.endTime, sinAction.tool) === false) {
                 console.log("Error in running the Actions list");
                 //may want some error handling in here or something.
-            }
+            }*/
+
         }
         //TODO - write the media and input code to a template file
         //write the popcorn functions to a javascript file

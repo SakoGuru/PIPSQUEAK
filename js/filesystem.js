@@ -124,26 +124,26 @@ function remove(location) {
 
 //function that will initialize the PIPSQUEAK location if it doesn't already exist.
 //location variable to allow us to eventually maybe let the user et where they want the working directory
-function initialize(location) {
+function initialize(name,location) {
     "use strict";
     //set default location
     location = location == null ? "." : location;
-
-    if (fs.existsSync(location + "/publish")) {
+    name = name == null ? "publish" : name;
+    if (fs.existsSync(location + "/" + name)) {
         return false;
     }
     //make PIPSQUEAK directory
-    makeDirectory(location + "/publish");
+    makeDirectory(location + "/" + name);
     //main folder is html
     //js, css folders
-    makeDirectory(location + "/publish/js");
-    makeDirectory(location + "/publish/css");
+    makeDirectory(location + "/"  + name + "/js");
+    makeDirectory(location + "/" + name + "/css");
     //assets folder
-    makeDirectory(location + "/publish/assets");
+    makeDirectory(location + "/"  + name + "/assets");
     //subfolders - audio, video, images?
-    makeDirectory(location + "/publish/assets/video");
-    makeDirectory(location + "/publish/assets/audio");
-    makeDirectory(location + "/publish/assets/images");
+    makeDirectory(location + "/"  + name + "/assets/video");
+    makeDirectory(location + "/"  + name + "/assets/audio");
+    makeDirectory(location + "/"  + name + "/assets/images");
     return true;
 }
 

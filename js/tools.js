@@ -106,6 +106,14 @@ var squeak = (function () {
             highlight = function (line, startTime, endTime) {
 				//the code will be the css we decide to use for highlight
 				//use jquery .css, but need to figure out how we want a highlight to look.
+                var start,
+                    end;
+                start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
+                    + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').addClass(\"highlight\")\n\t}\n});\n";
+                end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime 
+                    + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').removeClass(\"highlight\")\n\t}\n});\n";
+                popcornFile += start;
+                popcornFile += end;
                 return true;
             };
             strike = function (line, startTime, endTime) {
@@ -114,9 +122,9 @@ var squeak = (function () {
 				//start will strike the code, end will unstrike the code.
 				var code = $("" + line + "").html(),
 					start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
-					+ ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').html(\"<s>\" + $(\'"+line+"\').html() + \"</s>\")\n\t}\n});\n",
-					end = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
-					+ ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').html(\"" + code + "\")\n\t}\n});\n";
+                    + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').addClass(\"strike\")\n\t}\n});\n",
+					end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime 
+                    + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').removeClass(\"strike\")\n\t}\n});\n";
                 popcornFile += start;
                 popcornFile += end;
                 return true;

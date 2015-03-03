@@ -81,8 +81,8 @@ var squeak = (function () {
         return true;
     }
     //TODO - most of this.
-    //need on for publishes that runs through and call the functions that will actually write the changes.
     //will need to pull the video and codemirror segment and write those to the output template in the right places
+
     pub.publish = function () {
         var i,
             sinAction,
@@ -112,7 +112,7 @@ var squeak = (function () {
 				//need to determine how were finding a line, adding a class to each line.
 				//for strike we'll need a pop for start time, and then a pop for end time.
 				//start will strike the code, end will unstrike the code.
-				var code = $("" + line +"").html(),
+				var code = $("" + line + "").html(),
 					start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
 					+ ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').html(\"<s>\" + $(\'"+line+"\').html() + \"</s>\")\n\t}\n});\n",
 					end = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
@@ -191,9 +191,10 @@ var squeak = (function () {
                 //may want some error handling in here or something.
             }
         }
-        //TODO - write the edited code and the video to a template file
-        console.log(popcornFile);
+        //TODO - write the media and input code to a template file
+        //write the popcorn functions to a javascript file
         writeFile("./publish/js/pop.js",popcornFile);
+        alert("The tutorial has been published to " + process.cwd() + "/publish");
         return true;
     };
     //just a tester function

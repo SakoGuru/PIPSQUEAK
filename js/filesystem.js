@@ -129,21 +129,21 @@ function initialize(location) {
     //set default location
     location = location == null ? "." : location;
 
-    if (fs.existsSync(location + "/PIPSQUEAK")) {
+    if (fs.existsSync(location + "/publish")) {
         return false;
     }
     //make PIPSQUEAK directory
-    makeDirectory(location + "/PIPSQUEAK");
+    makeDirectory(location + "/publish");
     //main folder is html
     //js, css folders
-    makeDirectory(location + "/PIPSQUEAK/js");
-    makeDirectory(location + "/PIPSQUEAK/css");
+    makeDirectory(location + "/publish/js");
+    makeDirectory(location + "/publish/css");
     //assets folder
-    makeDirectory(location + "/PIPSQUEAK/assets");
+    makeDirectory(location + "/publish/assets");
     //subfolders - audio, video, images?
-    makeDirectory(location + "/PIPSQUEAK/assets/video");
-    makeDirectory(location + "/PIPSQUEAK/assets/audio");
-    makeDirectory(location + "/PIPSQUEAK/assets/images");
+    makeDirectory(location + "/publish/assets/video");
+    makeDirectory(location + "/publish/assets/audio");
+    makeDirectory(location + "/publish/assets/images");
     return true;
 }
 

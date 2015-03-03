@@ -182,7 +182,7 @@
 				
 				$("#strikethrough").click(function() {
 				
-					$("#tool").html("strikethrough");
+					$("#tool").html("strike");
 					video.pause();
 				
 				});

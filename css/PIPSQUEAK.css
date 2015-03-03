@@ -21,15 +21,17 @@
 	text-decoration: line-through;
 }
 
+@-webkit-keyframes highlight-fade {   
+   0% {background: none;}
+   100% {background: yellow;}
+}
 .highlight {
-	background-color: yellow;
+	-webkit-animation: highlight-fade 0.5s ease-in;
+	background: yellow;
 }
 
 .focus {
-	/*
-	position: relative;
-	left: 50%;
-	*/
+	transition: font-size 0.5s ease-in;
 	font-size: 200%;
 	text-align: center;
 }

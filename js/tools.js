@@ -88,14 +88,46 @@ var squeak = (function () {
         var i,
             sinAction,
             runAction,
-            popcornFile = "";
+            popcornFile = "", 
+            mediaFileName,
+            mediaType;
         if(media == null) {
             throw "Error, no media input to publish";
         }
         initialize();
+        mediaFileName = function() {
+            var pattern = new RegExp("[a-zA-Z0-9][a-zA-Z0-9]*[.][a-z0-9][a-z0-9]*")
+            return pattern.exec(media);
+
+        }();
+        mediaType = function () {
+            var pattern = new RegExp("[.][a-z0-9][a-z0-9]*"),
+            ending = pattern.exec(mediaFileName);
+            ending = ending[0];
+            switch (ending) {
+                case ".mp4":
+                case ".ogv":
+                case ".webm":
+                case ".flv":
+                case ".mkv": {
+                    return "video";
+                    break;
+                }
+                case ".mp3":
+                case ".flac": {
+                    return "audio";
+                    break;
+                }
+                default: {
+                    throw "Unrecognised media type " + ending
+                }
+            }
+
+        }();
         //TODO: handle file to get its name from its path, and determine if video or audio, as well as published directory name.
         //proof of concept
-        fs.createReadStream(media).pipe(fs.createWriteStream('./publish/assets/video/video.ogv'));
+        console.log('./publish/assets/'+ mediaType + '/' + mediaFileName);
+        copyFile(media,'./publish/assets/'+ mediaType + '/' + mediaFileName);
         /*runAction = function (line, startTime, endTime, action) {
         //only runAction can call the worker functions
             var focus,

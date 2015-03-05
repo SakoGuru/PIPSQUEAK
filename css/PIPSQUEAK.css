@@ -1,7 +1,10 @@
 /*popcorn classes*/
 
 .codeMirror {
-	transition: transform 2s, text-align 2s, text-decoration 2s, background-color 2s, font-size 2s, display 2s, visibility 2s, vertical-align 2s;
+	transition: all 2s;		/*this should add a 2s transition to all "transitionable" properties
+	/*
+	transition: transform 2s, background 2s, text-align 2s, text-decoration 2s, font-size 2s, display 2s, visibility 2s, vertical-align 2s;
+	*/
 }
 
 .change {
@@ -9,12 +12,17 @@
 }
 
 .popReset {
+	
 	text-decoration: none !important;
-	background-color: initial !important;
+	background: initial !important;
 	font-size: initial !important;
 	display: initial !important;
 	visibility: visible !important;
 	vertical-align: initial !important;
+	
+	-webkit-animation: highlight-fade 0.5s;
+	background: none !important;
+	
 }
 
 .strike{
@@ -25,13 +33,19 @@
    0% {background: none;}
    100% {background: yellow;}
 }
+
 .highlight {
-	-webkit-animation: highlight-fade 0.5s ease-in;
+	
+	-webkit-animation-fill-mode: forwards;
+	-webkit-animation: highlight-fade 0.5s;
+	
 	background: yellow;
 }
 
 .focus {
+	/*
 	transition: font-size 0.5s ease-in;
+	*/
 	font-size: 200%;
 	text-align: center;
 }

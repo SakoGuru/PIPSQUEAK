@@ -26,7 +26,7 @@
 					lineNumbers: true,
 					gutters: ["CodeMirror-linenumbers", "annotation-gutter"]
 				});
-				
+
 				/*editor.on("gutterClick", function(cm, n) {
 					var info = cm.lineInfo(n);
 					cm.setGutterMarker(n, "breakpoints", info.gutterMarkers ? null : makeMarker());
@@ -59,6 +59,19 @@
 				},500);
 				
 				//end jsfiddle 
+
+				$('#uploadCode').click(function() {
+					
+					if ($("#newCM").html() == "upload button clicked") {
+						newCM.toTextArea(); //transfer current code mirror instance back to the textarea DOM element
+					}
+					else {
+						editor.toTextArea(); //transfer current code mirror instance back to the textarea DOM element
+					}
+					$("#newCM").html("upload button clicked");
+				
+					$('#codearea').remove(); //remove the textarea DOM element
+				});
 				
 				$('#durationModal').on('shown.bs.modal', function () {
 					$('#dur').focus();
@@ -102,9 +115,16 @@
 						startTime = $('#currentTime').html();
 						startTime = Number(startTime);
 						endTime = startTime + Number(dur);
-						
+						var doc;
 						//begin get currently selected text from codemirror editor
-						var doc = editor.getDoc(); //get the editor document
+						var test = $("#newCM").html();
+						console.log(test);
+						if ($("#newCM").html() == "upload button clicked") {
+								doc = newCM.getDoc();
+						}
+						else {
+							doc = editor.getDoc(); //get the editor document
+						}
 						//var editText = doc.getSelection(); //get ALL selected text (save for later use)
 						startLine = (doc.getCursor("head").line + 1); //get line of highlighted text that moves when you press shift+arrow (add 1 b/c it's an array)
 						endLine = (doc.getCursor("anchor").line + 1);	//get line of highlighted text that stays the same (add 1 b/c it's an array)
@@ -203,11 +223,20 @@
 							
 				$("#publish").click(function() {
 					$("#printInfo").html("published");
-					//console.log(startTime);
-					//console.log(endTime);
-					var doc = editor.getDoc(); //get the editor document
-					doc.markText({line: 0, ch: 0}, {line: editor.lastLine() + 1, ch: 0}, {className: "codeMirror"}); //idea was to add transition to all lines in codemirror, but it didn't work
-					//doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "strikethrough"});
+
+					var doc;
+					var test = $("#newCM").html();
+					console.log(test);
+					if ($("#newCM").html() == "upload button clicked") {
+						$("#printInfo2").html("published for the new editor");
+						doc = newCM.getDoc();
+					}
+					else {
+						$("#printInfo2").html("published from original editor");
+						doc = editor.getDoc(); //get the editor document
+					}
+					
+					doc.markText({line: 0, ch: 0}, {line: editor.lastLine() + 1, ch: 0}, {className: "codeMirror"});
 					
 					var pop = Popcorn( "#video" );
 				
@@ -239,7 +268,7 @@
 								});
 							}
 							else {
-								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: action});
+								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: action});							
 							}
 						},
 						onEnd: function( options ) {
@@ -264,7 +293,7 @@
 								});
 							}
 							else {
-								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "popReset"});
+								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "popReset"});	
 							}
 						}
 					});
@@ -274,13 +303,15 @@
 					// to append text to end of codemirror: "editor.replaceRange( text, { line: editor.lastLine() + 1, ch:0 });"
 				
 				});
-
+				
+				//testing stuff
+				
 				//popcornjs example not working (startTime and end Time variables not accessible here)
-				console.log(startTime);
-				console.log(endTime);
+				//console.log(startTime);
+				//console.log(endTime);
 				//$("#test1").html("test area");
-				$("#test1").html(endTime);
-
+				//$("#test1").html(endTime);
+				/*
 				var pop = Popcorn( "#video" );
 				
 				pop.code({
@@ -293,6 +324,7 @@
 						document.getElementById( "test1" ).innerHTML = "Stop Popcornjs";
 					}
 				});
+				*/
 				
 			});
 

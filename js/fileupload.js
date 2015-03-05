@@ -2,9 +2,12 @@ var $ = require('jquery');
 			global.document = window.document;
 			global.navigator = window.navigator;
 			require('jquery-ui');
-
+			
 // Uploads user file and loads it into CodeMirror editor
 function loadFile(input) {
+
+	$('#wrappingDiv').append("<textarea id='codearea' name='codearea'></textarea> "); //add new textarea DOM element
+	
 	var editor = CodeMirror.fromTextArea(document.getElementById('codearea'), {
 		mode: 'text/html',
 		tabMode: 'indent',
@@ -12,11 +15,17 @@ function loadFile(input) {
 		lineWrapping: true,
 		autoCloseTags: true
 	});
+
 	var reader = new FileReader();
 	reader.onload = function(e) {
 		editor.setValue(e.target.result);
 	}
 	reader.readAsText(input.files[0]);
+	
+	//transfer new codemirror instance back to PIPSQUEAK.js
+	$('#codearea').data('CodeMirrorInstance', editor); //save new editor and name it CodeMirrorInstance
+	newCM = $('#codearea').data('CodeMirrorInstance'); //put new editor in global javascript variable to be accessed in PIPSQUEAK.js
+	
 }
 
 // Uploads user video file and loads it into video player

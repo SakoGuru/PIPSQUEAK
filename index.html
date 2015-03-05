@@ -158,7 +158,8 @@
 					
 
 					<div id = "printInfo"></div> <!--for testing output to backend-->
-					<div id = "test1" class="strikethrough"></div> <!--for testing popcornjs-->
+					<div id = "newCM" hidden></div>
+					<div id = "printInfo2"></div> <!--for testing popcornjs-->
 					<!--end tests-->
 					
 			</div>
@@ -248,11 +249,13 @@
 			<div class="panel-heading"><h4>CodeMirror</h4></div>
 			<div id="video_container">
 			<div style="position: relative; padding-left: 15px; padding-right: 15px; padding-top: 15px;">
+			<div id="wrappingDiv">
 			<textarea id="codearea" name="codearea">
 Here is
 some sample
 code.
 			</textarea> 
+			</div>
 			</div>
 			<div style="padding-top: 5px; padding-left: 15px; padding-right: 15px">
 			<span class="btn btn-success btn-file buttons" id="uploadCode">
@@ -305,13 +308,13 @@ code.
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-3">
-				<button type="submit" id="save" name="save" class="btn btn-primary btn-block buttons" onclick="saveCode()">Save <span class="glyphicon glyphicon-save"></span></button>	
+				<button type="submit" id="save" name="save" class="btn btn-primary btn-block buttons">Save <span class="glyphicon glyphicon-save"></span></button>	
 			</div> <!--end left column-->
 			<div class="col-md-6">
 			</div> <!--end middle column-->
 			<div class="col-sm-3">
 				<div align="right">
-					<button type="submit" align="right" id="publish" name="publish" class="btn btn-primary btn-block buttons" onclick="publishCode()">Publish <span class="glyphicon glyphicon-new-window"></span></button>	
+					<button type="submit" align="right" id="publish" name="publish" class="btn btn-primary btn-block buttons">Publish <span class="glyphicon glyphicon-new-window"></span></button>	
 				</div>
 			</div> <!--end right column-->
 		</div>

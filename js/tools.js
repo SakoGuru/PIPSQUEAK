@@ -89,7 +89,7 @@ var squeak = (function () {
             sinAction,
             runAction,
             popcornFile = "";
-        if(video == null) {
+        if(media == null) {
             throw "Error, no media input to publish";
         }
         initialize();

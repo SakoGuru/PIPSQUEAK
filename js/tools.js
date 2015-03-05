@@ -83,13 +83,20 @@ var squeak = (function () {
     //TODO - most of this.
     //will need to pull the video and codemirror segment and write those to the output template in the right places
 
-    pub.publish = function () {
+    //requires video path from frontend
+    pub.publish = function (media) {
         var i,
             sinAction,
             runAction,
             popcornFile = "";
+        if(video == null) {
+            throw "Error, no media input to publish";
+        }
         initialize();
-        runAction = function (line, startTime, endTime, action) {
+        //TODO: handle file to get its name from its path, and determine if video or audio, as well as published directory name.
+        //proof of concept
+        fs.createReadStream(media).pipe(fs.createWriteStream('./publish/assets/video/video.ogv'));
+        /*runAction = function (line, startTime, endTime, action) {
         //only runAction can call the worker functions
             var focus,
                 highlight,
@@ -188,7 +195,7 @@ var squeak = (function () {
                 return false;
             }
             return true;
-        };
+        }; */
         //when they hit publish run through the codemirror div and assign each individual LINE to an array location, with arr[0] being empty for simplicity 
         //TODO - read in codemirror portion and parse into individual lines for wrapping or class adding.
         var start, end;

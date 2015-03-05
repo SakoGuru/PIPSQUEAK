@@ -203,7 +203,14 @@
 					} else if (type == "Article") {
 						typeGlyph = "book";
 					}
-					editor.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
+					
+					if ($("#newCM").html() == "upload button clicked") {
+							newCM.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
+					}
+					else {
+						editor.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
+					}
+					
 				});
 				
 				$("#strikethrough").click(function() {

@@ -15,7 +15,8 @@ function loadFile(input) {
 		autoCloseTags: true,
 		theme: 'vibrant-ink',
 		matchBrackets: true,
-		styleActiveLine: true
+		styleActiveLine: true,
+		gutters: ["CodeMirror-linenumbers", "annotation-gutter"]
 	});
 
 	var reader = new FileReader();

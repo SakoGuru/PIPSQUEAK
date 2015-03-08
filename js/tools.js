@@ -172,10 +172,26 @@ var squeak = (function () {
                 return false;
             };
             fadeIn = function (line, startTime, endTime) {
-                return false;
+                var start,
+                    end;
+                start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
+                    + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').addClass(\"fadeIn\")\n\t}\n});\n";
+                end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime 
+                    + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').removeClass(\"fadeIn\")\n\t}\n});\n";
+                popcornFile += start;
+                popcornFile += end;
+                return true;
             };
             fadeOut = function (line, startTime, endTime) {
-                return false;
+                var start,
+                    end;
+                start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
+                    + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').addClass(\"fadeOut\")\n\t}\n});\n";
+                end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime 
+                    + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').removeClass(\"fadeOut\")\n\t}\n});\n";
+                popcornFile += start;
+                popcornFile += end;
+                return true;
             };
             anchor = function (line, startTime, endTime) {
                 return false;

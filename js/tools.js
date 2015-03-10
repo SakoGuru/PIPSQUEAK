@@ -274,3 +274,4 @@ var squeak = (function () {
     };
     return pub;
 }());
+exports.squeak = squeak;

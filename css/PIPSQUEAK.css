@@ -15,14 +15,14 @@
 	
 	text-decoration: none !important;
 	background: initial !important;
-	font-size: initial !important;
+	font-size: 100% !important;
 	display: initial !important;
 	visibility: visible !important;
 	vertical-align: initial !important;
-	
+	/*
 	-webkit-animation: highlight-fade 0.5s;
 	background: none !important;
-	
+	*/
 }
 
 .strike{

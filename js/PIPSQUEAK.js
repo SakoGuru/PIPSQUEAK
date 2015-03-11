@@ -225,8 +225,7 @@
 					$("#printInfo").html("published");
 
 					var doc;
-					var test = $("#newCM").html();
-					console.log(test);
+
 					if ($("#newCM").html() == "upload button clicked") {
 						$("#printInfo2").html("published for the new editor");
 						doc = newCM.getDoc();
@@ -268,10 +267,12 @@
 								});
 							}
 							else {
-								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: action});							
+								//doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {css: "text-decoration: line-through"});		
+								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: action});
 							}
 						},
 						onEnd: function( options ) {
+							doc.markText({line: 0, ch: 0}, {line: editor.lastLine() + 1, ch: 0}, {className: "codeMirror"});
 							if (action == "fadeIn") {
 								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "change"});
 								$(".change").css({
@@ -293,7 +294,8 @@
 								});
 							}
 							else {
-								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "popReset"});	
+								//doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {css: "text-decoration: none"});	
+								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "popReset"});
 							}
 						}
 					});

@@ -196,8 +196,24 @@ var squeak = (function () {
             anchor = function (line, startTime, endTime) {
                 return false;
             };
-            autoScroll = function (line, startTime, endTime) {
-                return false;
+			//TODO 'codearea' is whatever the name for the scroll div where the code is.  Confirm 
+            //TODO If possible to get all the lines for this one instead of individual actions per line
+			//		so we can get the first line to the last line (just need those two) to set the autoScroll bounds
+			autoScroll = function (line, startTime, endTime) {
+                var start,
+                    end,
+					durr;
+				durr = end - start;
+                start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
+                    + ",\n\tonStart: function() {\n\t\ttop = document.getElementById('"+line+"').offsetTop; 
+					\n\t\tdocument.getElementById('codearea').scrollTop = topPos;\n
+					\n\t\t$('body,html').animate({scrollTop: +line+},+durr+);\n
+					\n\t\t$(\'"+line+"\').addClass(\"autoScroll\")\n\t}\n});\n";
+                end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime 
+                    + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').removeClass(\"autoScroll\")\n\t}\n});\n";
+                popcornFile += start;
+                popcornFile += end;
+                return true;
             };
             //body of runAction
             if (action === 'strike') {

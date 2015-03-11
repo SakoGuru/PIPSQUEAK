@@ -83,13 +83,52 @@ var squeak = (function () {
     //TODO - most of this.
     //will need to pull the video and codemirror segment and write those to the output template in the right places
 
-    pub.publish = function () {
+    //requires video path from frontend
+    pub.publish = function (media) {
         var i,
             sinAction,
             runAction,
-            popcornFile = "";
+            popcornFile = "", 
+            mediaFileName,
+            mediaType;
+        if(media == null) {
+            throw "Error, no media input to publish";
+        }
         initialize();
-        runAction = function (line, startTime, endTime, action) {
+        mediaFileName = function() {
+            var pattern = new RegExp("[a-zA-Z0-9][a-zA-Z0-9]*[.][a-z0-9][a-z0-9]*")
+            return pattern.exec(media);
+
+        }();
+        mediaType = function () {
+            var pattern = new RegExp("[.][a-z0-9][a-z0-9]*"),
+            ending = pattern.exec(mediaFileName);
+            ending = ending[0];
+            switch (ending) {
+                case ".mp4":
+                case ".ogv":
+                case ".webm":
+                case ".flv":
+                case ".mkv": {
+                    return "video";
+                    break;
+                }
+                case ".mp3":
+                case ".flac": {
+                    return "audio";
+                    break;
+                }
+                default: {
+                    throw "Unrecognised media type " + ending
+                }
+            }
+
+        }();
+        //TODO: handle file to get its name from its path, and determine if video or audio, as well as published directory name.
+        //proof of concept
+        console.log('./publish/assets/'+ mediaType + '/' + mediaFileName);
+        copyFile(media,'./publish/assets/'+ mediaType + '/' + mediaFileName);
+        /*runAction = function (line, startTime, endTime, action) {
         //only runAction can call the worker functions
             var focus,
                 highlight,
@@ -133,10 +172,26 @@ var squeak = (function () {
                 return false;
             };
             fadeIn = function (line, startTime, endTime) {
-                return false;
+                var start,
+                    end;
+                start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
+                    + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').addClass(\"fadeIn\")\n\t}\n});\n";
+                end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime 
+                    + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').removeClass(\"fadeIn\")\n\t}\n});\n";
+                popcornFile += start;
+                popcornFile += end;
+                return true;
             };
             fadeOut = function (line, startTime, endTime) {
-                return false;
+                var start,
+                    end;
+                start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
+                    + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').addClass(\"fadeOut\")\n\t}\n});\n";
+                end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime 
+                    + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').removeClass(\"fadeOut\")\n\t}\n});\n";
+                popcornFile += start;
+                popcornFile += end;
+                return true;
             };
             anchor = function (line, startTime, endTime) {
                 return false;
@@ -188,7 +243,7 @@ var squeak = (function () {
                 return false;
             }
             return true;
-        };
+        }; */
         //when they hit publish run through the codemirror div and assign each individual LINE to an array location, with arr[0] being empty for simplicity 
         //TODO - read in codemirror portion and parse into individual lines for wrapping or class adding.
         var start, end;
@@ -219,3 +274,4 @@ var squeak = (function () {
     };
     return pub;
 }());
+exports.squeak = squeak;

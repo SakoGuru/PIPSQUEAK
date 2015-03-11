@@ -23,7 +23,13 @@
 				//create codemirror instance and add gutter marks
 			
 				var editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
+					tabMode: 'indent',
 					lineNumbers: true,
+					lineWrapping: true,
+					autoCloseTags: true,
+					theme: 'vibrant-ink',
+					matchBrackets: true,
+					styleActiveLine: true,
 					gutters: ["CodeMirror-linenumbers", "annotation-gutter"]
 				});
 
@@ -197,7 +203,14 @@
 					} else if (type == "Article") {
 						typeGlyph = "book";
 					}
-					editor.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
+					
+					if ($("#newCM").html() == "upload button clicked") {
+							newCM.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
+					}
+					else {
+						editor.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
+					}
+					
 				});
 				
 				$("#strikethrough").click(function() {

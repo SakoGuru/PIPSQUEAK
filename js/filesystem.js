@@ -39,6 +39,10 @@ function readFile(location) {
     return fs.readFileSync(location, 'ascii');
 }
 
+function copyFile(location, destination)  {
+    "use strict";
+    fs.createReadStream(location).pipe(fs.createWriteStream(destination));
+}
 //write the string contents of a file. can use different encoding types, like UTF8.
 function writeFile(location, contents) {
     "use strict";

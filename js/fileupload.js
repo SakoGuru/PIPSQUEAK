@@ -9,11 +9,14 @@ function loadFile(input) {
 	$('#wrappingDiv').append("<textarea id='codearea' name='codearea'></textarea> "); //add new textarea DOM element
 	
 	var editor = CodeMirror.fromTextArea(document.getElementById('codearea'), {
-		mode: 'text/html',
 		tabMode: 'indent',
 		lineNumbers: true,
 		lineWrapping: true,
-		autoCloseTags: true
+		autoCloseTags: true,
+		theme: 'vibrant-ink',
+		matchBrackets: true,
+		styleActiveLine: true,
+		gutters: ["CodeMirror-linenumbers", "annotation-gutter"]
 	});
 
 	var reader = new FileReader();

@@ -1,5 +1,7 @@
 //(c) Scott G Gavin, PIPSQUEAK - 01/28/2015
 /*jslint node: true */
+
+//this probably needs to be namespaced before too long, prevent collisions
 var http = require('http');
 var fs = require('fs');
 
@@ -42,6 +44,7 @@ function readFile(location) {
 function copyFile(location, destination)  {
     "use strict";
     fs.createReadStream(location).pipe(fs.createWriteStream(destination));
+    return true;
 }
 //write the string contents of a file. can use different encoding types, like UTF8.
 function writeFile(location, contents) {
@@ -150,7 +153,7 @@ function initialize(name,location) {
     makeDirectory(location + "/"  + name + "/assets/images");
     return true;
 }
-
+/* I dont think we need this.
 http.createServer(function (req, res) {
     "use strict";
     res.writeHead(200, {'Content-Type': 'text/plain'});
@@ -181,7 +184,7 @@ http.createServer(function (req, res) {
     }
     res.end();
 }).listen(port); //add ",ip" to the end of the listen to make it listen locally
-
+*/
 
 console.log('Server running at http://' + ip + ':' + port + '/');
 

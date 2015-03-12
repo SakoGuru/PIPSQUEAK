@@ -83,8 +83,10 @@ var squeak = (function () {
     //TODO - most of this.
     //will need to pull the video and codemirror segment and write those to the output template in the right places
 
-    //requires video path from frontend
-    pub.publish = function (media) {
+    //requires video path from frontend as the media
+    //path can be absolute or relative
+
+    pub.publish = function (media, fileContents, name, path) {
         var i,
             sinAction,
             runAction,
@@ -94,7 +96,9 @@ var squeak = (function () {
         if(media == null) {
             throw "Error, no media input to publish";
         }
-        initialize();
+        name = name == null ? "publish" : name;
+        path = path == null ? "." : path;
+        initialize(name, path);
         mediaFileName = function() {
             var pattern = new RegExp("[a-zA-Z0-9][a-zA-Z0-9]*[.][a-z0-9][a-z0-9]*")
             return pattern.exec(media);
@@ -107,14 +111,14 @@ var squeak = (function () {
             switch (ending) {
                 case ".mp4":
                 case ".ogv":
-                case ".webm":
-                case ".flv":
-                case ".mkv": {
+                case ".webm": {
                     return "video";
                     break;
                 }
                 case ".mp3":
-                case ".flac": {
+                case ".ogg": 
+                case ".wav" : 
+                case ".wave" : {
                     return "audio";
                     break;
                 }
@@ -124,10 +128,8 @@ var squeak = (function () {
             }
 
         }();
-        //TODO: handle file to get its name from its path, and determine if video or audio, as well as published directory name.
-        //proof of concept
-        console.log('./publish/assets/'+ mediaType + '/' + mediaFileName);
-        copyFile(media,'./publish/assets/'+ mediaType + '/' + mediaFileName);
+        console.log(path + '/' + name + '/assets/' + mediaType + '/' + mediaFileName);
+        copyFile(media,path + '/' + name + '/assets/' + mediaType + '/' + mediaFileName);
         /*runAction = function (line, startTime, endTime, action) {
         //only runAction can call the worker functions
             var focus,
@@ -159,8 +161,7 @@ var squeak = (function () {
 				//need to determine how were finding a line, adding a class to each line.
 				//for strike we'll need a pop for start time, and then a pop for end time.
 				//start will strike the code, end will unstrike the code.
-				var code = $("" + line + "").html(),
-					start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
+				var start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
                     + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').addClass(\"strike\")\n\t}\n});\n",
 					end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime 
                     + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').removeClass(\"strike\")\n\t}\n});\n";
@@ -264,12 +265,12 @@ var squeak = (function () {
         //TODO - read in codemirror portion and parse into individual lines for wrapping or class adding.
         var start, end;
         for (i = 0; i < id; i += 1) {
-            //if i remember right this is more efficient that calling to the array each time, but i could be wrong
+            //this is assuming that each line will have a class of "line<lineNumber>"
             sinAction = listOfActions[i];
             start = "pop.code ({\n\tstart: " + sinAction.startTime + ",\n\tend: " + sinAction.startTime 
-                    + ",\n\tonStart: function() {\n\t\t$(\'"+sinAction.line+"\').addClass(\"" + sinAction.tool + "\")\n\t}\n});\n";
+                    + ",\n\tonStart: function() {\n\t\t$(\'line"+sinAction.line+"\').addClass(\"" + sinAction.tool + "\")\n\t}\n});\n";
             end = "pop.code ({\n\tstart: " + sinAction.endTime + ",\n\tend: " + sinAction.endTime 
-                    + ",\n\tonStart: function() {\n\t\t$(\'"+sinAction.line+"\').removeClass(\"" + sinAction.tool + "\")\n\t}\n});\n";
+                    + ",\n\tonStart: function() {\n\t\t$(\'line"+sinAction.line+"\').removeClass(\"" + sinAction.tool + "\")\n\t}\n});\n";
             popcornFile += start;
             popcornFile += end;
             /*if (runAction(sinAction.line, sinAction.startTime, sinAction.endTime, sinAction.tool) === false) {
@@ -280,8 +281,12 @@ var squeak = (function () {
         }
         //TODO - write the media and input code to a template file
         //write the popcorn functions to a javascript file
-        writeFile("./publish/js/pop.js",popcornFile);
-        alert("The tutorial has been published to " + process.cwd() + "/publish");
+        writeFile(path + "/" + name + "/js/pop.js",popcornFile);
+        if (path === ".") {
+            alert("The tutorial has been published to " + process.cwd() + "/" + name);
+        } else {
+            alert("The tutorial has been published to " + path + "/" + name);
+        }
         return true;
     };
     //just a tester function
@@ -290,4 +295,5 @@ var squeak = (function () {
     };
     return pub;
 }());
+//why is this here?
 exports.squeak = squeak;

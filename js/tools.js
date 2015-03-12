@@ -99,7 +99,7 @@ var squeak = (function () {
         }
         name = name == null ? "publish" : name;
         path = path == null ? "." : path;
-        initialize(name, path);
+        pip.initialize(name, path);
         html = "<!DOCTYPE html>\n<html>\n\t<head>\n\t\t<script src = \"js/pop.js\" type = \"text/javascript\"></script>\n\t</head>\n\t<body>\n\t</body>\n</html>";
         mediaFileName = function() {
             var pattern = new RegExp("[a-zA-Z0-9][a-zA-Z0-9]*[.][a-z0-9][a-z0-9]*")
@@ -130,7 +130,7 @@ var squeak = (function () {
             }
 
         }();
-        copyFile(media,path + '/' + name + '/assets/' + mediaType + '/' + mediaFileName);
+        pip.copyFile(media,path + '/' + name + '/assets/' + mediaType + '/' + mediaFileName);
         /*runAction = function (line, startTime, endTime, action) {
         //only runAction can call the worker functions
             var focus,
@@ -282,9 +282,9 @@ var squeak = (function () {
         }
         //TODO - write the media and input code to a template file
         //write the popcorn functions to a javascript file
-        writeFile(path + "/" + name + "/js/pop.js",popcornFile);
+        pip.writeFile(path + "/" + name + "/js/pop.js",popcornFile);
         console.log(path + "/" + name + "/index.html");
-        writeFile(path + "/" + name + "/index.html",html);
+        pip.writeFile(path + "/" + name + "/index.html",html);
         if (path === ".") {
             alert("The tutorial has been published to " + process.cwd() + "/" + name);
         } else {

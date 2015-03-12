@@ -6,8 +6,7 @@ var squeak = (function () {
     'use strict';
     var pub = {},
         id = 0,
-        listOfActions = [],
-        writeListToFrontend;
+        listOfActions = [];
     //adds an action to the list of actions
     pub.addAction = function (startLine, endLine, startTime, endTime, action) {
         var i;
@@ -36,7 +35,7 @@ var squeak = (function () {
             actionNode.id = id;
             listOfActions.push(actionNode);
         }
-        writeListToFrontend();
+        this.writeListToFrontend();
     };
     //deletes a node from the list.  
     pub.deleteAction = function (remId) {
@@ -53,7 +52,7 @@ var squeak = (function () {
         //delete the node
         listOfActions.splice(remId - 1, 1);
         id -= 1;
-        writeListToFrontend();
+        this.writeListToFrontend();
         return true;
     };
     //TODO - fix this so it can undo deletes, and add a redo. will need at least 1 more "stack" (array)
@@ -64,12 +63,12 @@ var squeak = (function () {
         }
         id -= 1;
         listOfActions.splice(id, 1);
-        writeListToFrontend();
+        this.writeListToFrontend();
         return true;
     };
 
     //function that writes the list to the running frontend display
-    writeListToFrontend = function () {
+    pub.writeListToFrontend = function () {
         var i;
 
         //clear the table - extremely hamfisted

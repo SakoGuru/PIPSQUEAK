@@ -92,13 +92,15 @@ var squeak = (function () {
             runAction,
             popcornFile = "", 
             mediaFileName,
-            mediaType;
+            mediaType,
+            html;
         if(media == null) {
             throw "Error, no media input to publish";
         }
         name = name == null ? "publish" : name;
         path = path == null ? "." : path;
         initialize(name, path);
+        html = "<!DOCTYPE html>\n<html>\n\t<head>\n\t\t<script src = \"js/pop.js\" type = \"text/javascript\"></script>\n\t</head>\n\t<body>\n\t</body>\n</html>";
         mediaFileName = function() {
             var pattern = new RegExp("[a-zA-Z0-9][a-zA-Z0-9]*[.][a-z0-9][a-z0-9]*")
             return pattern.exec(media);
@@ -128,7 +130,6 @@ var squeak = (function () {
             }
 
         }();
-        console.log(path + '/' + name + '/assets/' + mediaType + '/' + mediaFileName);
         copyFile(media,path + '/' + name + '/assets/' + mediaType + '/' + mediaFileName);
         /*runAction = function (line, startTime, endTime, action) {
         //only runAction can call the worker functions
@@ -282,6 +283,8 @@ var squeak = (function () {
         //TODO - write the media and input code to a template file
         //write the popcorn functions to a javascript file
         writeFile(path + "/" + name + "/js/pop.js",popcornFile);
+        console.log(path + "/" + name + "/index.html");
+        writeFile(path + "/" + name + "/index.html",html);
         if (path === ".") {
             alert("The tutorial has been published to " + process.cwd() + "/" + name);
         } else {

@@ -83,18 +83,34 @@ var squeak = (function () {
     //TODO - most of this.
     //will need to pull the video and codemirror segment and write those to the output template in the right places
 
-    //requires video path from frontend
-    pub.publish = function (media) {
+    //requires video path from frontend as the media
+    //path can be absolute or relative
+
+    pub.publish = function (media, fileContents, name, path) {
         var i,
             sinAction,
             runAction,
             popcornFile = "", 
             mediaFileName,
-            mediaType;
+            mediaType,
+            html;
         if(media == null) {
             throw "Error, no media input to publish";
         }
-        initialize();
+        name = name == null ? "publish" : name;
+        path = path == null ? "." : path;
+        pip.initialize(name, path);
+        html = "<!DOCTYPE html>";
+        html += "\n<html>";
+        html += "\n\t<head>";
+        html += "\n\t\t<script src = \"js/pop.js\" type = \"text/javascript\"></script>";
+        html += "\n\t\t<link rel=\"stylesheet\" href=\"css/styles.css\">";
+        html += "\n\t\t<link rel=\"stylesheet\" href=\"css/PIPSQUEAK.css\">";
+        html += "\n\t\t<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">";
+        html += "\n\t</head>";
+        html += "\n\t<body>";
+        html += "\n\t</body>";
+        html += "\n</html>";
         mediaFileName = function() {
             var pattern = new RegExp("[a-zA-Z0-9][a-zA-Z0-9]*[.][a-z0-9][a-z0-9]*")
             return pattern.exec(media);
@@ -107,14 +123,14 @@ var squeak = (function () {
             switch (ending) {
                 case ".mp4":
                 case ".ogv":
-                case ".webm":
-                case ".flv":
-                case ".mkv": {
+                case ".webm": {
                     return "video";
                     break;
                 }
                 case ".mp3":
-                case ".flac": {
+                case ".ogg": 
+                case ".wav" : 
+                case ".wave" : {
                     return "audio";
                     break;
                 }
@@ -124,10 +140,10 @@ var squeak = (function () {
             }
 
         }();
-        //TODO: handle file to get its name from its path, and determine if video or audio, as well as published directory name.
-        //proof of concept
-        console.log('./publish/assets/'+ mediaType + '/' + mediaFileName);
-        copyFile(media,'./publish/assets/'+ mediaType + '/' + mediaFileName);
+        pip.copyFile(media,path + '/' + name + '/assets/' + mediaType + '/' + mediaFileName);
+        pip.copyFile("./css/PIPSQUEAK.css", path + '/' + name + '/css/PIPSQUEAK.css');
+        pip.copyFile("./css/styles.css", path + '/' + name + '/css/styles.css');
+        pip.copyFile("./css/bootstrap.min.css", path + '/' + name + '/css/bootstrap.min.css');
         /*runAction = function (line, startTime, endTime, action) {
         //only runAction can call the worker functions
             var focus,
@@ -159,8 +175,7 @@ var squeak = (function () {
 				//need to determine how were finding a line, adding a class to each line.
 				//for strike we'll need a pop for start time, and then a pop for end time.
 				//start will strike the code, end will unstrike the code.
-				var code = $("" + line + "").html(),
-					start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
+				var start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
                     + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').addClass(\"strike\")\n\t}\n});\n",
 					end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime 
                     + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').removeClass(\"strike\")\n\t}\n});\n";
@@ -196,8 +211,24 @@ var squeak = (function () {
             anchor = function (line, startTime, endTime) {
                 return false;
             };
-            autoScroll = function (line, startTime, endTime) {
-                return false;
+			//TODO 'codearea' is whatever the name for the scroll div where the code is.  Confirm 
+            //TODO If possible to get all the lines for this one instead of individual actions per line
+			//		so we can get the first line to the last line (just need those two) to set the autoScroll bounds
+			autoScroll = function (line, startTime, endTime) {
+                var start,
+                    end,
+					durr;
+				durr = end - start;
+                start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
+                    + ",\n\tonStart: function() {\n\t\ttop = document.getElementById('"+line+"').offsetTop; 
+					\n\t\tdocument.getElementById('codearea').scrollTop = topPos;\n
+					\n\t\t$('body,html').animate({scrollTop: +line+},+durr+);\n
+					\n\t\t$(\'"+line+"\').addClass(\"autoScroll\")\n\t}\n});\n";
+                end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime 
+                    + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').removeClass(\"autoScroll\")\n\t}\n});\n";
+                popcornFile += start;
+                popcornFile += end;
+                return true;
             };
             //body of runAction
             if (action === 'strike') {
@@ -248,12 +279,12 @@ var squeak = (function () {
         //TODO - read in codemirror portion and parse into individual lines for wrapping or class adding.
         var start, end;
         for (i = 0; i < id; i += 1) {
-            //if i remember right this is more efficient that calling to the array each time, but i could be wrong
+            //this is assuming that each line will have a class of "line<lineNumber>"
             sinAction = listOfActions[i];
             start = "pop.code ({\n\tstart: " + sinAction.startTime + ",\n\tend: " + sinAction.startTime 
-                    + ",\n\tonStart: function() {\n\t\t$(\'"+sinAction.line+"\').addClass(\"" + sinAction.tool + "\")\n\t}\n});\n";
+                    + ",\n\tonStart: function() {\n\t\t$(\'line"+sinAction.line+"\').addClass(\"" + sinAction.tool + "\")\n\t}\n});\n";
             end = "pop.code ({\n\tstart: " + sinAction.endTime + ",\n\tend: " + sinAction.endTime 
-                    + ",\n\tonStart: function() {\n\t\t$(\'"+sinAction.line+"\').removeClass(\"" + sinAction.tool + "\")\n\t}\n});\n";
+                    + ",\n\tonStart: function() {\n\t\t$(\'line"+sinAction.line+"\').removeClass(\"" + sinAction.tool + "\")\n\t}\n});\n";
             popcornFile += start;
             popcornFile += end;
             /*if (runAction(sinAction.line, sinAction.startTime, sinAction.endTime, sinAction.tool) === false) {
@@ -264,8 +295,14 @@ var squeak = (function () {
         }
         //TODO - write the media and input code to a template file
         //write the popcorn functions to a javascript file
-        writeFile("./publish/js/pop.js",popcornFile);
-        alert("The tutorial has been published to " + process.cwd() + "/publish");
+        pip.writeFile(path + "/" + name + "/js/pop.js",popcornFile);
+        console.log(path + "/" + name + "/index.html");
+        pip.writeFile(path + "/" + name + "/index.html",html);
+        if (path === ".") {
+            alert("The tutorial has been published to " + process.cwd() + "/" + name);
+        } else {
+            alert("The tutorial has been published to " + path + "/" + name);
+        }
         return true;
     };
     //just a tester function
@@ -274,4 +311,5 @@ var squeak = (function () {
     };
     return pub;
 }());
+//why is this here?
 exports.squeak = squeak;

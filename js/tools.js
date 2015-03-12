@@ -100,7 +100,17 @@ var squeak = (function () {
         name = name == null ? "publish" : name;
         path = path == null ? "." : path;
         pip.initialize(name, path);
-        html = "<!DOCTYPE html>\n<html>\n\t<head>\n\t\t<script src = \"js/pop.js\" type = \"text/javascript\"></script>\n\t</head>\n\t<body>\n\t</body>\n</html>";
+        html = "<!DOCTYPE html>";
+        html += "\n<html>";
+        html += "\n\t<head>";
+        html += "\n\t\t<script src = \"js/pop.js\" type = \"text/javascript\"></script>";
+        html += "\n\t\t<link rel=\"stylesheet\" href=\"css/styles.css\">";
+        html += "\n\t\t<link rel=\"stylesheet\" href=\"css/PIPSQUEAK.css\">";
+        html += "\n\t\t<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">";
+        html += "\n\t</head>";
+        html += "\n\t<body>";
+        html += "\n\t</body>";
+        html += "\n</html>";
         mediaFileName = function() {
             var pattern = new RegExp("[a-zA-Z0-9][a-zA-Z0-9]*[.][a-z0-9][a-z0-9]*")
             return pattern.exec(media);
@@ -131,6 +141,9 @@ var squeak = (function () {
 
         }();
         pip.copyFile(media,path + '/' + name + '/assets/' + mediaType + '/' + mediaFileName);
+        pip.copyFile("./css/PIPSQUEAK.css", path + '/' + name + '/css/PIPSQUEAK.css');
+        pip.copyFile("./css/styles.css", path + '/' + name + '/css/styles.css');
+        pip.copyFile("./css/bootstrap.min.css", path + '/' + name + '/css/bootstrap.min.css');
         /*runAction = function (line, startTime, endTime, action) {
         //only runAction can call the worker functions
             var focus,

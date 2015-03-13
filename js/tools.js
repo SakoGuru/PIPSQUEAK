@@ -7,6 +7,10 @@ var squeak = (function () {
     var pub = {},
         id = 0,
         listOfActions = [];
+	//Getter for listOfActions (mainly for testing)
+	pub.getListOfActionsCount = function (){
+		return listOfActions.length;
+	}
     //adds an action to the list of actions
     pub.addAction = function (startLine, endLine, startTime, endTime, action) {
         var i;
@@ -36,6 +40,7 @@ var squeak = (function () {
             listOfActions.push(actionNode);
         }
         this.writeListToFrontend();
+		return true;
     };
     //deletes a node from the list.  
     pub.deleteAction = function (remId) {
@@ -311,4 +316,5 @@ var squeak = (function () {
     return pub;
 }());
 //why is this here?
+//For testing yo -Luke (feel free to comment it out if not testing and it's giving a headache)
 exports.squeak = squeak;

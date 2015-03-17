@@ -15,10 +15,11 @@
 				
 				//create global variables
 				
-				var startLine;
-				var endLine;
-				var startTime;
-				var endTime;
+				var startLine,
+						endLine,
+				 		startTime,
+						endTime, 
+						dev = false;
 				
 				//create codemirror instance and add gutter marks
 			
@@ -124,7 +125,7 @@
 						var doc;
 						//begin get currently selected text from codemirror editor
 						var test = $("#newCM").html();
-						console.log(test);
+						if (dev === true) console.log(test);
 						if ($("#newCM").html() == "upload button clicked") {
 								doc = newCM.getDoc();
 						}
@@ -239,7 +240,7 @@
 
 					var doc;
 					var test = $("#newCM").html();
-					console.log(test);
+					if (dev === true) console.log(test);
 					if ($("#newCM").html() == "upload button clicked") {
 						$("#printInfo2").html("published for the new editor");
 						doc = newCM.getDoc();

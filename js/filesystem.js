@@ -56,6 +56,9 @@ var pip = (function() {
         return true;
     }
 
+    pub.doesExist = function(directory) {
+        return fs.existsSync(directory);
+    };
     //if theres no overwrite, make the directory. otherwise throw an error
     function makeDirectory(location) {
         "use strict";

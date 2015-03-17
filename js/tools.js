@@ -6,7 +6,8 @@ var squeak = (function () {
     'use strict';
     var pub = {},
         id = 0,
-        listOfActions = [];
+        listOfActions = [],
+        dev = true;
     //Getter for listOfActions (mainly for testing)
     pub.getListOfActionsCount = function () {
         return listOfActions.length;
@@ -15,6 +16,14 @@ var squeak = (function () {
     pub.addAction = function (startLine, endLine, startTime, endTime, action) {
         var i,
             actionNode = {};
+        if (typeof startLine !== "number" || typeof endLine !== "number" || typeof startTime !== "number" || typeof endTime !== "number") {
+            if(dev === true) console.log("Start line = " + startLine + " is a " + typeof startLine + ", should be a number."
+                + "\nEnd Line = " + endLine + " is a " + typeof endLine + ", should be a number."
+                + "\nstartTime = " + startTime + " is a " + typeof startTime + ", should be a number."
+                + "\nEnd Time = " + endTime + " is a " + typeof endTime + ", should be a number."
+                + "\nAction = " + action + " is a " + typeof action + ", should be a string.");
+            throw "Invalid parameters";
+        }
         endLine = endLine == null ? startLine : endLine;
         if (endLine < startLine) {
             i = endLine;
@@ -22,7 +31,7 @@ var squeak = (function () {
             startLine = i;
         }
         if (startTime > endTime) {
-            console.log("The end time cannot be before the start time");
+            if(dev === true) console.log("The end time cannot be before the start time");
             return false;
         }
         //add additional actions names here
@@ -38,13 +47,14 @@ var squeak = (function () {
         actionNode.id = id;
         listOfActions.push(actionNode);
         this.writeListToFrontend();
+        if(dev === true) console.log("Added the action " + action);
         return true;
     };
     //deletes a node from the list.  
     pub.deleteAction = function (remId) {
         var ii = 0;
         if (remId <= 0 || remId > id) {
-            console.log("Id was not found");
+            throw "Id was not found";
             return false;
         }
         //since the id starts at 1 and were keeping them in order theres no need to search for an id.
@@ -56,6 +66,7 @@ var squeak = (function () {
         listOfActions.splice(remId - 1, 1);
         id -= 1;
         this.writeListToFrontend();
+        if(dev === true) console.log("Deleted an action.");
         return true;
     };
     //TODO - fix this so it can undo deletes, and add a redo. will need at least 1 more "stack" (array)
@@ -67,6 +78,7 @@ var squeak = (function () {
         id -= 1;
         listOfActions.splice(id, 1);
         this.writeListToFrontend();
+        if(dev === true) console.log("Undid the last function");
         return true;
     };
 
@@ -89,6 +101,7 @@ var squeak = (function () {
                     + '</td><td><a href=\"javascript:;\" onclick = squeak.deleteAction(' + listOfActions[i].id + ')>X</a></td></tr>');
             }
         }
+        if(dev === true) console.log("Wrote the list to the frontend.");
         return true;
     };
     //TODO - most of this.
@@ -106,6 +119,9 @@ var squeak = (function () {
             html;
         if (media == null) {
             throw "Error, no media input to publish";
+        }
+        if(pip.doesExist(media) === false) { 
+            throw "File " + media + " does not exist.";
         }
         name = name == null ? "publish" : name;
         path = path == null ? "." : path;
@@ -145,11 +161,22 @@ var squeak = (function () {
             }
 
         }());
-        //TODO: check that all paths exist BEFORE trying to copy them, otherwise it makes an empty file if the copied files not found (at least in windows) that cant be deleted until 
         pip.copyFile(media, path + '/' + name + '/assets/' + mediaType + '/' + mediaFileName);
-        pip.copyFile("./css/PIPSQUEAK.css", path + '/' + name + '/css/PIPSQUEAK.css');
-        pip.copyFile("./css/styles.css", path + '/' + name + '/css/styles.css');
-        pip.copyFile("./css/bootstrap.min.css", path + '/' + name + '/css/bootstrap.min.css');
+        if(pip.doesExist("./css/PIPSQUEAK.css") === false) {
+            pip.copyFile("./css/PIPSQUEAK.css", path + '/' + name + '/css/PIPSQUEAK.css');
+        } else {
+            throw "File ./css/PIPSQUEAK.css does not exist.";
+        }
+        if(pip.doesExist("./css/styles.css") === false) {
+            pip.copyFile("./css/styles.css", path + '/' + name + '/css/styles.css');
+        } else {
+            throw "File ./css/styles.css does not exist.";
+        }
+        if(pip.doesExist("./css/bootstrap.min.css") === false) {
+            pip.copyFile("./css/bootstrap.min.css", path + '/' + name + '/css/bootstrap.min.css');
+        } else {
+            throw "File ./css/bootstrap.min.css does not exist.";
+        }
         runAction = function (startLine, endLine, startTime, endTime, action) {
         //only runAction can call the worker functions
             var start,
@@ -184,7 +211,7 @@ var squeak = (function () {
             };*/
             if (action === 'strike' || action === 'highlight' || action === 'focus' || action === 'fadeOut' || action === 'fadeIn') {
                 //call any of the CSS adder functions
-                console.log(action + "ing lines " + startLine + " - " + endLine + " from time " + startTime + " to time " + endTime + ".");
+                if(dev === true) console.log(action + "ing lines " + startLine + " - " + endLine + " from time " + startTime + " to time " + endTime + ".");
                 for (ii = startLine; ii < endLine; ii += 1) {
                     start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime
                         + ",\n\tonStart: function() {\n\t\t$(\'line" + i + "\').addClass(\"" + action + "\")\n\t}\n});\n";
@@ -195,18 +222,18 @@ var squeak = (function () {
                 }
             } else if (action === 'annotate') {
                 //call annotate function
-                console.log("Annotating lines " + startLine + " to " + endLine + " from time " + startTime + " to time " + endTime + ".");
+                if(dev === true) console.log("Annotating lines " + startLine + " to " + endLine + " from time " + startTime + " to time " + endTime + ".");
                 //TODO: Annotate function
 
             } else if (action === 'anchor') {
                 //call anchor function
-                console.log("Anchoring lines " + startLine + " to " + endLine + " from time " + startTime + " to time " + endTime + ".");
+                if(dev === true) console.log("Anchoring lines " + startLine + " to " + endLine + " from time " + startTime + " to time " + endTime + ".");
                 //TODO: Anchor function
 
             } else if (action === 'autoScroll') {
                 //call autoScroll function
                 //TODO: Luke should look at this and make sure I refactored it correctly.
-                console.log("Scrolling from line " + startLine + " to line " + endLine + " from time " + startTime + " to time " + endTime + ".");
+                if(dev === true) console.log("Scrolling from line " + startLine + " to line " + endLine + " from time " + startTime + " to time " + endTime + ".");
                 //durr = end - start; never used?
                 start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime
                     + ",\n\tonStart: function() {\n\t\ttop = document.getElementById(\'" + startLine + "\').offsetTop;"
@@ -218,7 +245,7 @@ var squeak = (function () {
                 popcornFile += start;
                 popcornFile += end;
             } else {
-                console.log(action + " is not an accepted action in function runAction");
+                if(dev === true) console.log(action + " is not an accepted action in function runAction");
                 return false;
             }
             return true;
@@ -229,7 +256,7 @@ var squeak = (function () {
             //this is assuming that each line will have a class of "line<lineNumber>"
             sinAction = listOfActions[i];
             if (runAction(sinAction.startLine, sinAction.endLine, sinAction.startTime, sinAction.endTime, sinAction.tool) === false) {
-                console.log("Error in running the Actions list");
+                if(dev === true) console.log("Error in running the Actions list");
                 //may want some error handling in here or something.
             }
 
@@ -244,12 +271,14 @@ var squeak = (function () {
         } else {
             alert("The tutorial has been published to " + path + "/" + name);
         }
+        if(dev === true) console.log("Publish is complete.");
         return true;
     };
     //just a tester function
     pub.showList = function () {
         console.log(listOfActions);
     };
+    if(dev === true) console.log("Squeak has initialized");
     return pub;
 }());
 //why is this here?

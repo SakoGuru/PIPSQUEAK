@@ -31,7 +31,7 @@ var squeak = (function () {
             startLine = i;
         }
         if (startTime > endTime) {
-            if(dev === true) console.log("The end time cannot be before the start time");
+            throw "Invalid end time, end time cannot be before start time";
             return false;
         }
         //add additional actions names here
@@ -162,17 +162,17 @@ var squeak = (function () {
 
         }());
         pip.copyFile(media, path + '/' + name + '/assets/' + mediaType + '/' + mediaFileName);
-        if(pip.doesExist("./css/PIPSQUEAK.css") === false) {
+        if(pip.doesExist("./css/PIPSQUEAK.css") === true) {
             pip.copyFile("./css/PIPSQUEAK.css", path + '/' + name + '/css/PIPSQUEAK.css');
         } else {
             throw "File ./css/PIPSQUEAK.css does not exist.";
         }
-        if(pip.doesExist("./css/styles.css") === false) {
+        if(pip.doesExist("./css/styles.css") === true) {
             pip.copyFile("./css/styles.css", path + '/' + name + '/css/styles.css');
         } else {
             throw "File ./css/styles.css does not exist.";
         }
-        if(pip.doesExist("./css/bootstrap.min.css") === false) {
+        if(pip.doesExist("./css/bootstrap.min.css") === true) {
             pip.copyFile("./css/bootstrap.min.css", path + '/' + name + '/css/bootstrap.min.css');
         } else {
             throw "File ./css/bootstrap.min.css does not exist.";
@@ -212,7 +212,7 @@ var squeak = (function () {
             if (action === 'strike' || action === 'highlight' || action === 'focus' || action === 'fadeOut' || action === 'fadeIn') {
                 //call any of the CSS adder functions
                 if(dev === true) console.log(action + "ing lines " + startLine + " - " + endLine + " from time " + startTime + " to time " + endTime + ".");
-                for (ii = startLine; ii < endLine; ii += 1) {
+                for (ii = startLine; ii <= endLine; ii += 1) {
                     start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime
                         + ",\n\tonStart: function() {\n\t\t$(\'line" + i + "\').addClass(\"" + action + "\")\n\t}\n});\n";
                     end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
@@ -259,7 +259,6 @@ var squeak = (function () {
                 if(dev === true) console.log("Error in running the Actions list");
                 //may want some error handling in here or something.
             }
-
         }
         //TODO - write the media and input code to a template file
         //write the popcorn functions to a javascript file

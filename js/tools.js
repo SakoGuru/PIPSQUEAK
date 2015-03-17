@@ -116,7 +116,9 @@ var squeak = (function () {
             popcornFile = "",
             mediaFileName,
             mediaType,
-            html;
+            html,
+            startTime = new Date().getTime(),
+            endTime = 0;
         if (media == null) {
             throw "Error, no media input to publish";
         }
@@ -150,6 +152,7 @@ var squeak = (function () {
             case ".mp4":
             case ".ogv":
             case ".webm":
+            case ".mkv":
                 return "video";
             case ".mp3":
             case ".ogg":
@@ -265,12 +268,14 @@ var squeak = (function () {
         pip.writeFile(path + "/" + name + "/js/pop.js", popcornFile);
         console.log(path + "/" + name + "/index.html");
         pip.writeFile(path + "/" + name + "/index.html", html);
+        endTime = new Date().getTime();
         if (path === ".") {
             alert("The tutorial has been published to " + process.cwd() + "/" + name);
         } else {
             alert("The tutorial has been published to " + path + "/" + name);
         }
         if(dev === true) console.log("Publish is complete.");
+        if(dev === true) alert("Publish took approximately " + (endTime - startTime)/1000 + " seconds to complete");
         return true;
     };
     //just a tester function
@@ -280,6 +285,4 @@ var squeak = (function () {
     if(dev === true) console.log("Squeak has initialized");
     return pub;
 }());
-//why is this here?
-//For testing yo -Luke (feel free to comment it out if not testing and it's giving a headache)
 exports.squeak = squeak;

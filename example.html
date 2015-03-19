@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+		<title>PIPSQUEAK</title>
+		
+		<!--original metadata from bootstrap template-->
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<meta name="generator" content="Bootply" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	
+		<!--bootstrap (must come before jquery b/c close button won't show otherwise)-->
+		<script src="js/bootstrap.min.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		
+		<!--bootstrap template-->
+		<script src="js/scripts.js"></script>
+		<link href="css/styles.css" rel="stylesheet">
+		
+		<!--jquery-->
+		<script src="js/jquery-2.1.3.min.js"></script>
+		<!--jquery ui external css and js links-->
+		<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+		
+		<!--angular.js-->
+		<script src="js/angular-1.3.9.min.js"></script>
+		
+		<!--our css and js-->
+		<link href="css/PIPSQUEAK.css" rel="stylesheet">
+		<script src="js/PIPSQUEAK.js"></script>
+		
+		<!--codemirror-->
+		<link rel="stylesheet" href="codemirror-4.12/lib/codemirror.css">
+		<script src="codemirror-4.12/lib/codemirror.js"></script>
+		<script src="codemirror-4.12/mode/javascript/javascript.js"></script>
+		
+		<style>
+		.col-centered{
+			float: none;
+			margin: 0 auto;
+		}
+		</style>
+		
+	</head>
+	<body>
+	
+<!--header-->
+
+<div id="top-nav" class="navbar navbar-inverse navbar-static-top">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">PIPSQUEAK</a>
+		</div>
+		<div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right">
+			<li class="dropdown">
+				<a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i> Admin <span class="caret"></span></a>
+				<ul id="g-account-menu" class="dropdown-menu" role="menu">
+					<li><a href="#">My Profile</a></li>
+				</ul>
+			</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<!--header-->
+
+<!--main-->
+
+<div class="container-fluid">
+<div class="row">
+      
+    <!--middle column-->
+			
+    <div class="col-md-6 col-centered">
+
+			<strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong> 
+
+      	<hr>
+			
+		<!--video-->	
+
+        <div class="panel panel-default">
+			<div class="panel-heading"><h4>Video</h4></div>
+				<div class="panel-body">
+				
+					<!--jsfiddle code for current time grabber-->
+			
+                    <div id="video_container"> <!--jsfiddle-->
+					
+					<video class="vid" id="video" controls>
+						
+						    <source type="video/mp4" src="http://media.w3.org/2010/05/sintel/trailer.mp4" id="mp4"></source>
+							<source type="video/webm" src="http://media.w3.org/2010/05/sintel/trailer.webm" id="webm"></source>
+							<source type="video/ogg" src="http://media.w3.org/2010/05/sintel/trailer.ogv" id="ogv"></source>
+							
+						Your browser does not support HTML5 video.
+					</video>
+					</div>
+					
+					<div>Current Time : <span  id="currentTime">0</span></div> <!--jsfiddle-->
+					<div>Total time : <span id="totalTime">0</span></div> <!--jsfiddle-->
+					<!--/end jsfiddle code-->
+
+					<div id = "printInfo"></div>
+					
+			</div>
+		</div>
+              
+		<hr>
+			  
+		<!--/video-->
+		
+		<!--popup to get duration-->
+		<!--
+		<div id="dialog">
+		
+		<div class="center">
+				<div id="mid" class="form-group">
+					<div id="contentBox">
+						<div id="tool" hidden></div>
+						<p>	Please enter the duration of the selected function:</p>
+						<br>
+						<input type="text" name="dur" id="dur" style = "width: 200px; height: 30px;" class="form-control mid" maxlength = 20 placeholder="Answer here" required="" autofocus>
+						<br>
+						<button id="answer" type="submit" name="answer" class="btn btn-primary">Answer</button>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+		-->
+		<!--/end popup to get duration-->
+			  
+		<!--codemirror-->
+        
+		<div class="panel panel-default">
+			<div class="panel-heading"><h4>Code</h4></div>
+				<div class="panel-body" style="min-height: 400px; max-height: 400px; overflow-y: scroll;">
+				
+					<button id="answer" type="submit" name="answer" class="btn btn-primary">Answer</button>
+					<br><br>
+					<p id="p1">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis consequat luctus velit, eget pretium magna suscipit vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sit amet purus commodo, mattis eros a, dignissim leo. In sit amet leo dui. Fusce et efficitur risus. Nam non mauris faucibus nulla luctus mollis a eu risus. Morbi tortor mi, aliquam ac turpis ac, egestas consectetur nunc. 
+					</p>
+					
+					<p id="p2">
+						Proin sagittis eleifend ornare. Vestibulum blandit elit vel fermentum porta. Phasellus quis luctus est. Mauris scelerisque nec nibh ornare cursus. Ut tincidunt, ex id lobortis hendrerit, tortor diam maximus augue, eu imperdiet ante neque in elit. Suspendisse consequat, purus at accumsan congue, mauris velit sagittis enim, tristique lobortis lacus tortor a massa. Suspendisse hendrerit ac lectus quis dignissim. Ut sodales magna neque, eget faucibus est cursus at. Sed et enim sit amet odio tincidunt ultricies pulvinar at erat. Nullam convallis, nisi id rhoncus finibus, augue odio sollicitudin metus, at accumsan massa mi sit amet dolor. Vestibulum consectetur hendrerit mauris, at eleifend tellus hendrerit sed. Phasellus porttitor urna leo, posuere aliquet lectus gravida tempor. 
+					</p>
+					
+					<p id="p3">
+						Nullam nunc nulla, sollicitudin finibus condimentum a, ornare quis enim. Duis quis turpis neque. Ut vitae nibh nunc. Curabitur scelerisque ante id elit consectetur, id pulvinar odio viverra. Morbi vitae justo purus. Quisque convallis interdum odio. Sed porta libero facilisis nibh luctus, eu tristique nunc semper. Praesent tincidunt finibus suscipit. Pellentesque vel mauris vel leo fringilla maximus maximus id elit. In eget mattis est. Aliquam vestibulum elit commodo justo fringilla, quis convallis dui interdum. 
+					</p>
+					
+					<p id="p4">
+						Quisque feugiat arcu a vehicula convallis. Aliquam ut luctus dui. Duis imperdiet tincidunt pulvinar. In fermentum finibus lorem at consequat. Sed suscipit sed orci in porta. Nunc felis nibh, euismod a lacinia sit amet, auctor non mauris. Mauris tincidunt elementum faucibus. Fusce aliquet elementum rhoncus. Integer ligula enim, faucibus ut mauris a, facilisis blandit velit. 
+					</p>
+					
+					<p id="p5">
+						Nullam lobortis ipsum sed porttitor tincidunt. Morbi euismod arcu vitae interdum posuere. Fusce sit amet lacinia neque. Phasellus auctor in lorem sed egestas. Curabitur accumsan hendrerit mi nec pretium. Nunc consequat ac libero et dictum. Fusce mollis sapien sed bibendum venenatis. Praesent in tellus quis nisi bibendum dignissim non nec enim. Ut tempor, odio quis vulputate varius, dolor nisi fringilla metus, quis dapibus est augue non neque. 
+					</p>
+				
+				</div>
+			</div>
+		</div>
+		
+		<!--/codemirror-->
+   
+	</div>
+			
+	<!--/middle column-->
+			
+</div>
+</div>
+
+<!--/main-->
+
+<footer class="text-center">PIPSQUEAK potential layout?</footer>
+
+	</body>
+</html>

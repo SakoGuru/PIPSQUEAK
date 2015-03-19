@@ -238,7 +238,19 @@
 				$("#publish").click(function() {
 					$("#printInfo").html("published");
 
-					var doc = editor.getDoc();
+					var doc;
+					
+					var test = $("#newCM").html();
+					if (dev === true) console.log(test);
+					
+					if ($("#newCM").html() == "upload button clicked") {
+						$("#printInfo2").html("published for the new editor");
+						doc = newCM.getDoc();
+					}
+					else {
+						$("#printInfo2").html("published from original editor");
+						doc = editor.getDoc(); //get the editor document
+					}
 					
 					//get codemirror lines into <p> tags
 						
@@ -257,18 +269,6 @@
 						}
 						
 					//end get codemirror lines into <p> tags
-					
-					var test = $("#newCM").html();
-					if (dev === true) console.log(test);
-
-					if ($("#newCM").html() == "upload button clicked") {
-						$("#printInfo2").html("published for the new editor");
-						doc = newCM.getDoc();
-					}
-					else {
-						$("#printInfo2").html("published from original editor");
-						doc = editor.getDoc(); //get the editor document
-					}
 					
 					doc.markText({line: 0, ch: 0}, {line: editor.lastLine() + 1, ch: 0}, {className: "codeMirror"});
 					

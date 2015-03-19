@@ -170,6 +170,12 @@ var squeak = (function () {
         name = name == null ? "publish" : name;
         path = path == null ? "." : path;
         pip.initialize(name, path);
+		
+		//first attempt at reading in basic publish view from file
+		var firstPart = pip.readFile("./templates/firstPart.txt");
+		console.log(firstPart);
+		html = firstPart;
+		/*
         html = "<!DOCTYPE html>";
         html += "\n<html>";
         html += "\n\t<head>";
@@ -179,8 +185,34 @@ var squeak = (function () {
         html += "\n\t\t<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">";
         html += "\n\t</head>";
         html += "\n\t<body>";
+		html += "\n\t\t<div class=\"panel panel-default\">";
+		html += "\n\t\t\t<div class=\"panel-heading\"><h4>Code</h4></div>";
+		html +=	"\n\t\t\t\t<div class=\"panel-body\" style=\"min-height: 400px; max-height: 400px; overflow-y: scroll;\">";
+		*/
+		
+		html += "<source type=\"video/mp4\" src=" + media + " id=\"mp4\"></source>";
+		html += "<source type=\"video/webm\" src=" + media + " id=\"webm\"></source>";
+		html += "<source type=\"video/ogg\" src=" + media + " id=\"ogv\"></source>";
+		
+		var secondPart = pip.readFile("./templates/secondPart.txt");
+		html += secondPart;
+		
+		var i;
+		for(i = 0; i < fileContents.length; i++) {
+			html += fileContents[i];
+		}
+		
+		var thirdPart = pip.readFile("./templates/thirdPart.txt");
+		html += thirdPart;
+		
+		/*
+		html += "\n\t\t</div>";
+		html += "\n\t\t\t</div>";
+		html += "\n\t\t\t\t</div>";
         html += "\n\t</body>";
         html += "\n</html>";
+		*/
+		
         mediaFileName = (function () {
             var pattern = new RegExp("[a-zA-Z0-9][a-zA-Z0-9]*[.][a-z0-9][a-z0-9]*");
             return pattern.exec(media);

@@ -1,0 +1,19 @@
+</div>
+			</div>
+		</div>
+		
+		<!--/codemirror-->
+   
+	</div>
+			
+	<!--/middle column-->
+			
+</div>
+</div>
+
+<!--/main-->
+
+<footer class="text-center">PIPSQUEAK potential layout?</footer>
+
+	</body>
+</html>

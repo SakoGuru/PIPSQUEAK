@@ -268,7 +268,7 @@
 						var lastPTag = "</p>";
 						
 						for (i = 0; i < numLines; i++) {
-							lines[i] = firstPTag.concat(doc.getLine(i)).concat(lastPTag);
+							lines[i] =  firstPTag + (i+1) + " " + doc.getLine(i) + lastPTag;
 						}
 						
 						for (i = 0; i < numLines; i++) {
@@ -276,6 +276,9 @@
 						}
 						
 					//end get codemirror lines into <p> tags
+					//pub.publish = function (media, fileContents, name, path)
+					
+					squeak.publish(media, lines);
 					
 					doc.markText({line: 0, ch: 0}, {line: editor.lastLine() + 1, ch: 0}, {className: "codeMirror"});
 					

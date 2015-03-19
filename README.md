@@ -13,6 +13,29 @@ To run the application:
 On all the platforms: open a terminal and type "npm start" from the project directory.  
   
 -----------------------   
+TESTING:  
+	Setup:  
+	run: npm install -g jasmine-node
+	  
+	Run All Tests:  
+	run: jasmine-node specs
+	OR  
+	run: jasmine-node specs --verbose  
+	  
+	Run Single Test File:  
+	run: jasmine-node specs/<filename>-spec.js
+	  
+	Write Tests:  
+	Place all tests in the specs folder  
+	IMPORTANT: End all test files with "-spec.js"  
+	See example in tools-spec.js  
+	  
+	Notes:  
+	When trying to nail down a single test, write it as iit (add an i to the it declaration).  
+	This forces jasmine to skip all other tests, while you work on iit.  You can flag multiple  
+	tests as iit at a time, just be sure to change them back to just 'it' after you are done.  
+  
+-----------------------   
 Handy Quick Git reference (These should work no matter how you personally have Git setup):  
 
 Typical Workflow:  

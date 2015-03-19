@@ -11,7 +11,6 @@
 			var action;
 			var media = './videos/nothing.webm';
 			var code = 'dead code';
-			
 			$(document).ready(function(global){
 				
 				
@@ -53,15 +52,13 @@
 					return marker;
 				}
 				if(pip.doesExist('recoveryFile.js') === true) {
-					if(confirm("PIPSQUEAK has detected that the recovery file is intact. Would you like to recover?")) {
+					if(confirm("PIPSQUEAK has detected that the recovery file is intact. Would you like to recover? (Note: selecting \'No\' will delete the recovery file)")) {
 						squeak.recover();
+					} else {
+						pip.removeFile('recoveryFile.js');
 					}
 				}
 				//end codemirror
-				squeak.saveFile(media,code);
-				setInterval(function() {
-					squeak.saveFile(media,code);
-				},15000);
 				
 				//jsfiddle code for grabbing current time from video
 				
@@ -348,7 +345,6 @@
 						document.getElementById( "test1" ).innerHTML = "Stop Popcornjs";
 					}
 				});
-				*/
-				
+				*/	
 			});
 

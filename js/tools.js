@@ -33,7 +33,7 @@ var squeak = (function () {
     };
 
     pub.saveFile = function(media, codeFile) {
-        var saveString = "var recover = {};\nrecover.video = \'" + media + "\';\nrecover.code = \'" + codeFile + "\';\nrecover.list = [\n",
+        var saveString = "var recover = {};\nrecover.media = \'" + media + "\';\nrecover.code = \'" + codeFile + "\';\nrecover.list = [\n",
             i = 0;
         console.log(media + "\n" + codeFile);
         if(pip.doesExist('./recoveryFile.js') === true) pip.removeFile('./recoveryFile.js');
@@ -87,6 +87,8 @@ var squeak = (function () {
         listOfActions.push(actionNode);
         this.writeListToFrontend();
         if(dev === true) console.log("Added the action " + action);
+        //right now the variables being passed are the globals from PIPSQUEAK
+        this.saveFile(media, code);
         return true;
     };
     //deletes a node from the list.  

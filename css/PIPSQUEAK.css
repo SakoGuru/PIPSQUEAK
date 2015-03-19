@@ -57,8 +57,8 @@
 }
 .fadeOut {
 	opacity: 0;
-	transition: opacity .25s ease-in-out;
-   -moz-transition: opacity .25s ease-in-out;
+	transition: opacity 2s ease-in-out;
+   -moz-transition: opacity 2s ease-in-out;
    -webkit-transition: opacity .25s ease-in-out;
 }
 

@@ -263,10 +263,12 @@
 								});
 							}
 							else if (action == "fadeOut") {
+								
 								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "change"});
 								$(".change").css({
 									"font-size": "0%"
 								});
+								
 							}
 							else if (action == "focus") {
 								$("#codeMirror").css({

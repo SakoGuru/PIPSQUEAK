@@ -9,6 +9,8 @@
 			var startTime;
 			var endTime;
 			var action;
+			var media = './videos/nothing.webm';
+			var code = 'dead code';
 			
 			$(document).ready(function(global){
 				
@@ -22,7 +24,7 @@
 						dev = false;
 				
 				//create codemirror instance and add gutter marks
-			
+				
 				var editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
 					tabMode: 'indent',
 					lineNumbers: true,
@@ -50,8 +52,16 @@
 					marker.innerHTML = "<a href=" + src + "><span class='glyphicon glyphicon-" + type + "'></span></a>";
 					return marker;
 				}
-				
+				if(pip.doesExist('recoveryFile.js') === true) {
+					if(confirm("PIPSQUEAK has detected that the recovery file is intact. Would you like to recover?")) {
+						squeak.recover();
+					}
+				}
 				//end codemirror
+				squeak.saveFile(media,code);
+				setInterval(function() {
+					squeak.saveFile(media,code);
+				},15000);
 				
 				//jsfiddle code for grabbing current time from video
 				

@@ -101,7 +101,7 @@ var pip = (function() {
 
 
     //removes a file if it exists
-    function removeFile(location) {
+    pub.removeFile = function(location) {
         "use strict";
         fs.unlinkSync(location);
         return true;

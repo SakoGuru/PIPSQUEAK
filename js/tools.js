@@ -8,6 +8,45 @@ var squeak = (function () {
         id = 0,
         listOfActions = [],
         dev = true;
+
+    pub.recover = function() {
+        var script   = document.createElement("script"),
+            temp;
+        script.type  = "text/javascript";
+        script.src   = "recoveryFile.js";   
+        document.body.appendChild(script);
+        $('script').last().addClass('recoveryFile');
+        //do the recovery actions, then remove the file
+        setTimeout(function(){
+            //put the saved list into listOfActions
+            listOfActions = recover.list;
+            squeak.writeListToFrontend();
+            //set the media
+            loadVideo(recover.media);
+            //set the code File
+
+            $('.recoveryFile').remove();
+            recover = undefined;
+
+        },1000);
+        return true;
+    };
+
+    pub.saveFile = function(media, codeFile) {
+        var saveString = "var recover = {};\nrecover.video = \'" + media + "\';\nrecover.code = \'" + codeFile + "\';\nrecover.list = [\n",
+            i = 0;
+        console.log(media + "\n" + codeFile);
+        if(pip.doesExist('./recoveryFile.js') === true) pip.removeFile('./recoveryFile.js');
+        for(i = 0; i < id; i++) {
+            saveString += "{endLine: " + listOfActions[i].endLine + ",endTime: " + listOfActions[i].endTime + ",id: " + listOfActions[i].id + ",startTime: " + listOfActions[i].startTime + ",startLine: " + listOfActions[i].startLine + ",tool: \'" + listOfActions[i].tool + "\'}";
+            if(i < id - 1) {
+                saveString += ",\n";
+            }
+        }
+        saveString += "\n];\n";
+        pip.writeFile('./recoveryFile.js',saveString);
+
+    };
     //Getter for listOfActions (mainly for testing)
     pub.getListOfActionsCount = function () {
         return listOfActions.length;
@@ -119,6 +158,7 @@ var squeak = (function () {
             html,
             startTime = new Date().getTime(),
             endTime = 0;
+        this.saveFile(media,fileContents);
         if (media == null) {
             throw "Error, no media input to publish";
         }
@@ -275,6 +315,7 @@ var squeak = (function () {
             alert("The tutorial has been published to " + path + "/" + name);
         }
         if(dev === true) console.log("Publish is complete.");
+        pip.removeFile('./recoveryFile.js');
         if(dev === true) alert("Publish took approximately " + (endTime - startTime)/1000 + " seconds to complete");
         return true;
     };

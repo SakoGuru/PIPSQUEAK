@@ -32,8 +32,11 @@ function loadFile(input) {
 }
 
 // Uploads user video file and loads it into video player
-function loadVideo() {
+function loadVideo(oldVid) {
+
 	var fullPath = document.getElementById("myFile").value;
+	if (oldVid != null) fullPath = oldVid;
+	media = fullPath;
 	if (fullPath) {
 		var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
 		var filename = fullPath.substring(startIndex);
@@ -50,4 +53,5 @@ function loadVideo() {
 	$(ogvvid).attr('src', fullPath);
 	player.load();
 	player.play(); 
+	squeak.saveFile(media, code);
 }

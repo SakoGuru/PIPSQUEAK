@@ -78,11 +78,9 @@ describe("tools", function () {
 			expect(tools.squeak.writeListToFrontend).toHaveBeenCalled();
 		});
 		
-		it("should return false if id was not found", function() {
-			var goodCall = tools.squeak.deleteAction(1);
-			var badCall = tools.squeak.deleteAction(0);	
-			expect(goodCall).toEqual(true);
-			expect(badCall).toEqual(false);
+		it("should throw error if id was not found", function() {	
+			expect(function(){tools.squeak.deleteAction(1);}).not.toThrow();
+			expect(function(){tools.squeak.deleteAction(-1);}).toThrow();
 		});
 	});
 	

@@ -78,11 +78,6 @@ describe("tools", function () {
 			expect(tools.squeak.writeListToFrontend).toHaveBeenCalled();
 		});
 		
-		it("should not throw an error unless an improper action is given", function() {
-			expect(function(){tools.squeak.deleteAction(1);}).not.toThrow()
-			expect(function(){tools.squeak.deleteAction("freak-out");}).toThrow()
-		});
-		
 		it("should return false if id was not found", function() {
 			var goodCall = tools.squeak.deleteAction(1);
 			var badCall = tools.squeak.deleteAction(0);	

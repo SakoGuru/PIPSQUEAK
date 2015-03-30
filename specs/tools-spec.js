@@ -66,7 +66,28 @@ describe("tools", function () {
 	
 	//Delete Action
 	describe("deleteAction", function() {
+		it("should delete an action", function() {
+			tools.squeak.deleteAction(1);
+			var actionCount = tools.squeak.getListOfActionsCount();
+			expect(actionCount).toEqual(actionCount - 1);
+		});
 		
+		it("should call writeListToFrontend", function() {
+			tools.squeak.deleteAction(1);
+			expect(tools.squeak.writeListToFrontend).toHaveBeenCalled();
+		});
+		
+		it("should not throw an error unless an improper action is given", function() {
+			expect(function(){tools.squeak.deleteAction(1);}).not.toThrow()
+			expect(function(){tools.squeak.deleteAction("freak-out");}).toThrow()
+		});
+		
+		it("should return false if id was not found", function() {
+			var goodCall = tools.squeak.addAction(1);
+			var badCall = tools.squeak.addAction(0);	
+			expect(goodCall).toEqual(true);
+			expect(badCall).toEqual(false);
+		});
 	});
 	
 	//Undo

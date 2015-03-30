@@ -67,9 +67,10 @@ describe("tools", function () {
 	//Delete Action
 	describe("deleteAction", function() {
 		it("should delete an action", function() {
+			var tmpActionCount = tools.squeak.getListOfActionsCount();
 			tools.squeak.deleteAction(1);
 			var actionCount = tools.squeak.getListOfActionsCount();
-			expect(actionCount).toEqual(actionCount - 1);
+			expect(actionCount).toEqual(tmpActionCount - 1);
 		});
 		
 		it("should call writeListToFrontend", function() {

@@ -83,8 +83,8 @@ describe("tools", function () {
 		});
 		
 		it("should return false if id was not found", function() {
-			var goodCall = tools.squeak.addAction(1);
-			var badCall = tools.squeak.addAction(0);	
+			var goodCall = tools.squeak.deleteAction(1);
+			var badCall = tools.squeak.deleteAction(0);	
 			expect(goodCall).toEqual(true);
 			expect(badCall).toEqual(false);
 		});

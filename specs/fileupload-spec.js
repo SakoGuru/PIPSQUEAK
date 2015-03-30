@@ -9,15 +9,21 @@ describe("fileupload", function() {
 	describe("uploadCode", function() {
 		
 		it("should upload a code file", function() {
-			expect(input.files[0]).not.toBeNull();
+			fileupload.loadFile();
+			expect(fileupload.input.files[0]).not.toBeNull();
 		});
 		
 		it("should load into codemirror", function() {
-			expect(editor.getValue()).not.toBeNull();
+			fileupload.loadFile();
+			expect(fileupload.editor.getValue()).not.toBeNull();
 		});
 	});
 	
 	describe("uploadVideo", function() {
 		
+		it("should call saveFile", function() {
+			fileupload.loadVideo();
+			expect(fileupload.squeak.saveFile).toHaveBeenCalled();
+		});
 	});
 });

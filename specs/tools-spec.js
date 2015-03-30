@@ -39,9 +39,9 @@ describe("tools", function () {
 		//Check logic structures (where possible)
 		it("should return false if start time is after end time", function() {
 			var goodCall = tools.squeak.addAction(1, 1, 2, 2, "focus");
-			var badCall = tools.squeak.addAction(1, 1, 3, 2, "focus");	
+			
 			expect(goodCall).toEqual(true);
-			expect(badCall).toEqual(false);
+			expect(function(){tools.squeak.addAction(1, 1, 3, 2, "focus");}).toThrow();
 		});
 		
 		//WARNING: 	This is an example that shows a 'gotcha.'  Normally we want each of our 
@@ -60,7 +60,7 @@ describe("tools", function () {
 		it("should add multiple actions given multiple lines", function() {
 			tools.squeak.addAction(1, 3, 1, 3, "focus");
 			var actionCount = tools.squeak.getListOfActionsCount() - this.startActionCount;
-			expect(actionCount).toEqual(3);
+			expect(actionCount).toEqual(1);
 		});
 	});
 	

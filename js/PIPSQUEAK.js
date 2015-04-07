@@ -491,17 +491,19 @@ var pip = (function() {
     //removes a file if it exists
     pub.removeFile = function(location) {
         "use strict";
-        fs.unlinkSync(location);
+        
+        fse.unlinkSync(location);
         return true;
-    }
+    };
 
     //removes a directory if it exists
-    function removeDirectory(location) {
+    pub.removeDirectory = function(location) {
         "use strict";
-        //needs to descend into its directory and delete files.  or not, maybe. Depends on if we want it to delete the whole directory and everything in it, or be safer and only kill directories.
-        fs.rmdirSync(location);
+        var fse = require('fs-extra');
+        //needs to descend into its directory and delete files.  or not, maybe. Depends on if we want it to delete the whole directory and everything in it, or be safer and only kill empty directories.
+        fse.remove(location);
         return true;
-    }
+    };
 
     //entry point to removal
     function remove(location) {
@@ -564,7 +566,7 @@ var pip = (function() {
 
     pub.copyDir = function(dirPath, targetPath) {
     	var ncp = new require('ncp').ncp;
-    	ncp.limit = 16;
+    	ncp.limit = 1600;
     	ncp(dirPath, targetPath, function (err) {
 		if (err) {
 		   	return console.error(err);
@@ -730,6 +732,8 @@ var squeak = (function () {
             html,
             startTime = new Date().getTime(),
             endTime = 0;
+        //pip.removeDirectory("./publish");
+        
         //this.saveFile(media,fileContents);
         if (media == null) {
             throw "Error, no media input to publish";
@@ -866,7 +870,7 @@ var squeak = (function () {
             };*/
             popcornFile += "document.addEventListener('DOMContentLoaded', function(event) {\n";
             popcornFile += "var pop = Popcorn(\"#video\");\n";
-            if (action === 'strike' || action === 'highlight' || action === 'focus' || action === 'fadeOut' || action === 'fadeIn') {
+            if (action === 'strike' || action === 'highlight' || action === 'focus' || action === 'fadeOut') {
                 //call any of the CSS adder functions
                 if(dev === true) console.log(action + "ing lines " + startLine + " - " + endLine + " from time " + startTime + " to time " + endTime + ".");
                 for (ii = startLine; ii <= endLine; ii += 1) {
@@ -934,11 +938,13 @@ var squeak = (function () {
             alert("The tutorial has been published to " + path + "/" + name);
         }
         if(dev === true) console.log("Publish is complete.");
-        pip.removeFile('./recoveryFile.pipsqueak');
+
+        // pip.removeFile('./recoveryFile.pipsqueak');
+
         if(dev === true) alert("Publish took approximately " + (endTime - startTime)/1000 + " seconds to complete");
         
         //TODO Should handle the if/else publish logic differences above... just not now.
-        if(dev === true) var newWin = gui.Window.open(path + "/" + name + "/index.html", {
+        var newWin = gui.Window.open(path + "/" + name + "/index.html", {
   			position: 'center',
   			width: 1280,
     		height: 720
@@ -956,4 +962,5 @@ var squeak = (function () {
     if(dev === true) console.log("Squeak has initialized");
     return pub;
 }());
+//TODO Remove or comment this out before final version (this is for testing purposes only and throws an error running)
 exports.squeak = squeak;

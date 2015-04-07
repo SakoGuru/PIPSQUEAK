@@ -864,17 +864,19 @@ var squeak = (function () {
                 popcornFile += end;
                 return true;
             };*/
+            popcornFile += "document.addEventListener('DOMContentLoaded', function(event) {\n";
             popcornFile += "var pop = Popcorn(\"#video\");\n";
             if (action === 'strike' || action === 'highlight' || action === 'focus' || action === 'fadeOut' || action === 'fadeIn') {
                 //call any of the CSS adder functions
                 if(dev === true) console.log(action + "ing lines " + startLine + " - " + endLine + " from time " + startTime + " to time " + endTime + ".");
                 for (ii = startLine; ii <= endLine; ii += 1) {
-                    start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime
-                        + ",\n\tonStart: function() {\n\t\t$(\'line" + i + "\').addClass(\"" + action + "\")\n\t}\n});\n";
-                    end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
-                        + ",\n\tonStart: function() {\n\t\t$(\'line" + i  + "\').removeClass(\"" + action + "\")\n\t}\n});\n";
+                    start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
+                        + ",\n\tonStart: function() {\n\t\t$(\'#line" + i + "\').addClass(\"" + action + "\");\n\t},\n"
+                        + "\tonEnd: function() {\n\t\t$(\'#line" + i + "\').removeClass(\"" + action + "\");\n\t}\n});\n";
+                    /*end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
+                        + ",\n\tonStart: function() {\n\t\t$(\'line" + i  + "\').removeClass(\"" + action + "\")\n\t}\n});\n";*/
                     popcornFile += start;
-                    popcornFile += end;
+                    //popcornFile += end;
                 }
             } else if (action === 'annotate') {
                 //call annotate function
@@ -904,6 +906,7 @@ var squeak = (function () {
                 if(dev === true) console.log(action + " is not an accepted action in function runAction");
                 return false;
             }
+            popcornFile += "});";
             return true;
         };
         //when they hit publish run through the codemirror div and assign each individual LINE to an array location, with arr[0] being empty for simplicity 

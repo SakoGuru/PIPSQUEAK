@@ -22,9 +22,13 @@ function loadFile(input) {
 	var reader = new FileReader();
 	reader.onload = function(e) {
 		editor.setValue(e.target.result);
+		code = e.target.result;
+		console.log(code);
+		code = (String (code)).replace(/'/g, "\"");
+		console.log("\n\n\n\n\n" + code);
+		squeak.saveFile(media,code);
 	}
 	reader.readAsText(input.files[0]);
-	
 	//transfer new codemirror instance back to PIPSQUEAK.js
 	$('#codearea').data('CodeMirrorInstance', editor); //save new editor and name it CodeMirrorInstance
 	newCM = $('#codearea').data('CodeMirrorInstance'); //put new editor in global javascript variable to be accessed in PIPSQUEAK.js

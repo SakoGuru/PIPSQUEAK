@@ -532,7 +532,7 @@ var pip = (function() {
         makeDirectory(location + "/" + name);
         //main folder is html
         //js, css folders
-        //makeDirectory(location + "/"  + name + "/js");
+        makeDirectory(location + "/"  + name + "/js");
         makeDirectory(location + "/" + name + "/css");
         //assets folder
         makeDirectory(location + "/"  + name + "/assets");

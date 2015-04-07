@@ -833,6 +833,9 @@ var squeak = (function () {
             throw "File ./css/bootstrap.min.css does not exist.";
         }
 
+		popcornFile += "document.addEventListener('DOMContentLoaded', function(event) {\n";
+        popcornFile += "var pop = Popcorn(\"#video\");\n";
+
         //copy the js files and then the node_modules
        // pip.copyDir("./js/",path + "/" + name + "/js/");
        // pip.copyDir("./node_modules", path + "/" + name + "/node_modules/");
@@ -868,8 +871,7 @@ var squeak = (function () {
                 popcornFile += end;
                 return true;
             };*/
-            popcornFile += "document.addEventListener('DOMContentLoaded', function(event) {\n";
-            popcornFile += "var pop = Popcorn(\"#video\");\n";
+            
             if (action === 'strike' || action === 'highlight' || action === 'focus' || action === 'fadeOut') {
                 //call any of the CSS adder functions
                 if(dev === true) console.log(action + "ing lines " + startLine + " - " + endLine + " from time " + startTime + " to time " + endTime + ".");
@@ -910,7 +912,7 @@ var squeak = (function () {
                 if(dev === true) console.log(action + " is not an accepted action in function runAction");
                 return false;
             }
-            popcornFile += "});";
+            
             return true;
         };
         //when they hit publish run through the codemirror div and assign each individual LINE to an array location, with arr[0] being empty for simplicity 
@@ -923,6 +925,7 @@ var squeak = (function () {
                 //may want some error handling in here or something.
             }
         }
+        popcornFile += "});";
         //TODO - write the media and input code to a template file
         //write the popcorn functions to a javascript file
         pip.writeFile(path + "/" + name + "/js/pop.js", popcornFile);

@@ -55,7 +55,8 @@ function loadVideo(oldVid) {
 
 	$(webmvid).attr('src', fullPath);
 	$(ogvvid).attr('src', fullPath);
+	$(webmvid).attr('autoplay', false);
+	$(ogvvid).attr('autoplay', false);
 	player.load();
-	player.play(); 
 	//squeak.saveFile(media, code);
 }

@@ -869,7 +869,7 @@ var squeak = (function () {
                 return true;
             };*/
             popcornFile += "var pop = Popcorn(\"#video\");\n";
-            if (action === 'strike' || action === 'highlight' || action === 'focus' || action === 'fadeOut' || action === 'fadeIn') {
+            if (action === 'strike' || action === 'highlight' || action === 'focus' || action === 'fadeOut') {
                 //call any of the CSS adder functions
                 if(dev === true) console.log(action + "ing lines " + startLine + " - " + endLine + " from time " + startTime + " to time " + endTime + ".");
                 for (ii = startLine; ii <= endLine; ii += 1) {

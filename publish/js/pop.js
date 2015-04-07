@@ -1,14 +1,15 @@
-document.addEventListener("DOMContentLoaded", function(event) { 
-	var pop = Popcorn("#video");
-	pop.code ({
-		start: 1,
-		end: 3,
-		onStart: function() {
-			$('#line0').addClass('highlight');
-		},
-		onEnd: function() {
-			$('#line0').removeClass('highlight');
-		}
-	});
+var pop = Popcorn("#video");
+pop.code ({
+	start: 0,
+	end: 0,
+	onStart: function() {
+		$('line0').addClass("fadeOut")
+	}
 });
-
+pop.code ({
+	start: 2,
+	end: 2,
+	onStart: function() {
+		$('line0').removeClass("fadeOut")
+	}
+});

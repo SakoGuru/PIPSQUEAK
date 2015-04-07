@@ -1,0 +1,47 @@
+Exam April 30
+Final report due May 11
+
+Project 3: take home questions
+
+Activity 1:
+
+SELECT S.* FROM Sailors S INNER JOIN Boats B ON (S.sid = B.sid) 
+INNER JOIN Reserves R ON (B.bid = R.bid)
+WHERE B.color = 'red';
+
+SELECT * FROM Sailors
+WHERE NOT (age <= 25 AND rating >= 4 AND name LIKE "H%";
+
+Activity 2:
+
+CREATE INDEX sailorIdx
+ON Sailors (sname, rating)
+
+CREATE INDEX bIdx
+
+Activity 3:
+
+keys: CP
+
+highest normal form: 2NF
+
+CPRQV --> CPRQ
+	Q->V
+	  --> QV
+	  
+	  
+keys: C, JP, SDJ
+
+highest normal form: 3NF
+
+CSJDPQV --> CSJDQV
+	SD->P	
+		--> SDP
+		
+Activity 4:
+
+CREATE VIEW 
+
+Activity 5:
+You have to do joins more often.
+

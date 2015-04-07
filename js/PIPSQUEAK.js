@@ -377,6 +377,14 @@
 			});
 
 
+/*-----------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+				Begin PIP
+
+-------------------------------------------------------------------------------
+-----------------------------------------------------------------------------*/
+
 //(c) Scott G Gavin, PIPSQUEAK - 01/28/2015
 /*jslint node: true */
 
@@ -532,7 +540,30 @@ var pip = (function() {
         makeDirectory(location + "/"  + name + "/assets/audio");
         makeDirectory(location + "/"  + name + "/assets/images");
         return true;
-    }
+    };
+
+    pub.zip = function(files, name, location) {
+    	var zip = new require('node-zip')(),
+    		i = 0;
+    	location = location == null ? "./" : location;
+    	name = name == null ? "recovery.pipsqueak" : name;
+        if(files == null) {
+        	return false;
+        } else {
+        	console.log(i + " " + files.length);
+        	for(i = 0; i < files.length; i += 1) {
+        		zip.file("testNew.js",this.readFile("./js/PIPSQUEAK.js"));
+        		console.log("here");
+        		console.log(this.readFile("./js/PIPSQUEAK.js"));
+        	}
+        	var data = zip.generate({base64:false,compression:'DEFLATE'});
+        	console.log(data);
+        	this.writeFile(location + name, data);
+        	return true;
+        }
+    };
+
+    
     return pub;
 }());
 
@@ -737,7 +768,9 @@ var squeak = (function () {
 		html += "\n\t\t\t<div class=\"panel-heading\"><h4>Code</h4></div>";
 		html +=	"\n\t\t\t\t<div class=\"panel-body\" style=\"min-height: 400px; max-height: 400px; overflow-y: scroll;\">";
 		*/
-		
+
+
+		//TODO: make this point to the published folder of the media
 		html += "<source type=\"video/mp4\" src=" + media + " id=\"mp4\"></source>";
 		html += "<source type=\"video/webm\" src=" + media + " id=\"webm\"></source>";
 		html += "<source type=\"video/ogg\" src=" + media + " id=\"ogv\"></source>";
@@ -834,6 +867,7 @@ var squeak = (function () {
                 popcornFile += end;
                 return true;
             };*/
+            popcornFile += "var pop = Popcorn(\"#video\");\n";
             if (action === 'strike' || action === 'highlight' || action === 'focus' || action === 'fadeOut' || action === 'fadeIn') {
                 //call any of the CSS adder functions
                 if(dev === true) console.log(action + "ing lines " + startLine + " - " + endLine + " from time " + startTime + " to time " + endTime + ".");

@@ -44,6 +44,10 @@
 		<script src="node_modules/codemirror/mode/javascript/javascript.js"></script>
 		<script src="node_modules/codemirror/addon/selection/mark-selection.js"></script>
 		<link href="node_modules/codemirror/theme/vibrant-ink.css" rel="stylesheet">
+		
+		<!--popcorn-->
+		<script src="js/pop.js"></script>
+		<script src="js/popcorn-complete.js"></script>
 
 	</head>
 	<body>

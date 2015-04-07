@@ -3,6 +3,7 @@
 			global.document = window.document;
 			global.navigator = window.navigator;
 			require('jquery-ui');
+			var gui = require('nw.gui');
 			
 			var startLine;
 			var endLine;
@@ -925,14 +926,24 @@ var squeak = (function () {
         console.log(path + "/" + name + "/index.html");
         pip.writeFile(path + "/" + name + "/index.html", html);
         endTime = new Date().getTime();
+        var newWinPath = "";
         if (path === ".") {
+        	newWinPath = process.cwd() + "/" + name;
             alert("The tutorial has been published to " + process.cwd() + "/" + name);
         } else {
+        	newWinPath = path + "/" + name;
             alert("The tutorial has been published to " + path + "/" + name);
         }
         if(dev === true) console.log("Publish is complete.");
         pip.removeFile('./recoveryFile.js');
         if(dev === true) alert("Publish took approximately " + (endTime - startTime)/1000 + " seconds to complete");
+        
+        //TODO Should handle the if/else publish logic differences above... just not now.
+        if(dev === true) var newWin = gui.Window.open(path + "/" + name + "/index.html");
+        newWin.on('focus', function() {
+  			console.log('New window is focused');
+		});
+		
         return true;
     };
     //just a tester function

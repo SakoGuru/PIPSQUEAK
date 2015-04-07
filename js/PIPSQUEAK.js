@@ -265,11 +265,11 @@
 						var numLines = doc.lineCount();
 						var lines = [];
 						var i;
-						var firstPTag = "<p>";
+						var firstPTag = "<p id='line=";
 						var lastPTag = "</p>";
 						
 						for (i = 0; i < numLines; i++) {
-							lines[i] =  firstPTag + (i+1) + " " + doc.getLine(i) + lastPTag;
+							lines[i] =  firstPTag + i + "'>" + (i+1) + " " + doc.getLine(i) + lastPTag;
 						}
 						
 						for (i = 0; i < numLines; i++) {
@@ -753,7 +753,7 @@ var squeak = (function () {
 		
 		//first attempt at reading in basic publish view from file
 		var firstPart = pip.readFile("./templates/firstPart.txt");
-		console.log(firstPart);
+
 		html = firstPart;
 		/*
         html = "<!DOCTYPE html>";

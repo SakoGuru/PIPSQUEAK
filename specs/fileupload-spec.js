@@ -3,7 +3,7 @@ describe("fileupload", function() {
 	var fileupload = require("../js/fileupload.js");
 	
 	beforeEach(function() {
-		this.startActionCount = tools.squeak.getListOfActionsCount();
+		this.startActionCount = tools.squeak.getListOfActionsCount();		
 	});
 	
 	describe("uploadCode", function() {

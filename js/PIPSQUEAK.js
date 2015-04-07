@@ -732,8 +732,6 @@ var squeak = (function () {
             html,
             startTime = new Date().getTime(),
             endTime = 0;
-        //pip.removeDirectory("./publish");
-        
         //this.saveFile(media,fileContents);
         if (media == null) {
             throw "Error, no media input to publish";

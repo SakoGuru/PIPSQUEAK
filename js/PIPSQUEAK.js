@@ -931,11 +931,11 @@ var squeak = (function () {
             alert("The tutorial has been published to " + path + "/" + name);
         }
         if(dev === true) console.log("Publish is complete.");
-        pip.removeFile('./recoveryFile.pipsqueak');
+        // pip.removeFile('./recoveryFile.pipsqueak');
         if(dev === true) alert("Publish took approximately " + (endTime - startTime)/1000 + " seconds to complete");
         
         //TODO Should handle the if/else publish logic differences above... just not now.
-        if(dev === true) var newWin = gui.Window.open(path + "/" + name + "/index.html", {
+        var newWin = gui.Window.open(path + "/" + name + "/index.html", {
   			position: 'center',
   			width: 1280,
     		height: 720
@@ -953,4 +953,5 @@ var squeak = (function () {
     if(dev === true) console.log("Squeak has initialized");
     return pub;
 }());
+//TODO Remove or comment this out before final version (this is for testing purposes only and throws an error running)
 exports.squeak = squeak;

@@ -265,7 +265,7 @@
 						var numLines = doc.lineCount();
 						var lines = [];
 						var i;
-						var firstPTag = "<p id='line=";
+						var firstPTag = "<p id='line";
 						var lastPTag = "</p>";
 						
 						for (i = 0; i < numLines; i++) {

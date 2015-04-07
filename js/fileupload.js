@@ -26,7 +26,7 @@ function loadFile(input) {
 		console.log(code);
 		code = (String (code)).replace(/'/g, "\"");
 		console.log("\n\n\n\n\n" + code);
-		squeak.saveFile(media,code);
+		//squeak.saveFile(media,code);
 	}
 	reader.readAsText(input.files[0]);
 	//transfer new codemirror instance back to PIPSQUEAK.js
@@ -57,5 +57,5 @@ function loadVideo(oldVid) {
 	$(ogvvid).attr('src', fullPath);
 	player.load();
 	player.play(); 
-	squeak.saveFile(media, code);
+	//squeak.saveFile(media, code);
 }

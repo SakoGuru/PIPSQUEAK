@@ -52,11 +52,11 @@
 					marker.innerHTML = "<a href=" + src + "><span class='glyphicon glyphicon-" + type + "'></span></a>";
 					return marker;
 				}
-				if(pip.doesExist('recoveryFile.js') === true) {
+				if(pip.doesExist('recoveryFile.pipsqueak') === true) {
 					if(confirm("PIPSQUEAK has detected that the recovery file is intact. Would you like to recover? (Note: selecting \'No\' will delete the recovery file)")) {
 						squeak.recover();
 					} else {
-						pip.removeFile('recoveryFile.js');
+						pip.removeFile('recoveryFile.pipsqueak');
 					}
 				}
 				//end codemirror
@@ -265,7 +265,7 @@
 						var numLines = doc.lineCount();
 						var lines = [];
 						var i;
-						var firstPTag = "<p id='line=";
+						var firstPTag = "<p id='line";
 						var lastPTag = "</p>";
 						
 						for (i = 0; i < numLines; i++) {
@@ -543,26 +543,36 @@ var pip = (function() {
         return true;
     };
 
-    pub.zip = function(files, name, location) {
+    pub.zip = function(mediaPath, code, name, location) {
     	var zip = new require('node-zip')(),
     		i = 0;
     	location = location == null ? "./" : location;
     	name = name == null ? "recovery.pipsqueak" : name;
-        if(files == null) {
+        if(code == null) {
         	return false;
         } else {
-        	console.log(i + " " + files.length);
-        	for(i = 0; i < files.length; i += 1) {
-        		zip.file("testNew.js",this.readFile("./js/PIPSQUEAK.js"));
-        		console.log("here");
-        		console.log(this.readFile("./js/PIPSQUEAK.js"));
-        	}
+    		zip.file("recover.media",this.readFile(mediaPath));
+    		zip.file("recover.code",code);
+    		console.log("here");
+    		console.log(this.readFile(mediaPath));
         	var data = zip.generate({base64:false,compression:'DEFLATE'});
         	console.log(data);
         	this.writeFile(location + name, data);
         	return true;
         }
     };
+
+    pub.copyDir = function(dirPath, targetPath) {
+    	var ncp = new require('ncp').ncp;
+    	ncp.limit = 16;
+    	ncp(dirPath, targetPath, function (err) {
+		if (err) {
+		   	return console.error(err);
+		}
+		 	console.log('done!');
+		});
+
+    }
 
     
     return pub;
@@ -589,42 +599,22 @@ var squeak = (function () {
         listOfActions = [],
         dev = true;
 
+        //TODO: This is gonna need to handle the zip file
     pub.recover = function() {
-        var script   = document.createElement("script"),
-            temp;
-        script.type  = "text/javascript";
-        script.src   = "recoveryFile.js";   
-        document.body.appendChild(script);
-        $('script').last().addClass('recoveryFile');
-        //do the recovery actions, then remove the file
-        setTimeout(function(){
-            //put the saved list into listOfActions
-            listOfActions = recover.list;
-            squeak.writeListToFrontend();
-            //set the media
-            loadVideo(recover.media);
-            //set the code File
+       /*
 
-            $('.recoveryFile').remove();
-            recover = undefined;
-
-        },1000);
-        return true;
+        },1000);*/
+        return false;
     };
 
     pub.saveFile = function(media, codeFile) {
-        var saveString = "var recover = {};\nrecover.media = \'" + media + "\';\nrecover.code = \'" + codeFile + "\';\nrecover.list = [\n",
-            i = 0;
-        console.log(media + "\n" + codeFile);
-        if(pip.doesExist('./recoveryFile.js') === true) pip.removeFile('./recoveryFile.js');
-        for(i = 0; i < id; i++) {
-            saveString += "{endLine: " + listOfActions[i].endLine + ",endTime: " + listOfActions[i].endTime + ",id: " + listOfActions[i].id + ",startTime: " + listOfActions[i].startTime + ",startLine: " + listOfActions[i].startLine + ",tool: \'" + listOfActions[i].tool + "\'}";
-            if(i < id - 1) {
-                saveString += ",\n";
-            }
-        }
-        saveString += "\n];\n";
-        pip.writeFile('./recoveryFile.js',saveString);
+   		var files = [];
+        //write the code from the codeMirror into the recover.code
+        files.append(media);
+        //write the media file (hell, why not) into the recover.itsMediaTag
+
+        //zip them together and what have you got?
+        pip.zip(files);
 
     };
     //Getter for listOfActions (mainly for testing)
@@ -668,7 +658,7 @@ var squeak = (function () {
         this.writeListToFrontend();
         if(dev === true) console.log("Added the action " + action);
         //right now the variables being passed are the globals from PIPSQUEAK
-        this.saveFile(media, code);
+        //this.saveFile(media, code);
         return true;
     };
     //deletes a node from the list.  
@@ -740,7 +730,7 @@ var squeak = (function () {
             html,
             startTime = new Date().getTime(),
             endTime = 0;
-        this.saveFile(media,fileContents);
+        //this.saveFile(media,fileContents);
         if (media == null) {
             throw "Error, no media input to publish";
         }
@@ -750,7 +740,8 @@ var squeak = (function () {
         name = name == null ? "publish" : name;
         path = path == null ? "." : path;
         pip.initialize(name, path);
-		
+		pip.copyDir("./js/",path + "/" + name + "/js/");
+        pip.copyDir("./node_modules", path + "/" + name + "/node_modules/");
 		//first attempt at reading in basic publish view from file
 		var firstPart = pip.readFile("./templates/firstPart.txt");
 
@@ -821,6 +812,7 @@ var squeak = (function () {
 
         }());
         pip.copyFile(media, path + '/' + name + '/assets/' + mediaType + '/' + mediaFileName);
+
         if(pip.doesExist("./css/PIPSQUEAK.css") === true) {
             pip.copyFile("./css/PIPSQUEAK.css", path + '/' + name + '/css/PIPSQUEAK.css');
         } else {
@@ -836,6 +828,10 @@ var squeak = (function () {
         } else {
             throw "File ./css/bootstrap.min.css does not exist.";
         }
+
+        //copy the js files and then the node_modules
+       // pip.copyDir("./js/",path + "/" + name + "/js/");
+       // pip.copyDir("./node_modules", path + "/" + name + "/node_modules/");
         runAction = function (startLine, endLine, startTime, endTime, action) {
         //only runAction can call the worker functions
             var start,
@@ -935,7 +931,7 @@ var squeak = (function () {
             alert("The tutorial has been published to " + path + "/" + name);
         }
         if(dev === true) console.log("Publish is complete.");
-        pip.removeFile('./recoveryFile.js');
+        pip.removeFile('./recoveryFile.pipsqueak');
         if(dev === true) alert("Publish took approximately " + (endTime - startTime)/1000 + " seconds to complete");
         
         //TODO Should handle the if/else publish logic differences above... just not now.

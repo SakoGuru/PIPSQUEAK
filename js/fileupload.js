@@ -23,9 +23,7 @@ function loadFile(input) {
 	reader.onload = function(e) {
 		editor.setValue(e.target.result);
 		code = e.target.result;
-		console.log(code);
 		code = (String (code)).replace(/'/g, "\"");
-		console.log("\n\n\n\n\n" + code);
 		//squeak.saveFile(media,code);
 	}
 	reader.readAsText(input.files[0]);

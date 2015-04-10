@@ -948,8 +948,10 @@ var squeak = (function () {
         var newWin = gui.Window.open(path + "/" + name + "/index.html", {
   			position: 'center',
   			width: 1280,
-    		height: 720
+    		height: 720,
+			'new-instance': true
 		});
+
         newWin.on('focus', function() {
   			console.log('New window is focused');
 		});

@@ -73,14 +73,8 @@
 
 <div class="container-fluid">
 <div class="row">
-      
-    <!--middle column-->
-			
-    <div class="col-md-6 col-centered">
-
-			<strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong> 
-
-      	<hr>
+      			
+    <div class="col-md-6">
 			
 		<!--video-->	
 

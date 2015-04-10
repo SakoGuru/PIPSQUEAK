@@ -1,0 +1,178 @@
+/*popcorn classes*/
+
+.codeMirror {
+	transition: all 2s;		/*this should add a 2s transition to all "transitionable" properties
+	/*
+	transition: transform 2s, background 2s, text-align 2s, text-decoration 2s, font-size 2s, display 2s, visibility 2s, vertical-align 2s;
+	*/
+}
+
+.change {
+
+}
+
+.popReset {
+	
+	text-decoration: none !important;
+	background: initial !important;
+	font-size: 100% !important;
+	display: initial !important;
+	visibility: visible !important;
+	vertical-align: initial !important;
+	/*
+	-webkit-animation: highlight-fade 0.5s;
+	background: none !important;
+	*/
+}
+
+.strike{
+	text-decoration: line-through;
+}
+
+@-webkit-keyframes highlight-fade {   
+   0% {background: none;}
+   100% {background: yellow;}
+}
+
+.highlight {
+	
+	-webkit-animation-fill-mode: forwards;
+	-webkit-animation: highlight-fade 0.25s;
+	
+	background: yellow;
+}
+
+@-webkit-keyframes focus-fade {   
+   0% {font-size: 100%;}
+   100% {font-size: 200%;}
+}
+
+.focus {
+	/*
+	-webkit-animation-fill-mode: forwards;
+	-webkit-animation: focus-fade 0.25s;
+	*/
+	
+	font-size: 200%;
+
+	
+    transition: font-size .25s ease-in-out;
+   -moz-transition: font-size .25s ease-in-out;
+   -webkit-transition: font-size .25s ease-in-out;
+	
+}
+
+.fadeOut {
+	opacity: 0;
+	transition: opacity 0.25s ease-in-out;
+   -moz-transition: opacity 0.25s ease-in-out;
+   -webkit-transition: opacity 0.25s ease-in-out;
+}
+
+.hidden {
+	transform: scale(0,0);
+	/*
+	display: none;
+	visibility: hidden;
+	*/
+}
+
+/*end popcorn classes*/
+
+div.center {
+	text-align: center;
+}
+
+div.buttons  button {
+	width: 200px;
+	height: 35px;
+}
+
+.buttons {
+	width: 200px;
+	height: 35px;
+}
+
+.mid {
+	margin: 0 auto;
+}
+
+.vid {
+	width: 100% !important;
+	position:relative !important;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 35px;
+    font-size: 200px;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+/*from codemirror*/
+
+.breakpoints {width: .8em;}
+.breakpoint { color: #822; }
+.CodeMirror {border: 1px solid #aaa;}
+
+/*end codemirror*/
+
+.ui-dialog,
+.ui-dialog,
+.ui-widget,
+.ui-widget-content,
+.ui-corner-all,
+.dialogBox,
+.ui-draggable,
+.ui-resizable {
+	/*background: url("../images/dialogBox/purple_design.jpg");*/
+	background: #E0EAF8;
+	color: black;/*#003200; #59955C #326632; #003300; #59955C;*/
+	font-family: 'ABeeZee', 'sans-serif';
+	font-size: large;
+	/*border-color: #6094DB; /*#202020;*/
+	border-radius: 20px;
+	/*border-width: 4px;
+	font-weight: bold;
+	text-shadow: 1px 1px black;*/
+}
+
+.ui-widget {
+	box-shadow: 10px 10px 5px #202020;
+}
+
+.ui-dialog-titlebar-close {
+	box-shadow: none;
+}
+
+.ui-dialog-titlebar {
+	/*background: url("../images/dialogBox/water_drop.jpg");*/
+	background: #6682b5;
+	color: white;
+	font-family: 'ABeeZee', 'sans-serif';
+	font-size: x-large;
+	text-align: center;
+	text-shadow: 1px 1px #003300;
+	font-weight: bold;
+}
+
+.modal-backdrop {
+	z-index: -1;
+}
+
+.annotation-gutter {
+	width: 30px;
+}

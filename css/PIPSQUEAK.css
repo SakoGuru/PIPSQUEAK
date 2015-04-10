@@ -37,24 +37,36 @@
 .highlight {
 	
 	-webkit-animation-fill-mode: forwards;
-	-webkit-animation: highlight-fade 0.5s;
+	-webkit-animation: highlight-fade 0.25s;
 	
 	background: yellow;
 }
 
+@-webkit-keyframes focus-fade {   
+   0% {font-size: 100%;}
+   100% {font-size: 200%;}
+}
+
 .focus {
 	/*
-	transition: font-size 0.5s ease-in;
+	-webkit-animation-fill-mode: forwards;
+	-webkit-animation: focus-fade 0.25s;
 	*/
+	
 	font-size: 200%;
-	text-align: center;
+
+	
+    transition: font-size .25s ease-in-out;
+   -moz-transition: font-size .25s ease-in-out;
+   -webkit-transition: font-size .25s ease-in-out;
+	
 }
 
 .fadeOut {
 	opacity: 0;
-	transition: opacity 2s ease-in-out;
-   -moz-transition: opacity 2s ease-in-out;
-   -webkit-transition: opacity .25s ease-in-out;
+	transition: opacity 0.25s ease-in-out;
+   -moz-transition: opacity 0.25s ease-in-out;
+   -webkit-transition: opacity 0.25s ease-in-out;
 }
 
 .hidden {

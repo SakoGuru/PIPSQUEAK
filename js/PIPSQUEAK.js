@@ -269,7 +269,7 @@
 						var lastPTag = "</p>";
 						
 						for (i = 0; i < numLines; i++) {
-							lines[i] =  firstPTag + i + "'>" + (i+1) + " " + doc.getLine(i) + lastPTag;
+							lines[i] =  firstPTag + (i + 1) + "'>" + (i + 1) + " " + doc.getLine(i) + lastPTag;
 						}
 						
 						for (i = 0; i < numLines; i++) {
@@ -875,8 +875,8 @@ var squeak = (function () {
                 if(dev === true) console.log(action + "ing lines " + startLine + " - " + endLine + " from time " + startTime + " to time " + endTime + ".");
                 for (ii = startLine; ii <= endLine; ii += 1) {
                     start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
-                        + ",\n\tonStart: function() {\n\t\t$(\'#line" + i + "\').addClass(\"" + action + "\");\n\t},\n"
-                        + "\tonEnd: function() {\n\t\t$(\'#line" + i + "\').removeClass(\"" + action + "\");\n\t}\n});\n";
+                        + ",\n\tonStart: function() {\n\t\t$(\'#line" + ii + "\').addClass(\"" + action + "\");\n\t},\n"
+                        + "\tonEnd: function() {\n\t\t$(\'#line" + ii + "\').removeClass(\"" + action + "\");\n\t}\n});\n";
                     /*end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() {\n\t\t$(\'line" + i  + "\').removeClass(\"" + action + "\")\n\t}\n});\n";*/
                     popcornFile += start;

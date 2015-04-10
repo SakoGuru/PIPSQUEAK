@@ -730,6 +730,7 @@ var squeak = (function () {
             html,
             startTime = new Date().getTime(),
             endTime = 0;
+        name = prompt("Name the tutorial as:", "publish");
         //this.saveFile(media,fileContents);
         if (media == null) {
             throw "Error, no media input to publish";
@@ -777,15 +778,7 @@ var squeak = (function () {
 		
 		var thirdPart = pip.readFile("./templates/thirdPart.txt");
 		html += thirdPart;
-		
-		/*
-		html += "\n\t\t</div>";
-		html += "\n\t\t\t</div>";
-		html += "\n\t\t\t\t</div>";
-        html += "\n\t</body>";
-        html += "\n</html>";
-		*/
-		
+
         mediaFileName = (function () {
             var pattern = new RegExp("[a-zA-Z0-9][a-zA-Z0-9]*[.][a-z0-9][a-z0-9]*");
             return pattern.exec(media);

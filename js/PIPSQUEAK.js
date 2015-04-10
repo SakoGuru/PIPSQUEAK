@@ -379,7 +379,7 @@ var pip = (function() {
         return fs.existsSync(directory);
     };
     //if theres no overwrite, make the directory. otherwise throw an error
-    function makeDirectory(location) {
+    pub.makeDirectory = function(location) {
         "use strict";
         var permissions = '0777';
         //need to make sure the selected directory wont overwrite a file too
@@ -462,17 +462,17 @@ var pip = (function() {
             return false;
         }
         //make PIPSQUEAK directory
-        makeDirectory(location + "/" + name);
+        this.makeDirectory(location + "/" + name);
         //main folder is html
         //js, css folders
-        makeDirectory(location + "/"  + name + "/js");
-        makeDirectory(location + "/" + name + "/css");
+        this.makeDirectory(location + "/"  + name + "/js");
+        this.makeDirectory(location + "/" + name + "/css");
         //assets folder
-        makeDirectory(location + "/"  + name + "/assets");
+        this.makeDirectory(location + "/"  + name + "/assets");
         //subfolders - audio, video, images?
-        makeDirectory(location + "/"  + name + "/assets/video");
-        makeDirectory(location + "/"  + name + "/assets/audio");
-        makeDirectory(location + "/"  + name + "/assets/images");
+        this.makeDirectory(location + "/"  + name + "/assets/video");
+        this.makeDirectory(location + "/"  + name + "/assets/audio");
+        this.makeDirectory(location + "/"  + name + "/assets/images");
         return true;
     };
 
@@ -672,7 +672,8 @@ var squeak = (function () {
             throw "File " + media + " does not exist.";
         }
         name = name == null ? "publish" : name;
-        path = path == null ? "." : path;
+        path = path == null ? "./publish" : path;
+        pip.makeDirectory('./publish');
         pip.initialize(name, path);
 		pip.copyDir("./js/",path + "/" + name + "/js/");
         pip.copyDir("./node_modules", path + "/" + name + "/node_modules/");

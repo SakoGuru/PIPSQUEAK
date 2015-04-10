@@ -272,9 +272,7 @@
 							lines[i] =  firstPTag + (i + 1) + "'>" + (i + 1) + " " + doc.getLine(i) + lastPTag;
 						}
 						
-						for (i = 0; i < numLines; i++) {
-							console.log(lines[i]);
-						}
+					
 						
 					//end get codemirror lines into <p> tags
 					//pub.publish = function (media, fileContents, name, path)
@@ -283,74 +281,7 @@
 					
 					doc.markText({line: 0, ch: 0}, {line: editor.lastLine() + 1, ch: 0}, {className: "codeMirror"});
 					
-					var pop = Popcorn( "#video" );
-				
-					pop.code({
-						start: startTime,
-						end: endTime,
-						onStart: function( options ) {
-							if (action == "fadeIn") {
-								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "change"});
-								$(".change").css({
-									"font-size": "100%"
-								});
-							}
-							else if (action == "fadeOut") {
-								
-								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "change"});
-								$(".change").css({
-									"font-size": "0%"
-								});
-								
-							}
-							else if (action == "focus") {
-								$("#codeMirror").css({
-									"font-size": "200%",
-									"text-align": "center"
-								});
-								doc.markText({line: 0, ch: 0}, {line: startLine - 1, ch: 0}, {className: "change"});
-								doc.markText({line: endLine, ch: 0}, {line: editor.lastLine() + 1, ch: 0}, {className: "change"});
-								$(".change").css({
-									"font-size": "0%"
-								});
-							}
-							else {
-								//doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {css: "text-decoration: line-through"});		
-								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: action});
-							}
-						},
-						onEnd: function( options ) {
-							doc.markText({line: 0, ch: 0}, {line: editor.lastLine() + 1, ch: 0}, {className: "codeMirror"});
-							if (action == "fadeIn") {
-								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "change"});
-								$(".change").css({
-									"font-size": "0%"
-								});
-							}
-							else if (action == "fadeOut") {
-								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "change"});
-								$(".change").css({
-									"font-size": "100%"
-								});		
-							}
-							else if (action == "focus") {
-								doc.markText({line: 0, ch: 0}, {line: startLine - 1, ch: 0}, {className: "popReset"});
-								doc.markText({line: endLine, ch: 0}, {line: editor.lastLine() + 1, ch: 0}, {className: "popReset"});
-								$("#codeMirror").css({
-									"font-size": "100%",
-									"text-align": "left"
-								});
-							}
-							else {
-								//doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {css: "text-decoration: none"});	
-								doc.markText({line: startLine - 1, ch: 0}, {line: endLine, ch: 0}, {className: "popReset"});
-							}
-						}
-					});
 					
-					//for future maybe
-					//maybe use "doc.setSelection" for autoscroll function
-					// to append text to end of codemirror: "editor.replaceRange( text, { line: editor.lastLine() + 1, ch:0 });"
 				
 				});
 				
@@ -732,6 +663,7 @@ var squeak = (function () {
             html,
             startTime = new Date().getTime(),
             endTime = 0;
+        name = prompt("Name the tutorial as:", "publish");
         //this.saveFile(media,fileContents);
         if (media == null) {
             throw "Error, no media input to publish";
@@ -779,15 +711,7 @@ var squeak = (function () {
 		
 		var thirdPart = pip.readFile("./templates/thirdPart.txt");
 		html += thirdPart;
-		
-		/*
-		html += "\n\t\t</div>";
-		html += "\n\t\t\t</div>";
-		html += "\n\t\t\t\t</div>";
-        html += "\n\t</body>";
-        html += "\n</html>";
-		*/
-		
+
         mediaFileName = (function () {
             var pattern = new RegExp("[a-zA-Z0-9][a-zA-Z0-9]*[.][a-z0-9][a-z0-9]*");
             return pattern.exec(media);
@@ -967,3 +891,5 @@ var squeak = (function () {
 }());
 //TODO Remove or comment this out before final version (this is for testing purposes only and throws an error running)
 exports.squeak = squeak;
+
+

@@ -1,11 +1,7 @@
 </video>
 					</div>
 					
-					<div>Current Time : <span  id="currentTime">0</span></div> <!--jsfiddle-->
-					<div>Total time : <span id="totalTime">0</span></div> <!--jsfiddle-->
-					<!--/end jsfiddle code-->
-
-					<div id = "printInfo"></div>
+					
 					
 			</div>
 		</div>

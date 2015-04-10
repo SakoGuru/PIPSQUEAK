@@ -13,7 +13,7 @@
 
 <!--/main-->
 
-<footer class="text-center">PIPSQUEAK potential layout?</footer>
+<footer class="text-center">PIPSQUEAK</footer>
 
 	</body>
 </html>

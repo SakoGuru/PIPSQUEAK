@@ -384,7 +384,7 @@ var pip = (function() {
         var permissions = '0777';
         //need to make sure the selected directory wont overwrite a file too
         if (fs.existsSync(location)) {
-            throw "Directory already exists";
+            return false;
         }
         fs.mkdirSync(location, permissions);
         return true;

@@ -272,9 +272,7 @@
 							lines[i] =  firstPTag + (i + 1) + "'>" + (i + 1) + " " + doc.getLine(i) + lastPTag;
 						}
 						
-						for (i = 0; i < numLines; i++) {
-							console.log(lines[i]);
-						}
+					
 						
 					//end get codemirror lines into <p> tags
 					//pub.publish = function (media, fileContents, name, path)
@@ -967,3 +965,5 @@ var squeak = (function () {
 }());
 //TODO Remove or comment this out before final version (this is for testing purposes only and throws an error running)
 exports.squeak = squeak;
+
+

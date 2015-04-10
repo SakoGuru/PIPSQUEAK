@@ -311,5 +311,8 @@ code.
 	    window.onbeforeunload = function() {
 	        return "Dude, are you sure you want to leave? Think of the kittens!";
 	    }
+	    window.onload = function() {
+  			pip.removeDirectory('publish');
+		};
 	</script>
 </html>

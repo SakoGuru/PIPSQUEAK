@@ -272,9 +272,7 @@
 							lines[i] =  firstPTag + (i + 1) + "'>" + (i + 1) + " " + doc.getLine(i) + lastPTag;
 						}
 						
-						for (i = 0; i < numLines; i++) {
-							console.log(lines[i]);
-						}
+					
 						
 					//end get codemirror lines into <p> tags
 					//pub.publish = function (media, fileContents, name, path)
@@ -948,8 +946,10 @@ var squeak = (function () {
         var newWin = gui.Window.open(path + "/" + name + "/index.html", {
   			position: 'center',
   			width: 1280,
-    		height: 720
+    		height: 720,
+			'new-instance': true
 		});
+
         newWin.on('focus', function() {
   			console.log('New window is focused');
 		});
@@ -965,3 +965,5 @@ var squeak = (function () {
 }());
 //TODO Remove or comment this out before final version (this is for testing purposes only and throws an error running)
 exports.squeak = squeak;
+
+

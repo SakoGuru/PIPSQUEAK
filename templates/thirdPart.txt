@@ -12,8 +12,13 @@
 </div>
 
 <!--/main-->
-
-<footer class="text-center">PIPSQUEAK</footer>
-
+<div id="footer">
+<footer class="text-center">
+	<div class="container-fluid">
+		PIPSQUEAK
+	</div>
+</footer>
+</div>
+</div>
 	</body>
 </html>

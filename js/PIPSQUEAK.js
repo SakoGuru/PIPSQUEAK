@@ -12,6 +12,7 @@
 			var action;
 			var media = './videos/nothing.webm';
 			var code = 'dead code';
+			
 			$(document).ready(function(global){
 				
 				
@@ -45,13 +46,32 @@
 					var info = cm.lineInfo(n);
 					cm.setGutterMarker(n, "annotation-gutter", info.gutterMarkers ? null : makeMarker());
 				});
-
+				
 				function makeMarker(src, type) {
 					var marker = document.createElement("div");
 					marker.style.color = "#822";
-					marker.innerHTML = "<a href=" + src + "><span class='glyphicon glyphicon-" + type + "'></span></a>";
+					marker.innerHTML = "<a href=" + src + "><span id='annotation' class='glyphicon glyphicon-" + type + "'></span></a>";
+					var annotation = $('#annotation');
+					annotation.dialog({
+						autoOpen:false,
+    					title:"Your jQueryUI Dialog",
+						show: "fade",
+						hide: "fade",
+    					width:500, //orig defaults: width: 300, height: auto
+						buttons: {
+							Ok: function() {
+								$(this).dialog('close');
+							}
+						}
+					});
+					annotation.hover(function(){
+						annotation.html('this is an annotation');
+						annotation.dialog('open');
+					});
+					
 					return marker;
 				}
+				
 				if(pip.doesExist('recoveryFile.pipsqueak') === true) {
 					if(confirm("PIPSQUEAK has detected that the recovery file is intact. Would you like to recover? (Note: selecting \'No\' will delete the recovery file)")) {
 						squeak.recover();

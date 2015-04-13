@@ -816,7 +816,15 @@ var squeak = (function () {
                 //call anchor function
                 if(dev === true) console.log("Anchoring lines " + startLine + " to " + endLine + " from time " + startTime + " to time " + endTime + ".");
                 //TODO: Anchor function
-
+				for (ii = startLine; ii <= endLine; ii += 1) {
+                    start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
+                        + ",\n\tonStart: function() {\n\t\t$(\'#line" + ii + "\').fadeOut();\n\t},\n"
+                        + "\tonEnd: function() {\n\t\t$(\'#line" + ii + "\').fadeIn();\n\t}\n});\n";
+                    /*end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
+                        + ",\n\tonStart: function() {\n\t\t$(\'line" + i  + "\').removeClass(\"" + action + "\")\n\t}\n});\n";*/
+                    popcornFile += start;
+                    //popcornFile += end;
+				}
             } else if (action === 'autoScroll') {
                 //call autoScroll function
                 //TODO: Luke should look at this and make sure I refactored it correctly.

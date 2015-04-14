@@ -849,7 +849,7 @@ var squeak = (function () {
                 for (ii = startLine; ii <= endLine; ii += 1) {
                     start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() {\n\t\t$(\'#line" + ii + "\').prepend($(\"#annotation\"));\n\t},\n"
-                        + "\tonEnd: function() {});\n";
+                        + "\tonEnd: function() {}});\n";
                     /*end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() {\n\t\t$(\'line" + i  + "\').removeClass(\"" + action + "\")\n\t}\n});\n";*/
                     popcornFile += start;

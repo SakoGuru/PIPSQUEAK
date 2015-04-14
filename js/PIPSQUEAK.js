@@ -64,8 +64,8 @@
 							}
 						}
 					});
-					annotation.hover(function(){
-						annotation.html('this is an annotation');
+					$(document).on("mouseover", "#annotation", function(){
+						alert("hover works");
 						annotation.dialog('open');
 					});
 					
@@ -210,6 +210,10 @@
 				
 				});
 				
+				$("#annotate").click(function() {
+					video.pause();
+				});
+				
 				$('#annotateDropMenu li a').click(function() {
 					var selText = $(this).text();
 					$('#annotateType').html(selText+' <span class="caret"></span>');
@@ -223,6 +227,14 @@
 					var src = $('#annotateSource').val();
 					var type = $('#annotateType').val();
 					var sendToBackend = [line, src, type];
+					
+					action = "annotate";
+					startLine = line;
+					endLine = line;
+					startTime = $('#currentTime').html();
+					startTime = Number(startTime);
+					endTime = $('#totalTime').html();
+					endTime = Number(endTime);
 					
 					var typeGlyph = "info-sign";
 					if (type == "Video") {
@@ -239,7 +251,7 @@
 					else {
 						editor.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
 					}
-					
+					squeak.addAction( startLine, endLine, startTime, endTime, action );
 				});
 				
 				$("#strikethrough").click(function() {
@@ -597,7 +609,7 @@ var squeak = (function () {
             return false;
         }
         //add additional actions names here
-        if (action !== 'strike' && action !== 'highlight' && action !== 'focus' && action !== 'fadeIn' && action !== 'fadeOut' && action !== 'anchor' && action !== 'autoScroll') {
+        if (action !== 'strike' && action !== 'highlight' && action !== 'focus' && action !== 'fadeIn' && action !== 'fadeOut' && action !== 'anchor' && action !== 'autoScroll' && action != 'annotate') {
             throw action + " is not an allowed action";
         }
         id += 1;

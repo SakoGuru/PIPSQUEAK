@@ -50,7 +50,7 @@
 				function makeMarker(src, type) {
 					var marker = document.createElement("div");
 					marker.style.color = "#822";
-					marker.innerHTML = "<a href=" + src + "><span id='annotation' class='glyphicon glyphicon-" + type + "'></span></a>";
+					marker.innerHTML = "<a title="+ $('#annotateComment').val() + " href=" + src + "><span id='annotation' class='glyphicon glyphicon-" + type + "'></span></a>";
 					var annotation = $('#annotation');
 					annotation.dialog({
 						autoOpen:false,
@@ -65,8 +65,8 @@
 						}
 					});
 					$(document).on("mouseover", "#annotation", function(){
-						alert("hover works");
-						annotation.dialog('open');
+						//alert($('#annotateComment').val() + "\n");
+						//annotation.dialog('open');
 					});
 					
 					return marker;
@@ -843,7 +843,15 @@ var squeak = (function () {
                 //call annotate function
                 if(dev === true) console.log("Annotating lines " + startLine + " to " + endLine + " from time " + startTime + " to time " + endTime + ".");
                 //TODO: Annotate function
-
+                for (ii = startLine; ii <= endLine; ii += 1) {
+                    start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
+                        + ",\n\tonStart: function() {\n\t\t$(\'#line" + ii + "\').prepend($(\"#annotation\"));\n\t},\n"
+                        + "\tonEnd: function() {});\n";
+                    /*end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
+                        + ",\n\tonStart: function() {\n\t\t$(\'line" + i  + "\').removeClass(\"" + action + "\")\n\t}\n});\n";*/
+                    popcornFile += start;
+                    //popcornFile += end;
+				}
             } else if (action === 'anchor') {
                 //call anchor function
                 if(dev === true) console.log("Anchoring lines " + startLine + " to " + endLine + " from time " + startTime + " to time " + endTime + ".");

@@ -818,14 +818,17 @@ var squeak = (function () {
             if (action === 'strike' || action === 'highlight' || action === 'focus' || action === 'fadeOut') {
                 //call any of the CSS adder functions
                 if(dev === true) console.log(action + "ing lines " + startLine + " - " + endLine + " from time " + startTime + " to time " + endTime + ".");
+				var scroller = "\n\t\tdocument.getElementById(\'codearea\').scrollTop = (document.getElementById(\'line" + startLine + "\').offsetTop - 150);";
                 for (ii = startLine; ii <= endLine; ii += 1) {
                     start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
-                        + ",\n\tonStart: function() {\n\t\t$(\'#line" + ii + "\').addClass(\"" + action + "\");\n\t},\n"
+                        + ",\n\tonStart: function() {" + scroller 
+						+ "\n\t\t$(\'#line" + ii + "\').addClass(\"" + action + "\");\n\t},\n"
                         + "\tonEnd: function() {\n\t\t$(\'#line" + ii + "\').removeClass(\"" + action + "\");\n\t}\n});\n";
                     /*end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() {\n\t\t$(\'line" + i  + "\').removeClass(\"" + action + "\")\n\t}\n});\n";*/
                     popcornFile += start;
                     //popcornFile += end;
+					scroller = ""; //Only want it on the first line
                 }
             } else if (action === 'annotate') {
                 //call annotate function
@@ -838,7 +841,8 @@ var squeak = (function () {
                 //TODO: Anchor function
 				for (ii = startLine; ii <= endLine; ii += 1) {
                     start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
-                        + ",\n\tonStart: function() {\n\t\t$(\'#line" + ii + "\').fadeOut();\n\t},\n"
+                        + ",\n\tonStart: function() { \n\t\tdocument.getElementById(\'codearea\').scrollTop = (document.getElementById(\'line" + startLine + "\').offsetTop - 150);"
+						+ "\n\t\t$(\'#line" + ii + "\').fadeOut();\n\t},\n"
                         + "\tonEnd: function() {\n\t\t$(\'#line" + ii + "\').fadeIn();\n\t}\n});\n";
                     /*end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() {\n\t\t$(\'line" + i  + "\').removeClass(\"" + action + "\")\n\t}\n});\n";*/
@@ -850,15 +854,11 @@ var squeak = (function () {
                 //TODO: Luke should look at this and make sure I refactored it correctly.
                 if(dev === true) console.log("Scrolling from line " + startLine + " to line " + endLine + " from time " + startTime + " to time " + endTime + ".");
                 //durr = end - start; never used?
-                start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime
-                    + ",\n\tonStart: function() {\n\t\ttop = document.getElementById(\'" + startLine + "\').offsetTop;"
-                    + "\n\t\tdocument.getElementById('codearea').scrollTop = topPos;\n"
-                    + "\n\t\t$('body,html').animate({scrollTop: " + endLine + "}," + "durr" + ");\n"
-                    + "\n\t\t$(\'" + endLine + "\').addClass(\"autoScroll\")\n\t}\n});\n";
-                end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
-                    + ",\n\tonStart: function() {\n\t\t$(\'" + endLine + "\').removeClass(\"autoScroll\")\n\t}\n});\n";
+                start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
+                        + ",\n\tonStart: function() {\n\t\tdocument.getElementById(\'codearea\').scrollTop = document.getElementById(\'line" + startLine + "\').offsetTop;\n\t},\n"
+						+ "\tonEnd: function() {\n\t\t//$(\'#line" + ii + "\').removeClass(\"" + action + "\");\n\t}\n});\n";
+					//document.getElementById("container").scrollTop = document.getElementById(\'"startLine + "\').offsetTop;
                 popcornFile += start;
-                popcornFile += end;
             } else {
                 if(dev === true) console.log(action + " is not an accepted action in function runAction");
                 return false;

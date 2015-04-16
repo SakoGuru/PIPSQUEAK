@@ -387,13 +387,13 @@
 						var numLines = doc.lineCount();
 						var lines = [];
 						var i;
-						var firstPTag = "<p id='line";
-						var lastPTag = "</p>";
-						
+						var firstPTag = "<span id='line";
+						var lastPTag = "</span>";
+						lines[0] = "<pre class='prettyprint linenums'><code>";
 						for (i = 0; i < numLines; i++) {
-							lines[i] =  firstPTag + (i + 1) + "'>" + (i + 1) + " " + doc.getLine(i) + lastPTag;
+							lines[i+1] =  firstPTag + (i + 1) + "'>" + doc.getLine(i) + lastPTag + '\n';
 						}
-						
+						lines[numLines+1] = "</code></pre>";
 					
 						
 					//end get codemirror lines into <p> tags

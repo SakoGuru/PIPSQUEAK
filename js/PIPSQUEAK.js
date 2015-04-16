@@ -26,7 +26,7 @@
 				
 				//create codemirror instance and add gutter marks
 				
-				var editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
+				editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
 					tabMode: 'indent',
 					lineNumbers: true,
 					lineWrapping: true,
@@ -96,18 +96,108 @@
 				//end jsfiddle 
 
 				$('#uploadCode').click(function() {
+					var c = $("#codearea").html();
+					//console.log(c)
 					
-					if ($("#newCM").html() == "upload button clicked") {
-						newCM.toTextArea(); //transfer current code mirror instance back to the textarea DOM element
+					if ($("#newCM").html() === "upload button clicked") {
+						/*
+						newCmInstance.toTextArea();
+						if(typeof editor === "undefined") {
+							console.log("what is happening?");
+						}
+						if(($("#printInfo").html()) == "new code"){
+							//console.log("newCmInstance = " newCmInstance);
+							newCmInstance.toTextArea();
+							console.log("fileupload.js was called the time before this");
+						}
+						else{
+							console.log("fileupload.js was NOT called the time before this");
+						}
+						*/
+						//var c = $("#codearea").html();
+
+						if(typeof newCmInstance === "undefined") {
+							/*
+							$('#wrappingDiv').remove(); //remove the textarea DOM element
+							$('#wrapHouse').append("<div id='wrappingDiv'></div>"); //add new textarea DOM element
+							$('#wrappingDiv').append("<textarea id='codearea' name='codearea'></textarea> "); //add new textarea DOM element
+							*/
+						//	console.log("newCmInstance is undefined");
+						}
+						else {
+							e = newCmInstance.getValue();
+							//console.log("newCmInstance is NOT undefined");
+							//console.log(e);
+							newCmInstance.toTextArea();
+							$('#codearea').remove(); //remove the textarea DOM element
+							var d = $("#codearea").html();
+							//console.log(d);
+							if (typeof d === "undefined") {
+								//console.log("we're in!");
+							$('#wrappingDiv').remove(); //remove the textarea DOM element
+							$('#wrapHouse').append("<div id='wrappingDiv'></div>"); //add new textarea DOM element
+							$('#wrappingDiv').append("<textarea id='codearea' name='codearea'>" + e + "</textarea> "); //add new textarea DOM element
+								editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
+									tabMode: 'indent',
+									lineNumbers: true,
+									lineWrapping: true,
+									autoCloseTags: true,
+									theme: 'vibrant-ink',
+									matchBrackets: true,
+									styleActiveLine: true,
+									gutters: ["CodeMirror-linenumbers", "annotation-gutter"]
+								});
+							}
+						}
+						
 					}
 					else {
-						editor.toTextArea(); //transfer current code mirror instance back to the textarea DOM element
+						console.log("first time upload button was clicked");
+					//	var c = $("#codearea").html();
+					//	console.log(c);
+						if(typeof editor === "undefined") {
+							/*
+							$('#wrappingDiv').remove(); //remove the textarea DOM element
+							$('#wrapHouse').append("<div id='wrappingDiv'></div>"); //add new textarea DOM element
+							$('#wrappingDiv').append("<textarea id='codearea' name='codearea'></textarea> "); //add new textarea DOM element
+							*/
+							//console.log("editor is undefined");
+						}
+						else {
+							e = editor.getValue();
+							//console.log("editor is NOT undefined");
+							editor.toTextArea();
+							$('#codearea').remove(); //remove the textarea DOM element
+							var d = $("#codearea").html();
+							//console.log(d);
+							if (typeof d === "undefined") {
+								//console.log("we're in!");
+								$('#wrappingDiv').append("<textarea id='codearea' name='codearea'>" + c + "</textarea> "); //add new textarea DOM element
+								editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
+									tabMode: 'indent',
+									lineNumbers: true,
+									lineWrapping: true,
+									autoCloseTags: true,
+									theme: 'vibrant-ink',
+									matchBrackets: true,
+									styleActiveLine: true,
+									gutters: ["CodeMirror-linenumbers", "annotation-gutter"]
+								});
+							}
+						}
 					}
+
 					$("#newCM").html("upload button clicked");
-				
+					$("#printInfo").html("reset");
+					
+
+					//console.log("e = " + e);
+					
 					$('#codearea').remove(); //remove the textarea DOM element
+					
 				});
-				
+
+
 				$('#durationModal').on('shown.bs.modal', function () {
 					$('#dur').focus();
 				})
@@ -155,7 +245,7 @@
 						var test = $("#newCM").html();
 						if (dev === true) console.log(test);
 						if ($("#newCM").html() == "upload button clicked") {
-								doc = newCM.getDoc();
+								doc = newCmInstance.getDoc();
 						}
 						else {
 							doc = editor.getDoc(); //get the editor document
@@ -246,7 +336,7 @@
 					}
 					
 					if ($("#newCM").html() == "upload button clicked") {
-							newCM.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
+							newCmInstance.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
 					}
 					else {
 						editor.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
@@ -285,7 +375,7 @@
 					
 					if ($("#newCM").html() == "upload button clicked") {
 						$("#printInfo2").html("published for the new editor");
-						doc = newCM.getDoc();
+						doc = newCmInstance.getDoc();
 					}
 					else {
 						$("#printInfo2").html("published from original editor");

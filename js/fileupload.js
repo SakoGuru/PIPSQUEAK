@@ -5,10 +5,26 @@ var $ = require('jquery');
 			
 // Uploads user file and loads it into CodeMirror editor
 function loadFile(input) {
-
-	$('#wrappingDiv').append("<textarea id='codearea' name='codearea'></textarea> "); //add new textarea DOM element
+	//console.log("loadfile function is running");
+	//console.log(editor);
+	//var c = $("#codearea").html();
+	//console.log(c);
+	//console.log(e);
+	/*
+	if (editor) {
+		//console.log(wrappingDiv);
+		$('#wrappingDiv').remove(); //remove the textarea DOM element
+	}
+	else if (newCmInstance){
+		//console.log(wrappingDiv);
+		$('#wrappingDiv').remove(); //remove the textarea DOM element
+	}
+	*/
+	$('#wrappingDiv').remove(); //remove the textarea DOM element
+	$('#wrapHouse').append("<div id='wrappingDiv'></div>"); //add new textarea DOM element
+	$('#wrappingDiv').append("<textarea id='codearea' name='codearea'>" + e + "</textarea> "); //add new textarea DOM element
 	
-	var editor = CodeMirror.fromTextArea(document.getElementById('codearea'), {
+	editor = CodeMirror.fromTextArea(document.getElementById('codearea'), {
 		tabMode: 'indent',
 		lineNumbers: true,
 		lineWrapping: true,
@@ -26,10 +42,16 @@ function loadFile(input) {
 		code = (String (code)).replace(/'/g, "\"");
 		//squeak.saveFile(media,code);
 	}
+
+
 	reader.readAsText(input.files[0]);
+	
+	$("#printInfo").html("new code");
+	
 	//transfer new codemirror instance back to PIPSQUEAK.js
 	$('#codearea').data('CodeMirrorInstance', editor); //save new editor and name it CodeMirrorInstance
-	newCM = $('#codearea').data('CodeMirrorInstance'); //put new editor in global javascript variable to be accessed in PIPSQUEAK.js
+	newCmInstance = $('#codearea').data('CodeMirrorInstance'); //put new editor in global javascript variable to be accessed in PIPSQUEAK.js
+	//console.log("newCM = " + newCM);
 	
 }
 

@@ -197,6 +197,10 @@
 					
 				});
 
+				$('.navbar-header').click(function() {
+					$(".col-sm-3").toggle('slide');
+				});
+
 
 				$('#durationModal').on('shown.bs.modal', function () {
 					$('#dur').focus();
@@ -276,6 +280,7 @@
 				
 					$("#tool").html("highlight");
 					video.pause();
+					
 				
 				});
 				

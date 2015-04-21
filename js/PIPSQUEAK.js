@@ -50,24 +50,13 @@
 				function makeMarker(src, type) {
 					var marker = document.createElement("div");
 					marker.style.color = "#822";
-					marker.innerHTML = "<a title="+ $('#annotateComment').val() + " href=" + src + "><span id='annotation' class='glyphicon glyphicon-comment'></span></a>";
-					var annotation = $('#annotation');
-					annotation.dialog({
-						autoOpen:false,
-    					title:"Your jQueryUI Dialog",
-						show: "fade",
-						hide: "fade",
-    					width:500, //orig defaults: width: 300, height: auto
-						buttons: {
-							Ok: function() {
-								$(this).dialog('close');
-							}
-						}
-					});
-					$(document).on("mouseover", "#annotation", function(){
-						//alert($('#annotateComment').val() + "\n");
+					//<a title="+ $('#annotateComment').val() + " href=" + src + ">
+					marker.innerHTML = "<span id='comment' data-toggle='modal' data-target='#annotateCommentModal' class='glyphicon glyphicon-comment'></span></a>";
+					var annotation = $('#comment');
+					/*$(document).on("mouseover", "#comment", function(){
+						alert($('#annotateComment').val() + "\n");
 						//annotation.dialog('open');
-					});
+					});*/
 					
 					return marker;
 				}
@@ -974,7 +963,7 @@ var squeak = (function () {
                 //TODO: Annotate function
                 for (ii = startLine; ii <= endLine; ii += 1) {
                     start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
-                        + ",\n\tonStart: function() {\n\t\t$(\'#line" + ii + "\').prepend(\"<span id='comment' class='glyphicon glyphicon-comment'>\");\n\t},\n"
+                        + ",\n\tonStart: function() {\n\t\t$(\'#line" + (startLine + 1) + "\').prepend(\"<span id='comment' data-toggle='modal' data-target='#annotateCommentModal' class='glyphicon glyphicon-comment'></span>\");\n\t},\n"
                         + "\tonEnd: function() {}});\n";
                     /*end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() {\n\t\t$(\'line" + i  + "\').removeClass(\"" + action + "\")\n\t}\n});\n";*/

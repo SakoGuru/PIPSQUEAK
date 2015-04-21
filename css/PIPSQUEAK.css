@@ -147,7 +147,10 @@ div.buttons  button {
 
 .breakpoints {width: .8em;}
 .breakpoint { color: #822; }
-.CodeMirror {border: 1px solid #aaa;}
+.CodeMirror {
+border: 1px solid #aaa;
+height: auto;
+}
 
 /*end codemirror*/
 

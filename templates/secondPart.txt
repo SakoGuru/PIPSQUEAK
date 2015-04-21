@@ -5,8 +5,6 @@
 					
 			</div>
 		</div>
-              
-		<hr>
 			  
 		<!--/video-->
 		
@@ -56,4 +54,5 @@
         
 		<div class="panel panel-default">
 			<div class="panel-heading"><h4>Code</h4></div>
+				<div >
 				<div id="codearea" class="panel-body" style="min-height: 400px; max-height: 400px; overflow-y: scroll;">

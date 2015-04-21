@@ -196,11 +196,41 @@
 					$('#codearea').remove(); //remove the textarea DOM element
 					
 				});
-
-				$('.navbar-header').click(function() {
-					$(".col-sm-3").toggle('slide');
+				
+				/*  //LEAVING THIS IN CASE WE WANT TO USE SLIDE STUFF
+				var toggleCounter = 0;
+				$('.navbar-brand').click(function() {
+					//console.log(toggleCounter);
+					$(".col-sm-2").toggle('slide');
+					
+					if(toggleCounter % 2 == 0) {
+						$("#codeHouse").delay(2000).queue(function(next){
+							$(this).removeClass("col-md-5");
+							next();
+						});
+						$("#codeHouse").addClass("col-md-6");
+						$("#videoHouse").delay(2000).queue(function(next){
+							$(this).removeClass("col-md-5");
+							next();
+						});
+						$("#videoHouse").addClass("col-md-6");
+					}
+					else {
+						$("#codeHouse").delay(2000).queue(function(next){
+							$(this).removeClass("col-md-6");
+							next();
+						});
+						$("#codeHouse").addClass("col-md-5");
+						$("#videoHouse").delay(2000).queue(function(next){
+							$(this).removeClass("col-md-6");
+							next();
+						});
+						$("#videoHouse").addClass("col-md-5");				
+					}
+					
+					toggleCounter++;
 				});
-
+				*/
 
 				$('#durationModal').on('shown.bs.modal', function () {
 					$('#dur').focus();
@@ -943,7 +973,7 @@ var squeak = (function () {
                 //TODO: Annotate function
                 for (ii = startLine; ii <= endLine; ii += 1) {
                     start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
-                        + ",\n\tonStart: function() {\n\t\t$(\'#line" + ii + "\').prepend(<span id='annotation' class='glyphicon glyphicon-comment'></span>);\n\t},\n"
+                        + ",\n\tonStart: function() {\n\t\t$(\'#line" + ii + "\').prepend(\"<span id='comment' class='glyphicon glyphicon-comment'>\");\n\t},\n"
                         + "\tonEnd: function() {}});\n";
                     /*end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() {\n\t\t$(\'line" + i  + "\').removeClass(\"" + action + "\")\n\t}\n});\n";*/

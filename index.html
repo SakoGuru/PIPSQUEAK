@@ -59,27 +59,38 @@
 			</button>
 			<a class="navbar-brand" href="#">PIPSQUEAK</a>
 		</div>
+		<div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+					<a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-eye-open"></i> View <span class="caret"></span></a>
+					<ul id="g-account-menu" class="dropdown-menu" role="menu">
+						<li><a href="#" data-toggle="modal" data-target="#historyModal"><span class="glyphicon glyphicon-time"></span> History</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
 	</div>
 </div>
 
 <!--header-->
 
 <!--main-->
-
+<div id="wrapper" style="overflow: hidden important">
 <div class="container-fluid">
 <div class="row">
 
 	<!--left column-->
 	
-	<div class="col-sm-3">
+	<div class="col-sm-2 goaway">
 
 		<strong><i class="glyphicon glyphicon-wrench"></i> Toolbox</strong>  
 
 		<hr>
 		
 		<div>
-			<div class="buttons">
-				<button type="submit" id="highlight" name="highlight" class="btn btn-primary btn-block buttons" data-toggle="modal" data-target="#durationModal">Highlight <span class="glyphicon glyphicon-pencil"></span></button>
+			<div>
+				<button type="submit" id="highlight" name="highlight" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">Highlight <span class="glyphicon glyphicon-pencil"></span></button>
 				<br>
 				<button type="submit" id="focus" name="focus" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">Focus <span class="glyphicon glyphicon-screenshot"></span></button>			
 				<br>
@@ -101,11 +112,12 @@
       
     <!--middle column-->
 			
-    <div class="col-md-6">
-
+    <div id="videoHouse" class="col-md-5" style="min-height: 1000px important;">
+<!--
 			<strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong> 
 
       	<hr>
+-->
 			
 		<!--video-->	
 
@@ -133,8 +145,8 @@
 						<br>
 						
 					</div>
-					<div>Current Time: <span  id="currentTime">0</span></div> <!--jsfiddle-->
-					<div>Total Time: <span id="totalTime">0</span></div> <!--jsfiddle-->
+					<div hidden>Current Time: <span  id="currentTime">0</span></div> <!--jsfiddle-->
+					<div hidden>Total Time: <span id="totalTime">0</span></div> <!--jsfiddle-->
 					<!--/end jsfiddle code-->
 
 					<!--tests-->
@@ -145,12 +157,74 @@
 					
 			</div>
 		</div>
+		
+		</div>
               
-		<hr>
+		
 			  
 		<!--/video-->
+			  
+		<!--codemirror-->
+		<div id="codeHouse" class="col-md-5">
+              
+		<div class="panel panel-default" id="codeMirror">
+			<div class="panel-heading"><h4>CodeMirror</h4></div>
+			<div id="video_container">
+			<div id="wrapHouse" style="position: relative; padding-left: 15px; padding-right: 15px; padding-top: 15px;">
+			<div id="wrappingDiv">
+			<textarea id="codearea" name="codearea">
+Here is
+some sample
+code.
+			</textarea> 
+			</div>
+			</div>
+			<div style="padding-top: 5px; padding-left: 15px; padding-right: 15px">
+			<span class="btn btn-success btn-file buttons" id="uploadCode">
+				<p style="display: inline; position: relative; z-index: 1" class="mid">Upload Code </p><span style="position: relative; z-index: 1" class="glyphicon glyphicon-upload"></span>
+				<input style="z-index: 2" type="file" id="myFile" onchange="loadFile(this)" class="btn btn-default btn-block buttons">
+			</span>
+			<br>
+			<br>
+			
+			</div>
+			</div>
+		</div>
 		
-		<!--popup to get duration-->
+		</div>
+			  
+		<!--/codemirror-->
+   
+	</div>
+			
+	<!--/middle column-->
+			
+	<!--right column-->
+<!--
+	<div class="col-sm-3" >
+
+		<strong><i class="glyphicon glyphicon-time"></i> History</strong>  
+
+		<hr>
+      
+		
+	  	<div style="height:768px;width:100%;overflow:auto;">
+		<table class="table table-striped actionsTable">
+			<thead>
+				<tr><th>Line #</th><th>Time (s)</th><th>Tool</th><th>Delete</th></tr>
+			</thead>
+			
+			<tbody>
+			</tbody>
+		</table>
+		</div>				
+		
+	  
+	</div>
+-->
+	<!--/right column-->
+	
+			<!--popup to get duration-->
 
 		<div class="modal fade" id="durationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
@@ -281,11 +355,19 @@ code.
 	<div class="col-sm-3">
 
 		<strong><i class="glyphicon glyphicon-time"></i> History</strong>  
-
-		<hr>
-      
-		<!--history-->
-	  	<div style="height:768px;width:100%;overflow:auto;">
+		
+		<!--popup for history-->
+		<div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="historyModalLabel"><span class="glyphicon glyphicon-time"></span> History</h4>
+			  </div>
+			  <div class="modal-body">
+	<div>   
+		
+	  	<div style="height:500px;width:100%;overflow:auto;">
 		<table class="table table-striped actionsTable">
 			<thead>
 				<tr><th>Line #</th><th>Time (s)</th><th>Tool</th><th>Delete</th></tr>
@@ -295,17 +377,26 @@ code.
 			</tbody>
 		</table>
 		</div>				
-		<!--/history-->
+		
 	  
 	</div>
-			
-	<!--/right column-->
+				<div class="modal-footer">
+					<!--<span id = "error"></span>-->
+					<span id="error"></span>
+					<button id="durationClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+
+		<!--/end popup to get duration-->
 	
 </div>
 </div>
 
 <!--/main-->
-
+<div id="footer">
 <footer>
 	<div class="container-fluid">
 		<div class="row">
@@ -322,6 +413,7 @@ code.
 		</div>
 	</div>
 </footer>
+</div>
 	
 	</body>
 	<script type="text/javascript">

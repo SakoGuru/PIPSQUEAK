@@ -197,6 +197,10 @@
 					
 				});
 				
+				//$("#videoSizer").height() = $("#codeSizer").height();
+				var codesize = $(".codeSizer").height();
+				console.log(codesize);
+				$(".videoSizer").height(codesize);
 				/*  //LEAVING THIS IN CASE WE WANT TO USE SLIDE STUFF
 				var toggleCounter = 0;
 				$('.navbar-brand').click(function() {

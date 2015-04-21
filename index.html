@@ -76,18 +76,24 @@
 <!--header-->
 
 <!--main-->
-<div id="wrapper" style="overflow: hidden important">
+<div id="wrapper">
 <div class="container-fluid">
+		<div class="row">
+			<div class="col-md-2">
+				<strong><i class="glyphicon glyphicon-wrench"></i> Toolbox</strong>  
+				<hr>
+			</div>
+			<div class="col-md-10">
+				<strong><i class="glyphicon glyphicon-dashboard"></i> Dashboard</strong>  
+				<hr>
+			</div>
+		</div>
 <div class="row">
 
 	<!--left column-->
 	
 	<div class="col-sm-2 goaway">
 
-		<strong><i class="glyphicon glyphicon-wrench"></i> Toolbox</strong>  
-
-		<hr>
-		
 		<div>
 			<div>
 				<button type="submit" id="highlight" name="highlight" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">Highlight <span class="glyphicon glyphicon-pencil"></span></button>
@@ -112,7 +118,7 @@
       
     <!--middle column-->
 			
-    <div id="videoHouse" class="col-md-5" style="min-height: 1000px important;">
+    <div id="videoHouse" class="col-md-5">
 <!--
 			<strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong> 
 
@@ -121,19 +127,20 @@
 			
 		<!--video-->	
 
-        <div class="panel panel-default">
+        <div  class="panel panel-default">
 			<div class="panel-heading"><h4>Video</h4></div>
-				<div class="panel-body">
+				<div class="panel-body videoSizer">
 				
 					<!--jsfiddle code for current time grabber-->
-			
-                    <div id="video_container"> <!--jsfiddle-->
+                    <div id="video_container" style="position: absolute; padding-top: 15px; padding-left: 15px; padding-right: 45px"> <!--jsfiddle-->
 					
-						<video class="vid" id="video" controls>
+						<video class="vid" id="video" style="position: relative; height: 100%;" controls>
 						
 							<source type="video/webm" src="" id="webm" autoplay="false"></source>
 							<source type="video/ogg" src="" id="ogv" autoplay="false"></source>
-							
+							<!--
+							<source src="http://playground.html5rocks.com/samples/html5_misc/chrome_japan.ogv" type='video/ogg; codecs="theora, vorbis"' />
+							-->
 							Your browser does not support HTML5 video.
 						</video>
 						
@@ -143,8 +150,9 @@
 						</span>
 						<br>
 						<br>
-						
+				
 					</div>
+
 					<div hidden>Current Time: <span  id="currentTime">0</span></div> <!--jsfiddle-->
 					<div hidden>Total Time: <span id="totalTime">0</span></div> <!--jsfiddle-->
 					<!--/end jsfiddle code-->
@@ -169,14 +177,17 @@
               
 		<div class="panel panel-default" id="codeMirror">
 			<div class="panel-heading"><h4>CodeMirror</h4></div>
-			<div id="video_container">
+			<div class="panel-body codeSizer">
+			<div id="video_container" >
 			<div id="wrapHouse" style="position: relative; padding-left: 15px; padding-right: 15px; padding-top: 15px;">
 			<div id="wrappingDiv">
-			<textarea id="codearea" name="codearea">
+
+			<textarea id="codearea" name="codearea" style="min-height: 400px; max-height: 400px; overflow-y: scroll;">
 Here is
 some sample
 code.
 			</textarea> 
+
 			</div>
 			</div>
 			<div style="padding-top: 5px; padding-left: 15px; padding-right: 15px">
@@ -187,6 +198,7 @@ code.
 			<br>
 			<br>
 			
+			</div>
 			</div>
 			</div>
 		</div>
@@ -348,7 +360,9 @@ code.
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-3">
+				<!--
 				<button type="submit" id="save" name="save" class="btn btn-primary btn-block buttons">Save <span class="glyphicon glyphicon-save"></span></button>
+				-->
 			</div> <!--end left column-->
 			<div class="col-md-6">
 			</div> <!--end middle column-->

@@ -50,7 +50,7 @@
 				function makeMarker(src, type) {
 					var marker = document.createElement("div");
 					marker.style.color = "#822";
-					marker.innerHTML = "<a title="+ $('#annotateComment').val() + " href=" + src + "><span id='annotation' class='glyphicon glyphicon-" + type + "'></span></a>";
+					marker.innerHTML = "<a title="+ $('#annotateComment').val() + " href=" + src + "><span id='annotation' class='glyphicon glyphicon-comment'></span></a>";
 					var annotation = $('#annotation');
 					annotation.dialog({
 						autoOpen:false,
@@ -959,7 +959,8 @@ var squeak = (function () {
             if (action === 'strike' || action === 'highlight' || action === 'focus' || action === 'fadeOut') {
                 //call any of the CSS adder functions
                 if(dev === true) console.log(action + "ing lines " + startLine + " - " + endLine + " from time " + startTime + " to time " + endTime + ".");
-				var scroller = "\n\t\tdocument.getElementById(\'codearea\').scrollTop = (document.getElementById(\'line" + startLine + "\').offsetTop - 150);";
+				//var scroller = "\n\t\tdocument.getElementById(\'codearea\').scrollTop = (document.getElementById(\'line" + startLine + "\').offsetTop - 150);";
+                var scroller = "\n\t\t$(\'#codearea\').animate({ scrollTop: (document.getElementById(\'line" + startLine + "\').offsetTop - 150) }, 600, 'easeOutElastic')";
                 for (ii = startLine; ii <= endLine; ii += 1) {
                     start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() {" + scroller 

@@ -50,7 +50,7 @@
 				function makeMarker(src, type) {
 					var marker = document.createElement("div");
 					marker.style.color = "#822";
-					marker.innerHTML = "<a title="+ $('#annotateComment').val() + " href=" + src + "><span id='annotation' class='glyphicon glyphicon-" + type + "'></span></a>";
+					marker.innerHTML = "<a title="+ $('#annotateComment').val() + " href=" + src + "><span id='annotation' class='glyphicon glyphicon-comment'></span></a>";
 					var annotation = $('#annotation');
 					annotation.dialog({
 						autoOpen:false,
@@ -943,7 +943,7 @@ var squeak = (function () {
                 //TODO: Annotate function
                 for (ii = startLine; ii <= endLine; ii += 1) {
                     start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
-                        + ",\n\tonStart: function() {\n\t\t$(\'#line" + ii + "\').prepend($(\"#annotation\"));\n\t},\n"
+                        + ",\n\tonStart: function() {\n\t\t$(\'#line" + ii + "\').prepend(<span id='annotation' class='glyphicon glyphicon-comment'></span>);\n\t},\n"
                         + "\tonEnd: function() {}});\n";
                     /*end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() {\n\t\t$(\'line" + i  + "\').removeClass(\"" + action + "\")\n\t}\n});\n";*/

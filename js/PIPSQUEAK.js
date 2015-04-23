@@ -818,6 +818,7 @@ var squeak = (function () {
             throw "Error, no media input to publish";
         }
         if(pip.doesExist(media) === false) { 
+        	alert("Cannot publish a tutorial without a video file");
             throw "File " + media + " does not exist.";
         }
         name = name == null ? "publish" : name;

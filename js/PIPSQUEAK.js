@@ -49,13 +49,10 @@
 				
 				function makeMarker(src, type) {
 					var marker = document.createElement("div");
-					marker.style.color = "#428BCA";
+					marker.style.color = "#822";
 					//<a title="+ $('#annotateComment').val() + " href=" + src + ">
 					marker.innerHTML = "<span id='comment' data-toggle='modal' data-target='#annotateCommentModal' class='glyphicon glyphicon-comment'></span></a>";
 					var annotation = $('#comment');
-				/*	$("annotateCommentModal").click(function() {
-						
-					}*/
 					/*$(document).on("mouseover", "#comment", function(){
 						alert($('#annotateComment').val() + "\n");
 						//annotation.dialog('open');
@@ -189,6 +186,10 @@
 					
 				});
 				
+				//$("#videoSizer").height() = $("#codeSizer").height();
+				var codesize = $(".codeSizer").height();
+				console.log(codesize);
+				$(".videoSizer").height(codesize);
 				/*  //LEAVING THIS IN CASE WE WANT TO USE SLIDE STUFF
 				var toggleCounter = 0;
 				$('.navbar-brand').click(function() {
@@ -818,7 +819,6 @@ var squeak = (function () {
             throw "Error, no media input to publish";
         }
         if(pip.doesExist(media) === false) { 
-        	alert("Cannot publish a tutorial without a video file");
             throw "File " + media + " does not exist.";
         }
         name = name == null ? "publish" : name;
@@ -949,7 +949,7 @@ var squeak = (function () {
                 //call any of the CSS adder functions
                 if(dev === true) console.log(action + "ing lines " + startLine + " - " + endLine + " from time " + startTime + " to time " + endTime + ".");
 				//var scroller = "\n\t\tdocument.getElementById(\'codearea\').scrollTop = (document.getElementById(\'line" + startLine + "\').offsetTop - 150);";
-                var scroller = "\n\t\t$(\'#codearea\').animate({ scrollTop: (document.getElementById(\'line" + startLine + "\').offsetTop - 150) }, 600, 'easeOutBack')";
+                var scroller = "\n\t\t$(\'#codearea\').animate({ scrollTop: (document.getElementById(\'line" + startLine + "\').offsetTop - 150) }, 600, 'easeOutElastic')";
                 for (ii = startLine; ii <= endLine; ii += 1) {
                     start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() {" + scroller 
@@ -967,7 +967,7 @@ var squeak = (function () {
                 //TODO: Annotate function
                 for (ii = startLine; ii <= endLine; ii += 1) {
                     start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
-                        + ",\n\tonStart: function() {\n\t\t$(\'#line" + (startLine + 1) + "\').prepend(\"<span id='comment' style='color:#428BCA' data-toggle='modal' data-target='#annotateCommentModal' class='glyphicon glyphicon-comment'></span>\");\n\t},\n"
+                        + ",\n\tonStart: function() {\n\t\t$(\'#line" + (startLine + 1) + "\').prepend(\"<span id='comment' data-toggle='modal' data-target='#annotateCommentModal' class='glyphicon glyphicon-comment'></span>\");\n\t},\n"
                         + "\tonEnd: function() {}});\n";
                     /*end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() {\n\t\t$(\'line" + i  + "\').removeClass(\"" + action + "\")\n\t}\n});\n";*/

@@ -13,6 +13,21 @@
 			var media = './videos/nothing.webm';
 			var code = 'dead code';
 			
+			var entityMap = {
+    			"&": "&amp;",
+    			"<": "&lt;",
+    			">": "&gt;",
+    			'"': '&quot;',
+    			"'": '&#39;',
+    			"/": '&#x2F;'
+  			};
+
+  			function escapeHtml(string) {
+    			return String(string).replace(/[&<>"'\/]/g, function (s) {
+      			return entityMap[s];
+    			});
+  			}
+			
 			$(document).ready(function(global){
 				
 				
@@ -419,7 +434,7 @@
 						var lastPTag = "</span>";
 						lines[0] = "<pre class='prettyprint linenums'><code>";
 						for (i = 0; i < numLines; i++) {
-							lines[i+1] =  firstPTag + (i + 1) + "'>" + doc.getLine(i) + lastPTag + '\n';
+							lines[i+1] =  firstPTag + (i + 1) + "'>" + escapeHtml(doc.getLine(i)) + lastPTag + '\n';
 						}
 						lines[numLines+1] = "</code></pre>";
 					

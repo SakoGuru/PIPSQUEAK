@@ -948,7 +948,7 @@ var squeak = (function () {
                 //call any of the CSS adder functions
                 if(dev === true) console.log(action + "ing lines " + startLine + " - " + endLine + " from time " + startTime + " to time " + endTime + ".");
 				//var scroller = "\n\t\tdocument.getElementById(\'codearea\').scrollTop = (document.getElementById(\'line" + startLine + "\').offsetTop - 150);";
-                var scroller = "\n\t\t$(\'#codearea\').animate({ scrollTop: (document.getElementById(\'line" + startLine + "\').offsetTop - 150) }, 600, 'easeOutElastic')";
+                var scroller = "\n\t\t$(\'#codearea\').animate({ scrollTop: (document.getElementById(\'line" + startLine + "\').offsetTop - 150) }, 600, 'easeOutBack')";
                 for (ii = startLine; ii <= endLine; ii += 1) {
                     start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() {" + scroller 

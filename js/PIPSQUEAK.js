@@ -129,7 +129,7 @@
 						//	console.log("newCmInstance is undefined");
 						}
 						else {
-							e = newCmInstance.getValue();
+							e = escapeHtml(newCmInstance.getValue());
 							//console.log("newCmInstance is NOT undefined");
 							//console.log(e);
 							newCmInstance.toTextArea();

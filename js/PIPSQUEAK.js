@@ -151,6 +151,10 @@
 									styleActiveLine: true,
 									gutters: ["CodeMirror-linenumbers", "annotation-gutter"]
 								});
+								
+								$('#codearea').data('CodeMirrorInstance', editor); //save new editor and name it CodeMirrorInstance
+								newCmInstance = $('#codearea').data('CodeMirrorInstance'); //put new editor in global javascript variable to be accessed in PIPSQUEAK.js
+								
 							}
 						}
 						
@@ -187,6 +191,10 @@
 									styleActiveLine: true,
 									gutters: ["CodeMirror-linenumbers", "annotation-gutter"]
 								});
+								
+								$('#codearea').data('CodeMirrorInstance', editor); //save new editor and name it CodeMirrorInstance
+								newCmInstance = $('#codearea').data('CodeMirrorInstance'); //put new editor in global javascript variable to be accessed in PIPSQUEAK.js
+								
 							}
 						}
 					}

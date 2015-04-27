@@ -366,17 +366,27 @@
 				commentCount = 0;
 
 				$('#annotateSubmit').click(function() {
-					$('#annotateModal').modal('hide');
+					
 					
 					var line = parseInt($('#annotateLine').val()) - 1;
+					var lines = [];
+					var lineCounter = 0;
+					
+					//check if line already has a comment
+					for (lineCounter; lineCounter < commentCount; lineCounter++) {
+							
+					}
+					
+					commentCount++;
 					var src = $('#annotateSource').val();
 					var type = $('#annotateType').val();
 					var sendToBackend = [line, src, type];
 					console.log(line);
 					
+					//add professor comment to global variable to write into pop.js
 					profComments[line] = $('#annotateComment').val();
 					console.log(profComments[line]);
-					commentCount++;
+
 					
 					action = "annotate";
 					startLine = line;
@@ -394,12 +404,35 @@
 					} else if (type == "Article") {
 						typeGlyph = "book";
 					}
-					
+					var error = "";
+					var error2 = "";
 					if ($("#newCM").html() == "upload button clicked") {
+						console.log(newCm.lineCount());
+						if (line >= newCm.lineCount() || line < 0) {					//check if user entered line is in editor
+							console.log("uh oh line number doesn't exist");
+							error = "Error: Please choose a line between 1 and " + editor.lineCount() + ".";
+							$("#annotateError").html(error);						
+						}
+						else {
+							console.log("should be setting guttermarker");
 							newCmInstance.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
+							$('#annotateModal').modal('hide');
+							$("#annotateError").html("");
+						}
 					}
 					else {
-						editor.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
+						console.log(editor.lineCount());
+						if (line >= editor.lineCount() || line < 0) {					//check if user entered line is in editor
+							console.log("uh oh line number doesn't exist");
+							error = "Error: Please choose a line between 1 and " + editor.lineCount() + ".";
+							$("#annotateError").html(error);
+						}
+						else {
+							console.log("should be setting guttermarker");
+							editor.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
+							$('#annotateModal').modal('hide');
+							$("#annotateError").html("");
+						}
 					}
 					squeak.addAction( startLine, endLine, startTime, endTime, action );
 				});

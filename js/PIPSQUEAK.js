@@ -28,17 +28,20 @@
     			});
   			}
 			
+			profComments = [];		
+			
 			$(document).ready(function(global){
 				
 				
 				//create global variables
-				annotateSwitch = 0;
+
 				var startLine,
 						endLine,
 				 		startTime,
 						endTime, 
 						dev = false;
-				
+						
+
 				//create codemirror instance and add gutter marks
 				
 				editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
@@ -360,7 +363,8 @@
 					$('#annotateType').html(selText+' <span class="caret"></span>');
 					$('#annotateType').val(selText);
 				});
-				
+				commentCount = 0;
+
 				$('#annotateSubmit').click(function() {
 					$('#annotateModal').modal('hide');
 					
@@ -368,6 +372,11 @@
 					var src = $('#annotateSource').val();
 					var type = $('#annotateType').val();
 					var sendToBackend = [line, src, type];
+					console.log(line);
+					
+					profComments[line] = $('#annotateComment').val();
+					console.log(profComments[line]);
+					commentCount++;
 					
 					action = "annotate";
 					startLine = line;
@@ -994,7 +1003,11 @@ var squeak = (function () {
                     start = "\n$(\'#line" + (startLine + 1) + "\').prepend(\"<span id='comment" + ii + "' data-toggle='modal' data-target='#annotateCommentModal' class='glyphicon glyphicon-comment'> </span>\");\n"
 						+ "$('#comment" + ii + "').click(function() {\n"
 						+ "video.pause();\n"
+						+ "console.log('" + profComments[ii] + "');\n"
+						+ "$('#annotateCommentContent').html('" + profComments[ii] + "');\n"
 						+ "});\n";
+
+						
 					/*end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() {\n\t\t$(\'line" + i  + "\').removeClass(\"" + action + "\")\n\t}\n});\n";*/
                     popcornFile += start;

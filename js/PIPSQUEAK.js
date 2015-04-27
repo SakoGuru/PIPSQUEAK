@@ -32,7 +32,7 @@
 				
 				
 				//create global variables
-				
+				annotateSwitch = 0;
 				var startLine,
 						endLine,
 				 		startTime,
@@ -991,10 +991,11 @@ var squeak = (function () {
                 if(dev === true) console.log("Annotating lines " + startLine + " to " + endLine + " from time " + startTime + " to time " + endTime + ".");
                 //TODO: Annotate function
                 for (ii = startLine; ii <= endLine; ii += 1) {
-                    start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
-                        + ",\n\tonStart: function() {\n\t\t$(\'#line" + (startLine + 1) + "\').prepend(\"<span id='comment' data-toggle='modal' data-target='#annotateCommentModal' class='glyphicon glyphicon-comment'></span>\");\n\t},\n"
-                        + "\tonEnd: function() {}});\n";
-                    /*end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
+                    start = "\n$(\'#line" + (startLine + 1) + "\').prepend(\"<span id='comment" + ii + "' data-toggle='modal' data-target='#annotateCommentModal' class='glyphicon glyphicon-comment'> </span>\");\n"
+						+ "$('#comment" + ii + "').click(function() {\n"
+						+ "video.pause();\n"
+						+ "});\n";
+					/*end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() {\n\t\t$(\'line" + i  + "\').removeClass(\"" + action + "\")\n\t}\n});\n";*/
                     popcornFile += start;
                     //popcornFile += end;

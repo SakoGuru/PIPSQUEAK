@@ -482,7 +482,7 @@
 						var i;
 						var firstPTag = "<span id='line";
 						var lastPTag = "</span>";
-						lines[0] = "<pre class='prettyprint linenums'><code>";
+						lines[0] = "<pre id='codearea_pretty' class='prettyprint linenums' style='min-height: 370px; max-height: 370px; overflow-y: scroll; overflow-x: scroll;'><code>";
 						for (i = 0; i < numLines; i++) {
 							lines[i+1] =  firstPTag + (i + 1) + "'>" + escapeHtml(doc.getLine(i)) + lastPTag + '\n';
 						}

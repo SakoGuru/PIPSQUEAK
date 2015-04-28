@@ -386,6 +386,7 @@
 					//add professor comment to global variable to write into pop.js
 					profComments[line] = $('#annotateComment').val();
 					console.log(profComments[line]);
+					$("#annotateCommentContent").html(profComments[line]);
 
 					
 					action = "annotate";

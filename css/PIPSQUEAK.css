@@ -94,6 +94,7 @@
 /*for horizontal scrolling*/
 pre {
     overflow-x: auto;
+    tab-size: 2;
 }
 pre code {
     overflow-wrap: normal;

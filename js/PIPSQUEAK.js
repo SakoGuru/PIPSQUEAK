@@ -1073,9 +1073,13 @@ var squeak = (function () {
                 if(dev === true) console.log("Scrolling from line " + startLine + " to line " + endLine + " from time " + startTime + " to time " + endTime + ".");
                 //durr = end - start; never used?
                 start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
-                        + ",\n\tonStart: function() {\n\t\tdocument.getElementById(\'codearea\').scrollTop = document.getElementById(\'line" + startLine + "\').offsetTop;\n\t},\n"
-						+ "\tonEnd: function() {\n\t\t//$(\'#line" + ii + "\').removeClass(\"" + action + "\");\n\t}\n});\n";
-					//document.getElementById("container").scrollTop = document.getElementById(\'"startLine + "\').offsetTop;
+                        + ",\n\tonStart: function() { \n\t\t$(\'#codearea_pretty\').animate({ scrollTop: (document.getElementById(\'line" + startLine + "\').offsetTop - 150) }, 600, 'easeOutBack')"
+						+ "\n\t},\n"
+                        + "\tonEnd: function() {}\n});\n";
+                        
+                        
+                        //\n\t\t$(\'#codearea_pretty\').animate({ scrollTop: (document.getElementById(\'line" + startLine + "\').offsetTop - 150) }, 600, 'easeOutBack')\n"
+                        //+ "\tonEnd: function() { }\n});\n";
                 popcornFile += start;
             } else {
                 if(dev === true) console.log(action + " is not an accepted action in function runAction");

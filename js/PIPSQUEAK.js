@@ -1053,8 +1053,8 @@ var squeak = (function () {
 				for (ii = startLine; ii <= endLine; ii += 1) {
                     start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() { \n\t\tdocument.getElementById(\'codearea\').scrollTop = (document.getElementById(\'line" + startLine + "\').offsetTop - 150);"
-						+ "\n\t\t$(\'#line" + ii + "\').fadeOut();\n\t},\n"
-                        + "\tonEnd: function() {\n\t\t$(\'#line" + ii + "\').fadeIn();\n\t}\n});\n";
+						+ "\n\t\t$(\'#line" + ii + "\').parent().parent().fadeOut();\n\t},\n"
+                        + "\tonEnd: function() {\n\t\t$(\'#line" + ii + "\').parent().parent().fadeIn();\n\t}\n});\n";
                     /*end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() {\n\t\t$(\'line" + i  + "\').removeClass(\"" + action + "\")\n\t}\n});\n";*/
                     popcornFile += start;

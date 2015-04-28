@@ -407,10 +407,10 @@
 					var error = "";
 					var error2 = "";
 					if ($("#newCM").html() == "upload button clicked") {
-						console.log(newCm.lineCount());
-						if (line >= newCm.lineCount() || line < 0) {					//check if user entered line is in editor
+						console.log(newCmInstance.lineCount());
+						if (line >= newCmInstance.lineCount() || line < 0) {					//check if user entered line is in editor
 							console.log("uh oh line number doesn't exist");
-							error = "Error: Please choose a line between 1 and " + editor.lineCount() + ".";
+							error = "Error: Please choose a line between 1 and " + newCmInstance.lineCount() + ".";
 							$("#annotateError").html(error);						
 						}
 						else {

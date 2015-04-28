@@ -793,6 +793,12 @@ var squeak = (function () {
             throw "Invalid end time, end time cannot be before start time";
             return false;
         }
+        if(startTime === endTime && startTime === 0) {
+        	startTime = 0.01;
+        	endTime = startTime;
+        } else if(startTime === 0) {
+        	startTime = 0.01;
+        }
         //add additional actions names here
         if (action !== 'strike' && action !== 'highlight' && action !== 'focus' && action !== 'fadeIn' && action !== 'fadeOut' && action !== 'anchor' && action !== 'autoScroll' && action != 'annotate') {
             throw action + " is not an allowed action";

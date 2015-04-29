@@ -40,6 +40,16 @@
 				 		startTime,
 						endTime, 
 						dev = false;
+				
+				//so pressing enter to submit doesn't break the page		
+				$(document).ready(function() {
+  					$(window).keydown(function(event){
+						if(event.keyCode == 13) {
+							event.preventDefault();
+							$('#durationSubmit').click();
+						}
+					});
+				});
 						
 
 				//create codemirror instance and add gutter marks

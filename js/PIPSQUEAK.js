@@ -982,6 +982,15 @@ var squeak = (function () {
 
 		popcornFile += "document.addEventListener('DOMContentLoaded', function(event) {\n";
         popcornFile += "var pop = Popcorn(\"#video\");\n";
+        
+        //Autoscroll check function:
+        popcornFile += "var checkPos = function (nextPos, currentPos){\n"
+        	+ "\tif(nextPos > (currentPos + 100)){\n"
+        	+ "\t\treturn true;\n"
+        	+ "\t} else {\n"
+        	+ "\t\treturn false;\n"
+        	+ "}\n};\n\n"
+        	
 
         //copy the js files and then the node_modules
        // pip.copyDir("./js/",path + "/" + name + "/js/");
@@ -1023,7 +1032,11 @@ var squeak = (function () {
                 //call any of the CSS adder functions
                 if(dev === true) console.log(action + "ing lines " + startLine + " - " + endLine + " from time " + startTime + " to time " + endTime + ".");
 				//var scroller = "\n\t\tdocument.getElementById(\'codearea\').scrollTop = (document.getElementById(\'line" + startLine + "\').offsetTop - 150);";
-                var scroller = "\n\t\t$(\'#codearea_pretty\').animate({ scrollTop: (document.getElementById(\'line" + startLine + "\').offsetTop - 150) }, 600, 'easeOutBack')";
+                var scroller = "\n\t\tvar startPos = (document.getElementById(\'line" + startLine + "\').offsetTop - 150);\n"
+                	+ "\t\tvar currentPos = document.getElementById(\'codearea_pretty\').scrollTop;\n"
+                	+ "\t\tif(startPos > (currentPos + 300) || startPos < currentPos){\n"
+                	+ "\t\t\t$(\'#codearea_pretty\').animate({ scrollTop: startPos }, 600, 'easeOutBack')"
+                	+ "\t\t}\n";
                 for (ii = startLine; ii <= endLine; ii += 1) {
                     start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() {" + scroller 

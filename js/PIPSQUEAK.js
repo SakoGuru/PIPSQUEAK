@@ -1168,17 +1168,19 @@ var squeak = (function () {
         if(dev === true) alert("Publish took approximately " + (endTime - startTime)/1000 + " seconds to complete");
         
         //TODO Should handle the if/else publish logic differences above... just not now.
-        var newWin = gui.Window.open(path + "/" + name + "/index.html", {
-  			position: 'center',
-  			width: 1280,
-    		height: 720,
-			'new-instance': true
-		});
+        setTimeout( function() {
+        	var newWin = gui.Window.open(path + "/" + name + "/index.html", {
+	  			position: 'center',
+	  			width: 1280,
+	    		height: 720,
+				'new-instance': true
+			});
 
-        newWin.on('focus', function() {
+			newWin.on('focus', function() {
   			console.log('New window is focused');
 		});
-		
+        }, 2000);
+
         return true;
     };
     //just a tester function

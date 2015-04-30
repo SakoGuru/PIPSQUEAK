@@ -946,6 +946,11 @@ var squeak = (function () {
 		
 		var thirdPart = pip.readFile("./templates/thirdPart.txt");
 		html += thirdPart;
+		
+		html += name;
+		
+		var fourthPart = pip.readFile("./templates/fourthPart.txt");
+		html += fourthPart;
 
         mediaFileName = (function () {
             var pattern = new RegExp("[a-zA-Z0-9][a-zA-Z0-9]*[.][a-z0-9][a-z0-9]*");

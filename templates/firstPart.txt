@@ -11,7 +11,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		
 		<!--jquery-->
-        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+        <!--<script src="node_modules/jquery/dist/jquery.min.js"></script>-->
 		<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 		
         <!-- <script src="node_modules/blueimp-file-upload/js/jquery.fileupload.js"></script> -->
@@ -25,9 +25,9 @@
 		<script src="http://popcornjs.org/code/dist/popcorn-complete.js"></script>
 	
 		<!--bootstrap (must come before jquery b/c close button won't show otherwise)-->
-		<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-		<link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<!--<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>-->
+		<!--<link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">-->
+		<!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">-->
 		
 		
 		<!--include these to get bootstrap modals working-->
@@ -35,7 +35,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
 <!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">-->
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>

@@ -932,9 +932,9 @@ var squeak = (function () {
 
 
 		//TODO: make this point to the published folder of the media
-		html += "<source type=\"video/mp4\" src=" + media + " id=\"mp4\"></source>";
-		html += "<source type=\"video/webm\" src=" + media + " id=\"webm\"></source>";
-		html += "<source type=\"video/ogg\" src=" + media + " id=\"ogv\"></source>";
+		html += "<source type=\"video/mp4\" src=file:///" + media + " id=\"mp4\"></source>";
+		html += "<source type=\"video/webm\" src=file:///" + media + " id=\"webm\"></source>";
+		html += "<source type=\"video/ogg\" src=file:///" + media + " id=\"ogv\"></source>";
 		
 		var secondPart = pip.readFile("./templates/secondPart.txt");
 		html += secondPart;

@@ -898,6 +898,9 @@ var squeak = (function () {
             endTime = 0;
         name = prompt("Name the tutorial as:", "publish");
         //this.saveFile(media,fileContents);
+		if(name === null) {
+				return;
+		}
         if (media == null) {
             throw "Error, no media input to publish";
         }

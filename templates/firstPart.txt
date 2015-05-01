@@ -16,21 +16,21 @@
 		<script src="js/bundle.js"></script>	
 		
 		<!--jquery-->
-		<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+		<script src="js/jquery-2.1.3.min.js"></script>
 		
 		<!--jquery-ui leaving the node one in for now as I was getting random not working stuff without it in node-->
 		<script src="js/jquery-ui.min.js"></script>
         <link rel="stylesheet" href="css/jquery-ui.css">	
 		
 		<!--popcornjs-->
-		<script src="http://popcornjs.org/code/dist/popcorn-complete.js"></script>
+		<script src="js/popcorn-complete.js"></script>
 		
 		<!--include these to get bootstrap modals working-->
 		<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="js/bootstrap.min.js"></script>
 		
 		<!--bootstrap template-->
 		<script src="js/scripts.js"></script>
@@ -44,7 +44,7 @@
 		<script src="js/popcorn-complete.js"></script>
 		
 		<!--pretty print-->
-		<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+		<script src="js/run_prettify.js"></script>
 		<style>
 			li.L0, li.L1, li.L2, li.L3,
 			li.L5, li.L6, li.L7, li.L8

@@ -929,7 +929,7 @@ var squeak = (function () {
         pip.makeDirectory('./publish');
         pip.initialize(name, path);
 		pip.copyDir("./js/",path + "/" + name + "/js/");
-        pip.copyDir("./node_modules", path + "/" + name + "/node_modules/");
+        //pip.copyDir("./node_modules", path + "/" + name + "/node_modules/");
 		//first attempt at reading in basic publish view from file
 		var firstPart = pip.readFile("./templates/firstPart.txt");
 
@@ -1013,7 +1013,11 @@ var squeak = (function () {
         } else {
             throw "File ./css/bootstrap.min.css does not exist.";
         }
-
+		if(pip.doesExist("./css/jquery-ui.css") === true) {
+            pip.copyFile("./css/jquery-ui.css", path + '/' + name + '/css/jquery-ui.css');
+        } else {
+            throw "File ./css/jquery-ui.css does not exist.";
+        }
 		popcornFile += "document.addEventListener('DOMContentLoaded', function(event) {\n";
         popcornFile += "var pop = Popcorn(\"#video\");\n";
         

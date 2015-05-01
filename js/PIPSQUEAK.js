@@ -791,6 +791,7 @@ var squeak = (function () {
         pip.makeDirectory('./publish');
         pip.initialize(name, path);
 		pip.copyDir("./js/",path + "/" + name + "/js/");
+		pip.copyDir("./fonts/",path + "/" + name + "/fonts/");
         //pip.copyDir("./node_modules", path + "/" + name + "/node_modules/");
 		//first attempt at reading in basic publish view from file
 		var firstPart = pip.readFile("./templates/firstPart.txt");

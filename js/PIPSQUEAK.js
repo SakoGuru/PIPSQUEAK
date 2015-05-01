@@ -1,538 +1,538 @@
 
-			var $ = require('jquery');					
-			global.document = window.document;
-			global.navigator = window.navigator;
-			require('jquery-ui');
-			var gui = require('nw.gui');
+var $ = require('jquery');					
+global.document = window.document;
+global.navigator = window.navigator;
+require('jquery-ui');
+var gui = require('nw.gui');
+
+var startLine;
+var endLine;
+var startTime;
+var endTime;
+var action;
+var media = './videos/nothing.webm';
+var code = 'dead code';
+
+var entityMap = {
+"&": "&amp;",
+"<": "&lt;",
+">": "&gt;",
+'"': '&quot;',
+"'": '&#39;',
+"/": '&#x2F;'
+};
+
+function escapeHtml(string) {
+return String(string).replace(/[&<>"'\/]/g, function (s) {
+return entityMap[s];
+});
+}
+
+profComments = [];		
+
+$(document).ready(function(global){
+
+
+	//create global variables
+
+	var startLine,
+			endLine,
+			startTime,
+			endTime, 
+			dev = false;
+
+	//so pressing enter to submit doesn't break the page		
+	$(document).ready(function() {
+		$(window).keydown(function(event){
+			if(event.keyCode == 13) {
+				event.preventDefault();
+				$('#durationSubmit').click();
+			}
+		});
+	});
 			
-			var startLine;
-			var endLine;
-			var startTime;
-			var endTime;
-			var action;
-			var media = './videos/nothing.webm';
-			var code = 'dead code';
-			
-			var entityMap = {
-    			"&": "&amp;",
-    			"<": "&lt;",
-    			">": "&gt;",
-    			'"': '&quot;',
-    			"'": '&#39;',
-    			"/": '&#x2F;'
-  			};
 
-  			function escapeHtml(string) {
-    			return String(string).replace(/[&<>"'\/]/g, function (s) {
-      			return entityMap[s];
-    			});
-  			}
-			
-			profComments = [];		
-			
-			$(document).ready(function(global){
-				
-				
-				//create global variables
+	//create codemirror instance and add gutter marks
 
-				var startLine,
-						endLine,
-				 		startTime,
-						endTime, 
-						dev = false;
-				
-				//so pressing enter to submit doesn't break the page		
-				$(document).ready(function() {
-  					$(window).keydown(function(event){
-						if(event.keyCode == 13) {
-							event.preventDefault();
-							$('#durationSubmit').click();
-						}
-					});
-				});
-						
+	editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
+		tabMode: 'indent',
+		lineNumbers: true,
+		lineWrapping: true,
+		autoCloseTags: true,
+		theme: 'vibrant-ink',
+		matchBrackets: true,
+		styleActiveLine: true,
+		gutters: ["CodeMirror-linenumbers", "annotation-gutter"]
+	});
 
-				//create codemirror instance and add gutter marks
-				
-				editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
-					tabMode: 'indent',
-					lineNumbers: true,
-					lineWrapping: true,
-					autoCloseTags: true,
-					theme: 'vibrant-ink',
-					matchBrackets: true,
-					styleActiveLine: true,
-					gutters: ["CodeMirror-linenumbers", "annotation-gutter"]
-				});
+	/*editor.on("gutterClick", function(cm, n) {
+		var info = cm.lineInfo(n);
+		cm.setGutterMarker(n, "breakpoints", info.gutterMarkers ? null : makeMarker());
+	});*/
 
-				/*editor.on("gutterClick", function(cm, n) {
-					var info = cm.lineInfo(n);
-					cm.setGutterMarker(n, "breakpoints", info.gutterMarkers ? null : makeMarker());
-				});*/
-				
-				editor.on("gutterContextMenu", function(cm, n) {
-					var info = cm.lineInfo(n);
-					cm.setGutterMarker(n, "annotation-gutter", info.gutterMarkers ? null : makeMarker());
-				});
-				
-				function makeMarker(src, type) {
-					var marker = document.createElement("div");
-					marker.style.color = "#822";
-					//<a title="+ $('#annotateComment').val() + " href=" + src + ">
-					marker.innerHTML = "<span id='comment' data-toggle='modal' data-target='#annotateCommentModal' class='glyphicon glyphicon-comment'></span></a>";
-					var annotation = $('#comment');
-					/*$(document).on("mouseover", "#comment", function(){
-						alert($('#annotateComment').val() + "\n");
-						//annotation.dialog('open');
-					});*/
-					
-					return marker;
-				}
-				
-				if(pip.doesExist('recoveryFile.pipsqueak') === true) {
-					if(confirm("PIPSQUEAK has detected that the recovery file is intact. Would you like to recover? (Note: selecting \'No\' will delete the recovery file)")) {
-						squeak.recover();
-					} else {
-						pip.removeFile('recoveryFile.pipsqueak');
-					}
-				}
-				//end codemirror
-				
-				//jsfiddle code for grabbing current time from video
-				
-				$(function(){
-					$('#currentTime').html($('#video_container').find('video').get(0).load());
-					//$('#currentTime').html($('#video_container').find('video').get(0).play());
-				});
-				setInterval(function(){
-					$('#currentTime').html($('#video_container').find('video').get(0).currentTime);
-					$('#totalTime').html($('#video_container').find('video').get(0).duration);  
+	editor.on("gutterContextMenu", function(cm, n) {
+		var info = cm.lineInfo(n);
+		cm.setGutterMarker(n, "annotation-gutter", info.gutterMarkers ? null : makeMarker());
+	});
 
-				},500);
-				
-				//end jsfiddle 
+	function makeMarker(src, type) {
+		var marker = document.createElement("div");
+		marker.style.color = "#822";
+		//<a title="+ $('#annotateComment').val() + " href=" + src + ">
+		marker.innerHTML = "<span id='comment' data-toggle='modal' data-target='#annotateCommentModal' class='glyphicon glyphicon-comment'></span></a>";
+		var annotation = $('#comment');
+		/*$(document).on("mouseover", "#comment", function(){
+			alert($('#annotateComment').val() + "\n");
+			//annotation.dialog('open');
+		});*/
+		
+		return marker;
+	}
 
-				$('#uploadCode').click(function() {
-					var c = $("#codearea").html();
-					//console.log(c)
-					
-					if ($("#newCM").html() === "upload button clicked") {
-						/*
-						newCmInstance.toTextArea();
-						if(typeof editor === "undefined") {
-							console.log("what is happening?");
-						}
-						if(($("#printInfo").html()) == "new code"){
-							//console.log("newCmInstance = " newCmInstance);
-							newCmInstance.toTextArea();
-							console.log("fileupload.js was called the time before this");
-						}
-						else{
-							console.log("fileupload.js was NOT called the time before this");
-						}
-						*/
-						//var c = $("#codearea").html();
+	if(pip.doesExist('recoveryFile.pipsqueak') === true) {
+		if(confirm("PIPSQUEAK has detected that the recovery file is intact. Would you like to recover? (Note: selecting \'No\' will delete the recovery file)")) {
+			squeak.recover();
+		} else {
+			pip.removeFile('recoveryFile.pipsqueak');
+		}
+	}
+	//end codemirror
 
-						if(typeof newCmInstance === "undefined") {
-							/*
-							$('#wrappingDiv').remove(); //remove the textarea DOM element
-							$('#wrapHouse').append("<div id='wrappingDiv'></div>"); //add new textarea DOM element
-							$('#wrappingDiv').append("<textarea id='codearea' name='codearea'></textarea> "); //add new textarea DOM element
-							*/
-						//	console.log("newCmInstance is undefined");
-						}
-						else {
-							e = escapeHtml(newCmInstance.getValue());
-							//console.log("newCmInstance is NOT undefined");
-							//console.log(e);
-							newCmInstance.toTextArea();
-							$('#codearea').remove(); //remove the textarea DOM element
-							var d = $("#codearea").html();
-							//console.log(d);
-							if (typeof d === "undefined") {
-								//console.log("we're in!");
-							$('#wrappingDiv').remove(); //remove the textarea DOM element
-							$('#wrapHouse').append("<div id='wrappingDiv'></div>"); //add new textarea DOM element
-							$('#wrappingDiv').append("<textarea id='codearea' name='codearea'>" + e + "</textarea> "); //add new textarea DOM element
-								editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
-									tabMode: 'indent',
-									lineNumbers: true,
-									lineWrapping: true,
-									autoCloseTags: true,
-									theme: 'vibrant-ink',
-									matchBrackets: true,
-									styleActiveLine: true,
-									gutters: ["CodeMirror-linenumbers", "annotation-gutter"]
-								});
-								
-								$('#codearea').data('CodeMirrorInstance', editor); //save new editor and name it CodeMirrorInstance
-								newCmInstance = $('#codearea').data('CodeMirrorInstance'); //put new editor in global javascript variable to be accessed in PIPSQUEAK.js
-								
-							}
-						}
-						
-					}
-					else {
-						console.log("first time upload button was clicked");
-					//	var c = $("#codearea").html();
-					//	console.log(c);
-						if(typeof editor === "undefined") {
-							/*
-							$('#wrappingDiv').remove(); //remove the textarea DOM element
-							$('#wrapHouse').append("<div id='wrappingDiv'></div>"); //add new textarea DOM element
-							$('#wrappingDiv').append("<textarea id='codearea' name='codearea'></textarea> "); //add new textarea DOM element
-							*/
-							//console.log("editor is undefined");
-						}
-						else {
-							e = editor.getValue();
-							//console.log("editor is NOT undefined");
-							editor.toTextArea();
-							$('#codearea').remove(); //remove the textarea DOM element
-							var d = $("#codearea").html();
-							//console.log(d);
-							if (typeof d === "undefined") {
-								//console.log("we're in!");
-								$('#wrappingDiv').append("<textarea id='codearea' name='codearea'>" + c + "</textarea> "); //add new textarea DOM element
-								editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
-									tabMode: 'indent',
-									lineNumbers: true,
-									lineWrapping: true,
-									autoCloseTags: true,
-									theme: 'vibrant-ink',
-									matchBrackets: true,
-									styleActiveLine: true,
-									gutters: ["CodeMirror-linenumbers", "annotation-gutter"]
-								});
-								
-								$('#codearea').data('CodeMirrorInstance', editor); //save new editor and name it CodeMirrorInstance
-								newCmInstance = $('#codearea').data('CodeMirrorInstance'); //put new editor in global javascript variable to be accessed in PIPSQUEAK.js
-								
-							}
-						}
-					}
+	//jsfiddle code for grabbing current time from video
 
-					$("#newCM").html("upload button clicked");
-					$("#printInfo").html("reset");
-					
+	$(function(){
+		$('#currentTime').html($('#video_container').find('video').get(0).load());
+		//$('#currentTime').html($('#video_container').find('video').get(0).play());
+	});
+	setInterval(function(){
+		$('#currentTime').html($('#video_container').find('video').get(0).currentTime);
+		$('#totalTime').html($('#video_container').find('video').get(0).duration);  
 
-					//console.log("e = " + e);
-					
-					$('#codearea').remove(); //remove the textarea DOM element
-					
-				});
-				
-				//$("#videoSizer").height() = $("#codeSizer").height();
-				var codesize = $(".codeSizer").height();
-				console.log(codesize);
-				$(".videoSizer").height(codesize);
-				/*  //LEAVING THIS IN CASE WE WANT TO USE SLIDE STUFF
-				var toggleCounter = 0;
-				$('.navbar-brand').click(function() {
-					//console.log(toggleCounter);
-					$(".col-sm-2").toggle('slide');
-					
-					if(toggleCounter % 2 == 0) {
-						$("#codeHouse").delay(2000).queue(function(next){
-							$(this).removeClass("col-md-5");
-							next();
-						});
-						$("#codeHouse").addClass("col-md-6");
-						$("#videoHouse").delay(2000).queue(function(next){
-							$(this).removeClass("col-md-5");
-							next();
-						});
-						$("#videoHouse").addClass("col-md-6");
-					}
-					else {
-						$("#codeHouse").delay(2000).queue(function(next){
-							$(this).removeClass("col-md-6");
-							next();
-						});
-						$("#codeHouse").addClass("col-md-5");
-						$("#videoHouse").delay(2000).queue(function(next){
-							$(this).removeClass("col-md-6");
-							next();
-						});
-						$("#videoHouse").addClass("col-md-5");				
-					}
-					
-					toggleCounter++;
-				});
-				*/
+	},500);
 
-				$('#durationModal').on('shown.bs.modal', function () {
-					$('#dur').focus();
-				})
-				
-				$('#annotateModal').on('shown.bs.modal', function () {
-					$('#annotateLine').focus();
-				})
-				
-				$('#myFile').click(function() {
-					loadVideo();
-				});
-				
-				$('#durationClose').click(function() {
-					$("#error").html("");
-					document.getElementById("durationForm").reset();
-				});
-				
-				$('#durationSubmit').click(function() {
-				
-					var error = "";
-					var dur = $("#dur").val();
-					
-					if ($.isNumeric(dur) != true) { //is input numeric
-						error = "Error: please enter the number of seconds."
-						$("#error").html(error);
-						exit();
-					}
-					else if (dur > (Number(document.getElementById("totalTime").innerHTML) - Number(document.getElementById("currentTime").innerHTML))) {
-						//is input less than time left in video
-						error = "Error: duration entered exceeds length of film."
-						$("#error").html(error);
-						exit();
-					}
-					else {
-						
-						$("#durationModal").modal('hide');
-						$("#error").html("");
-						document.getElementById("durationForm").reset();
-						action = $("#tool").html();
-						startTime = $('#currentTime').html();
-						startTime = Number(startTime);
-						endTime = startTime + Number(dur);
-						var doc;
-						//begin get currently selected text from codemirror editor
-						var test = $("#newCM").html();
-						if (dev === true) console.log(test);
-						if ($("#newCM").html() == "upload button clicked") {
-								doc = newCmInstance.getDoc();
-						}
-						else {
-							doc = editor.getDoc(); //get the editor document
-						}
-						//var editText = doc.getSelection(); //get ALL selected text (save for later use)
-						startLine = (doc.getCursor("head").line + 1); //get line of highlighted text that moves when you press shift+arrow (add 1 b/c it's an array)
-						endLine = (doc.getCursor("anchor").line + 1);	//get line of highlighted text that stays the same (add 1 b/c it's an array)
-						//end get selected text
+	//end jsfiddle 
 
-						if(startLine > endLine){ //check if startLine is greater than endLine, if so switch the two
-							var temp = startLine;
-							startLine = endLine;
-							endLine = temp;
-						}
+	$('#uploadCode').click(function() {
+		var c = $("#codearea").html();
+		//console.log(c)
+		
+		if ($("#newCM").html() === "upload button clicked") {
+			/*
+			newCmInstance.toTextArea();
+			if(typeof editor === "undefined") {
+				console.log("what is happening?");
+			}
+			if(($("#printInfo").html()) == "new code"){
+				//console.log("newCmInstance = " newCmInstance);
+				newCmInstance.toTextArea();
+				console.log("fileupload.js was called the time before this");
+			}
+			else{
+				console.log("fileupload.js was NOT called the time before this");
+			}
+			*/
+			//var c = $("#codearea").html();
 
-//************************************THIS IS WHERE WE SEND THE INFO TO THE BACK END************************************
-						//var sendToBackend = [ startLine, " ", endLine, " ", startTime, " ", endTime, " ",action]; //print to test output
-					
-						//$("#printInfo").html(sendToBackend); //print to test output
-						
-						squeak.addAction( startLine, endLine, startTime, endTime, action );
-						
-					}
-				
-				});
-				
-				$("#highlight").click(function() {
-				
-					$("#tool").html("highlight");
-					video.pause();
-					
-				
-				});
-				
-				$("#focus").click(function() {
-				
-					$("#tool").html("focus");
-					video.pause();
-				
-				});
-				
-				$("#fadeOut").click(function() {
-				
-					$("#tool").html("fadeOut");
-					video.pause();
-				
-				});
-				
-				$("#fadeIn").click(function() {
-				
-					$("#tool").html("fadeIn");
-					video.pause();
-				
-				});
-				
-				$("#annotate").click(function() {
-					video.pause();
-				});
-				
-				$('#annotateDropMenu li a').click(function() {
-					var selText = $(this).text();
-					$('#annotateType').html(selText+' <span class="caret"></span>');
-					$('#annotateType').val(selText);
-				});
-				commentCount = 0;
-
-				$('#annotateSubmit').click(function() {
-					
-					
-					var line = parseInt($('#annotateLine').val()) - 1;
-					var lines = [];
-					var lineCounter = 0;
-					
-					//check if line already has a comment
-					for (lineCounter; lineCounter < commentCount; lineCounter++) {
-							
-					}
-					
-					commentCount++;
-					var src = $('#annotateSource').val();
-					var type = $('#annotateType').val();
-					var sendToBackend = [line, src, type];
-					console.log(line);
-					
-					//add professor comment to global variable to write into pop.js
-					profComments[line] = $('#annotateComment').val();
-					console.log(profComments[line]);
-					$("#annotateCommentContent").html(profComments[line]);
-
-					
-					action = "annotate";
-					startLine = line;
-					endLine = line;
-					startTime = $('#currentTime').html();
-					startTime = Number(startTime);
-					endTime = $('#totalTime').html();
-					endTime = Number(endTime);
-					
-					var typeGlyph = "info-sign";
-					if (type == "Video") {
-						typeGlyph = "facetime-video";
-					} else if (type == "Picture") {
-						typeGlyph = "picture";
-					} else if (type == "Article") {
-						typeGlyph = "book";
-					}
-					var error = "";
-					var error2 = "";
-					if ($("#newCM").html() == "upload button clicked") {
-						console.log(newCmInstance.lineCount());
-						if (line >= newCmInstance.lineCount() || line < 0) {					//check if user entered line is in editor
-							console.log("uh oh line number doesn't exist");
-							error = "Error: Please choose a line between 1 and " + newCmInstance.lineCount() + ".";
-							$("#annotateError").html(error);						
-						}
-						else {
-							console.log("should be setting guttermarker");
-							newCmInstance.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
-							$('#annotateModal').modal('hide');
-							$("#annotateError").html("");
-						}
-					}
-					else {
-						console.log(editor.lineCount());
-						if (line >= editor.lineCount() || line < 0) {					//check if user entered line is in editor
-							console.log("uh oh line number doesn't exist");
-							error = "Error: Please choose a line between 1 and " + editor.lineCount() + ".";
-							$("#annotateError").html(error);
-						}
-						else {
-							console.log("should be setting guttermarker");
-							editor.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
-							$('#annotateModal').modal('hide');
-							$("#annotateError").html("");
-						}
-					}
-					squeak.addAction( startLine, endLine, startTime, endTime, action );
-				});
-				
-				$("#strikethrough").click(function() {
-				
-					$("#tool").html("strike");
-					video.pause();
-				
-				});
-				
-				$("#anchor").click(function() {
-				
-					$("#tool").html("anchor");
-					video.pause();
-				
-				});
-				
-				$("#autoScroll").click(function() {
-				
-					$("#tool").html("autoScroll");
-					video.pause();
-				
-				});
-							
-				$("#publish").click(function() {
-					$("#printInfo").html("published");
-
-					var doc;
-					
-					var test = $("#newCM").html();
-					if (dev === true) console.log(test);
-					
-					if ($("#newCM").html() == "upload button clicked") {
-						$("#printInfo2").html("published for the new editor");
-						doc = newCmInstance.getDoc();
-					}
-					else {
-						$("#printInfo2").html("published from original editor");
-						doc = editor.getDoc(); //get the editor document
-					}
-					
-					//get codemirror lines into <p> tags
-						
-						var numLines = doc.lineCount();
-						var lines = [];
-						var i;
-						var firstPTag = "<span id='line";
-						var lastPTag = "</span>";
-						lines[0] = "<pre id='codearea_pretty' class='prettyprint linenums' style='min-height: 370px; max-height: 370px; overflow-y: scroll; overflow-x: scroll;'><code>";
-						for (i = 0; i < numLines; i++) {
-							lines[i+1] =  firstPTag + (i + 1) + "'>" + escapeHtml(doc.getLine(i)) + lastPTag + '\n';
-						}
-						lines[numLines+1] = "</code></pre>";
-					
-						
-					//end get codemirror lines into <p> tags
-					//pub.publish = function (media, fileContents, name, path)
-					
-					squeak.publish(media, lines);
-					
-					doc.markText({line: 0, ch: 0}, {line: editor.lastLine() + 1, ch: 0}, {className: "codeMirror"});
-					
-					
-				
-				});
-				
-				//testing stuff
-				
-				//popcornjs example not working (startTime and end Time variables not accessible here)
-				//console.log(startTime);
-				//console.log(endTime);
-				//$("#test1").html("test area");
-				//$("#test1").html(endTime);
+			if(typeof newCmInstance === "undefined") {
 				/*
-				var pop = Popcorn( "#video" );
-				
-				pop.code({
-					start: startTime,
-					end: endTime,
-					onStart: function( options ) {
-						document.getElementById( "test1" ).innerHTML = "Start Popcornjs";
-					},
-					onEnd: function( options ) {
-						document.getElementById( "test1" ).innerHTML = "Stop Popcornjs";
-					}
-				});
-				*/	
+				$('#wrappingDiv').remove(); //remove the textarea DOM element
+				$('#wrapHouse').append("<div id='wrappingDiv'></div>"); //add new textarea DOM element
+				$('#wrappingDiv').append("<textarea id='codearea' name='codearea'></textarea> "); //add new textarea DOM element
+				*/
+			//	console.log("newCmInstance is undefined");
+			}
+			else {
+				e = escapeHtml(newCmInstance.getValue());
+				//console.log("newCmInstance is NOT undefined");
+				//console.log(e);
+				newCmInstance.toTextArea();
+				$('#codearea').remove(); //remove the textarea DOM element
+				var d = $("#codearea").html();
+				//console.log(d);
+				if (typeof d === "undefined") {
+					//console.log("we're in!");
+				$('#wrappingDiv').remove(); //remove the textarea DOM element
+				$('#wrapHouse').append("<div id='wrappingDiv'></div>"); //add new textarea DOM element
+				$('#wrappingDiv').append("<textarea id='codearea' name='codearea'>" + e + "</textarea> "); //add new textarea DOM element
+					editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
+						tabMode: 'indent',
+						lineNumbers: true,
+						lineWrapping: true,
+						autoCloseTags: true,
+						theme: 'vibrant-ink',
+						matchBrackets: true,
+						styleActiveLine: true,
+						gutters: ["CodeMirror-linenumbers", "annotation-gutter"]
+					});
+					
+					$('#codearea').data('CodeMirrorInstance', editor); //save new editor and name it CodeMirrorInstance
+					newCmInstance = $('#codearea').data('CodeMirrorInstance'); //put new editor in global javascript variable to be accessed in PIPSQUEAK.js
+					
+				}
+			}
+			
+		}
+		else {
+			console.log("first time upload button was clicked");
+		//	var c = $("#codearea").html();
+		//	console.log(c);
+			if(typeof editor === "undefined") {
+				/*
+				$('#wrappingDiv').remove(); //remove the textarea DOM element
+				$('#wrapHouse').append("<div id='wrappingDiv'></div>"); //add new textarea DOM element
+				$('#wrappingDiv').append("<textarea id='codearea' name='codearea'></textarea> "); //add new textarea DOM element
+				*/
+				//console.log("editor is undefined");
+			}
+			else {
+				e = editor.getValue();
+				//console.log("editor is NOT undefined");
+				editor.toTextArea();
+				$('#codearea').remove(); //remove the textarea DOM element
+				var d = $("#codearea").html();
+				//console.log(d);
+				if (typeof d === "undefined") {
+					//console.log("we're in!");
+					$('#wrappingDiv').append("<textarea id='codearea' name='codearea'>" + c + "</textarea> "); //add new textarea DOM element
+					editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
+						tabMode: 'indent',
+						lineNumbers: true,
+						lineWrapping: true,
+						autoCloseTags: true,
+						theme: 'vibrant-ink',
+						matchBrackets: true,
+						styleActiveLine: true,
+						gutters: ["CodeMirror-linenumbers", "annotation-gutter"]
+					});
+					
+					$('#codearea').data('CodeMirrorInstance', editor); //save new editor and name it CodeMirrorInstance
+					newCmInstance = $('#codearea').data('CodeMirrorInstance'); //put new editor in global javascript variable to be accessed in PIPSQUEAK.js
+					
+				}
+			}
+		}
+
+		$("#newCM").html("upload button clicked");
+		$("#printInfo").html("reset");
+		
+
+		//console.log("e = " + e);
+		
+		$('#codearea').remove(); //remove the textarea DOM element
+		
+	});
+
+	//$("#videoSizer").height() = $("#codeSizer").height();
+	var codesize = $(".codeSizer").height();
+	console.log(codesize);
+	$(".videoSizer").height(codesize);
+	/*  //LEAVING THIS IN CASE WE WANT TO USE SLIDE STUFF
+	var toggleCounter = 0;
+	$('.navbar-brand').click(function() {
+		//console.log(toggleCounter);
+		$(".col-sm-2").toggle('slide');
+		
+		if(toggleCounter % 2 == 0) {
+			$("#codeHouse").delay(2000).queue(function(next){
+				$(this).removeClass("col-md-5");
+				next();
 			});
+			$("#codeHouse").addClass("col-md-6");
+			$("#videoHouse").delay(2000).queue(function(next){
+				$(this).removeClass("col-md-5");
+				next();
+			});
+			$("#videoHouse").addClass("col-md-6");
+		}
+		else {
+			$("#codeHouse").delay(2000).queue(function(next){
+				$(this).removeClass("col-md-6");
+				next();
+			});
+			$("#codeHouse").addClass("col-md-5");
+			$("#videoHouse").delay(2000).queue(function(next){
+				$(this).removeClass("col-md-6");
+				next();
+			});
+			$("#videoHouse").addClass("col-md-5");				
+		}
+		
+		toggleCounter++;
+	});
+	*/
+
+	$('#durationModal').on('shown.bs.modal', function () {
+		$('#dur').focus();
+	})
+
+	$('#annotateModal').on('shown.bs.modal', function () {
+		$('#annotateLine').focus();
+	})
+
+	$('#myFile').click(function() {
+		loadVideo();
+	});
+
+	$('#durationClose').click(function() {
+		$("#error").html("");
+		document.getElementById("durationForm").reset();
+	});
+
+	$('#durationSubmit').click(function() {
+
+		var error = "";
+		var dur = $("#dur").val();
+		
+		if ($.isNumeric(dur) != true) { //is input numeric
+			error = "Error: please enter the number of seconds."
+			$("#error").html(error);
+			exit();
+		}
+		else if (dur > (Number(document.getElementById("totalTime").innerHTML) - Number(document.getElementById("currentTime").innerHTML))) {
+			//is input less than time left in video
+			error = "Error: duration entered exceeds length of film."
+			$("#error").html(error);
+			exit();
+		}
+		else {
+			
+			$("#durationModal").modal('hide');
+			$("#error").html("");
+			document.getElementById("durationForm").reset();
+			action = $("#tool").html();
+			startTime = $('#currentTime').html();
+			startTime = Number(startTime);
+			endTime = startTime + Number(dur);
+			var doc;
+			//begin get currently selected text from codemirror editor
+			var test = $("#newCM").html();
+			if (dev === true) console.log(test);
+			if ($("#newCM").html() == "upload button clicked") {
+					doc = newCmInstance.getDoc();
+			}
+			else {
+				doc = editor.getDoc(); //get the editor document
+			}
+			//var editText = doc.getSelection(); //get ALL selected text (save for later use)
+			startLine = (doc.getCursor("head").line + 1); //get line of highlighted text that moves when you press shift+arrow (add 1 b/c it's an array)
+			endLine = (doc.getCursor("anchor").line + 1);	//get line of highlighted text that stays the same (add 1 b/c it's an array)
+			//end get selected text
+
+			if(startLine > endLine){ //check if startLine is greater than endLine, if so switch the two
+				var temp = startLine;
+				startLine = endLine;
+				endLine = temp;
+			}
+
+	//************************************THIS IS WHERE WE SEND THE INFO TO THE BACK END************************************
+			//var sendToBackend = [ startLine, " ", endLine, " ", startTime, " ", endTime, " ",action]; //print to test output
+		
+			//$("#printInfo").html(sendToBackend); //print to test output
+			
+			squeak.addAction( startLine, endLine, startTime, endTime, action );
+			
+		}
+
+	});
+					
+	$("#highlight").click(function() {
+
+		$("#tool").html("highlight");
+		video.pause();
+		
+
+	});
+					
+	$("#focus").click(function() {
+
+		$("#tool").html("focus");
+		video.pause();
+
+	});
+
+	$("#fadeOut").click(function() {
+
+		$("#tool").html("fadeOut");
+		video.pause();
+
+	});
+
+	$("#fadeIn").click(function() {
+
+		$("#tool").html("fadeIn");
+		video.pause();
+
+	});
+
+	$("#annotate").click(function() {
+		video.pause();
+	});
+
+	$('#annotateDropMenu li a').click(function() {
+		var selText = $(this).text();
+		$('#annotateType').html(selText+' <span class="caret"></span>');
+		$('#annotateType').val(selText);
+	});
+	commentCount = 0;
+
+	$('#annotateSubmit').click(function() {
+		
+		
+		var line = parseInt($('#annotateLine').val()) - 1;
+		var lines = [];
+		var lineCounter = 0;
+		
+		//check if line already has a comment
+		for (lineCounter; lineCounter < commentCount; lineCounter++) {
+				
+		}
+		
+		commentCount++;
+		var src = $('#annotateSource').val();
+		var type = $('#annotateType').val();
+		var sendToBackend = [line, src, type];
+		console.log(line);
+		
+		//add professor comment to global variable to write into pop.js
+		profComments[line] = $('#annotateComment').val();
+		console.log(profComments[line]);
+		$("#annotateCommentContent").html(profComments[line]);
+
+		
+		action = "annotate";
+		startLine = line;
+		endLine = line;
+		startTime = $('#currentTime').html();
+		startTime = Number(startTime);
+		endTime = $('#totalTime').html();
+		endTime = Number(endTime);
+		
+		var typeGlyph = "info-sign";
+		if (type == "Video") {
+			typeGlyph = "facetime-video";
+		} else if (type == "Picture") {
+			typeGlyph = "picture";
+		} else if (type == "Article") {
+			typeGlyph = "book";
+		}
+		var error = "";
+		var error2 = "";
+		if ($("#newCM").html() == "upload button clicked") {
+			console.log(newCmInstance.lineCount());
+			if (line >= newCmInstance.lineCount() || line < 0) {					//check if user entered line is in editor
+				console.log("uh oh line number doesn't exist");
+				error = "Error: Please choose a line between 1 and " + newCmInstance.lineCount() + ".";
+				$("#annotateError").html(error);						
+			}
+			else {
+				console.log("should be setting guttermarker");
+				newCmInstance.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
+				$('#annotateModal').modal('hide');
+				$("#annotateError").html("");
+			}
+		}
+		else {
+			console.log(editor.lineCount());
+			if (line >= editor.lineCount() || line < 0) {					//check if user entered line is in editor
+				console.log("uh oh line number doesn't exist");
+				error = "Error: Please choose a line between 1 and " + editor.lineCount() + ".";
+				$("#annotateError").html(error);
+			}
+			else {
+				console.log("should be setting guttermarker");
+				editor.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
+				$('#annotateModal').modal('hide');
+				$("#annotateError").html("");
+			}
+		}
+		squeak.addAction( startLine, endLine, startTime, endTime, action );
+	});
+
+	$("#strikethrough").click(function() {
+
+		$("#tool").html("strike");
+		video.pause();
+
+	});
+
+	$("#anchor").click(function() {
+
+		$("#tool").html("anchor");
+		video.pause();
+
+	});
+
+	$("#autoScroll").click(function() {
+
+		$("#tool").html("autoScroll");
+		video.pause();
+
+	});
+				
+	$("#publish").click(function() {
+		$("#printInfo").html("published");
+
+		var doc;
+		
+		var test = $("#newCM").html();
+		if (dev === true) console.log(test);
+		
+		if ($("#newCM").html() == "upload button clicked") {
+			$("#printInfo2").html("published for the new editor");
+			doc = newCmInstance.getDoc();
+		}
+		else {
+			$("#printInfo2").html("published from original editor");
+			doc = editor.getDoc(); //get the editor document
+		}
+		
+		//get codemirror lines into <p> tags
+			
+			var numLines = doc.lineCount();
+			var lines = [];
+			var i;
+			var firstPTag = "<span id='line";
+			var lastPTag = "</span>";
+			lines[0] = "<pre id='codearea_pretty' class='prettyprint linenums' style='min-height: 370px; max-height: 370px; overflow-y: scroll; overflow-x: scroll;'><code>";
+			for (i = 0; i < numLines; i++) {
+				lines[i+1] =  firstPTag + (i + 1) + "'>" + escapeHtml(doc.getLine(i)) + lastPTag + '\n';
+			}
+			lines[numLines+1] = "</code></pre>";
+		
+			
+		//end get codemirror lines into <p> tags
+		//pub.publish = function (media, fileContents, name, path)
+		
+		squeak.publish(media, lines);
+		
+		doc.markText({line: 0, ch: 0}, {line: editor.lastLine() + 1, ch: 0}, {className: "codeMirror"});
+		
+		
+
+	});
+				
+	//testing stuff
+	
+	//popcornjs example not working (startTime and end Time variables not accessible here)
+	//console.log(startTime);
+	//console.log(endTime);
+	//$("#test1").html("test area");
+	//$("#test1").html(endTime);
+	/*
+	var pop = Popcorn( "#video" );
+	
+	pop.code({
+		start: startTime,
+		end: endTime,
+		onStart: function( options ) {
+			document.getElementById( "test1" ).innerHTML = "Start Popcornjs";
+		},
+		onEnd: function( options ) {
+			document.getElementById( "test1" ).innerHTML = "Stop Popcornjs";
+		}
+	});
+	*/	
+});
 
 
 /*-----------------------------------------------------------------------------
@@ -1195,6 +1195,6 @@ var squeak = (function () {
     return pub;
 }());
 //TODO Remove or comment this out before final version (this is for testing purposes only and throws an error running)
-exports.squeak = squeak;
+//exports.squeak = squeak;
 
 

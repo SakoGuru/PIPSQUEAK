@@ -29,6 +29,8 @@ return entityMap[s];
 }
 
 profComments = [];		
+profCommentsBackup = [];
+profCommentsCounter = 0;
 
 $(document).ready(function(global){
 
@@ -65,30 +67,6 @@ $(document).ready(function(global){
 		gutters: ["CodeMirror-linenumbers", "annotation-gutter"]
 	});
 
-	/*editor.on("gutterClick", function(cm, n) {
-		var info = cm.lineInfo(n);
-		cm.setGutterMarker(n, "breakpoints", info.gutterMarkers ? null : makeMarker());
-	});*/
-
-	editor.on("gutterContextMenu", function(cm, n) {
-		var info = cm.lineInfo(n);
-		cm.setGutterMarker(n, "annotation-gutter", info.gutterMarkers ? null : makeMarker());
-	});
-
-	function makeMarker(src, type) {
-		var marker = document.createElement("div");
-		marker.style.color = "#822";
-		//<a title="+ $('#annotateComment').val() + " href=" + src + ">
-		marker.innerHTML = "<span id='comment' data-toggle='modal' data-target='#annotateCommentModal' class='glyphicon glyphicon-comment'></span></a>";
-		var annotation = $('#comment');
-		/*$(document).on("mouseover", "#comment", function(){
-			alert($('#annotateComment').val() + "\n");
-			//annotation.dialog('open');
-		});*/
-		
-		return marker;
-	}
-
 	if(pip.doesExist('recoveryFile.pipsqueak') === true) {
 		if(confirm("PIPSQUEAK has detected that the recovery file is intact. Would you like to recover? (Note: selecting \'No\' will delete the recovery file)")) {
 			squeak.recover();
@@ -102,7 +80,6 @@ $(document).ready(function(global){
 
 	$(function(){
 		$('#currentTime').html($('#video_container').find('video').get(0).load());
-		//$('#currentTime').html($('#video_container').find('video').get(0).play());
 	});
 	setInterval(function(){
 		$('#currentTime').html($('#video_container').find('video').get(0).currentTime);
@@ -117,40 +94,19 @@ $(document).ready(function(global){
 		//console.log(c)
 		
 		if ($("#newCM").html() === "upload button clicked") {
-			/*
-			newCmInstance.toTextArea();
-			if(typeof editor === "undefined") {
-				console.log("what is happening?");
-			}
-			if(($("#printInfo").html()) == "new code"){
-				//console.log("newCmInstance = " newCmInstance);
-				newCmInstance.toTextArea();
-				console.log("fileupload.js was called the time before this");
-			}
-			else{
-				console.log("fileupload.js was NOT called the time before this");
-			}
-			*/
-			//var c = $("#codearea").html();
 
 			if(typeof newCmInstance === "undefined") {
-				/*
-				$('#wrappingDiv').remove(); //remove the textarea DOM element
-				$('#wrapHouse').append("<div id='wrappingDiv'></div>"); //add new textarea DOM element
-				$('#wrappingDiv').append("<textarea id='codearea' name='codearea'></textarea> "); //add new textarea DOM element
-				*/
-			//	console.log("newCmInstance is undefined");
+				console.log("newCmInstance is undefined");
 			}
 			else {
 				e = escapeHtml(newCmInstance.getValue());
-				//console.log("newCmInstance is NOT undefined");
-				//console.log(e);
+
 				newCmInstance.toTextArea();
 				$('#codearea').remove(); //remove the textarea DOM element
 				var d = $("#codearea").html();
-				//console.log(d);
+
 				if (typeof d === "undefined") {
-					//console.log("we're in!");
+
 				$('#wrappingDiv').remove(); //remove the textarea DOM element
 				$('#wrapHouse').append("<div id='wrappingDiv'></div>"); //add new textarea DOM element
 				$('#wrappingDiv').append("<textarea id='codearea' name='codearea'>" + e + "</textarea> "); //add new textarea DOM element
@@ -174,25 +130,19 @@ $(document).ready(function(global){
 		}
 		else {
 			console.log("first time upload button was clicked");
-		//	var c = $("#codearea").html();
-		//	console.log(c);
+
 			if(typeof editor === "undefined") {
-				/*
-				$('#wrappingDiv').remove(); //remove the textarea DOM element
-				$('#wrapHouse').append("<div id='wrappingDiv'></div>"); //add new textarea DOM element
-				$('#wrappingDiv').append("<textarea id='codearea' name='codearea'></textarea> "); //add new textarea DOM element
-				*/
-				//console.log("editor is undefined");
+				console.log("editor is undefined");
 			}
 			else {
 				e = editor.getValue();
-				//console.log("editor is NOT undefined");
+
 				editor.toTextArea();
 				$('#codearea').remove(); //remove the textarea DOM element
 				var d = $("#codearea").html();
-				//console.log(d);
+
 				if (typeof d === "undefined") {
-					//console.log("we're in!");
+
 					$('#wrappingDiv').append("<textarea id='codearea' name='codearea'>" + c + "</textarea> "); //add new textarea DOM element
 					editor = CodeMirror.fromTextArea(document.getElementById("codearea"), {
 						tabMode: 'indent',
@@ -214,52 +164,14 @@ $(document).ready(function(global){
 
 		$("#newCM").html("upload button clicked");
 		$("#printInfo").html("reset");
-		
 
-		//console.log("e = " + e);
-		
 		$('#codearea').remove(); //remove the textarea DOM element
 		
 	});
 
-	//$("#videoSizer").height() = $("#codeSizer").height();
 	var codesize = $(".codeSizer").height();
 	console.log(codesize);
 	$(".videoSizer").height(codesize);
-	/*  //LEAVING THIS IN CASE WE WANT TO USE SLIDE STUFF
-	var toggleCounter = 0;
-	$('.navbar-brand').click(function() {
-		//console.log(toggleCounter);
-		$(".col-sm-2").toggle('slide');
-		
-		if(toggleCounter % 2 == 0) {
-			$("#codeHouse").delay(2000).queue(function(next){
-				$(this).removeClass("col-md-5");
-				next();
-			});
-			$("#codeHouse").addClass("col-md-6");
-			$("#videoHouse").delay(2000).queue(function(next){
-				$(this).removeClass("col-md-5");
-				next();
-			});
-			$("#videoHouse").addClass("col-md-6");
-		}
-		else {
-			$("#codeHouse").delay(2000).queue(function(next){
-				$(this).removeClass("col-md-6");
-				next();
-			});
-			$("#codeHouse").addClass("col-md-5");
-			$("#videoHouse").delay(2000).queue(function(next){
-				$(this).removeClass("col-md-6");
-				next();
-			});
-			$("#videoHouse").addClass("col-md-5");				
-		}
-		
-		toggleCounter++;
-	});
-	*/
 
 	$('#durationModal').on('shown.bs.modal', function () {
 		$('#dur').focus();
@@ -313,7 +225,6 @@ $(document).ready(function(global){
 			else {
 				doc = editor.getDoc(); //get the editor document
 			}
-			//var editText = doc.getSelection(); //get ALL selected text (save for later use)
 			startLine = (doc.getCursor("head").line + 1); //get line of highlighted text that moves when you press shift+arrow (add 1 b/c it's an array)
 			endLine = (doc.getCursor("anchor").line + 1);	//get line of highlighted text that stays the same (add 1 b/c it's an array)
 			//end get selected text
@@ -350,9 +261,9 @@ $(document).ready(function(global){
 
 	});
 
-	$("#fadeOut").click(function() {
+	$("#fade").click(function() {
 
-		$("#tool").html("fadeOut");
+		$("#tool").html("fade");
 		video.pause();
 
 	});
@@ -373,29 +284,47 @@ $(document).ready(function(global){
 		$('#annotateType').html(selText+' <span class="caret"></span>');
 		$('#annotateType').val(selText);
 	});
-	commentCount = 0;
 
 	$('#annotateSubmit').click(function() {
 		
 		
-		var line = parseInt($('#annotateLine').val()) - 1;
-		var lines = [];
-		var lineCounter = 0;
+		var line = parseInt($('#annotateLine').val());
+		var error = "";
+		var error2 = "";
 		
-		//check if line already has a comment
-		for (lineCounter; lineCounter < commentCount; lineCounter++) {
-				
+		if ($("#newCM").html() == "upload button clicked") {
+			console.log(newCmInstance.lineCount());
+			if (line >= newCmInstance.lineCount() || line < 0) {					//check if user entered line is in editor
+				error = "Error: Please choose a line between 1 and " + newCmInstance.lineCount() + ".";
+				$("#annotateError").html(error);	
+				return;
+			}
+			else {
+
+				$('#annotateModal').modal('hide');
+				$("#annotateError").html("");
+			}
 		}
-		
-		commentCount++;
-		var src = $('#annotateSource').val();
-		var type = $('#annotateType').val();
-		var sendToBackend = [line, src, type];
-		console.log(line);
-		
+		else {
+			if (line >= editor.lineCount() || line < 0) {					//check if user entered line is in editor
+				console.log("uh oh line number doesn't exist");
+				error = "Error: Please choose a line between 1 and " + editor.lineCount() + ".";
+				$("#annotateError").html(error);
+				return;
+			}
+			else {
+
+				$('#annotateModal').modal('hide');
+				$("#annotateError").html("");
+			}
+		}
+
 		//add professor comment to global variable to write into pop.js
 		profComments[line] = $('#annotateComment').val();
-		console.log(profComments[line]);
+		profCommentsBackup[profCommentsCounter] = (profCommentsCounter + " " + $('#annotateLine').val() + " " + $('#annotateComment').val());
+		console.log(profCommentsBackup[profCommentsCounter]);
+		profCommentsCounter++;
+
 		$("#annotateCommentContent").html(profComments[line]);
 
 		
@@ -406,45 +335,7 @@ $(document).ready(function(global){
 		startTime = Number(startTime);
 		endTime = $('#totalTime').html();
 		endTime = Number(endTime);
-		
-		var typeGlyph = "info-sign";
-		if (type == "Video") {
-			typeGlyph = "facetime-video";
-		} else if (type == "Picture") {
-			typeGlyph = "picture";
-		} else if (type == "Article") {
-			typeGlyph = "book";
-		}
-		var error = "";
-		var error2 = "";
-		if ($("#newCM").html() == "upload button clicked") {
-			console.log(newCmInstance.lineCount());
-			if (line >= newCmInstance.lineCount() || line < 0) {					//check if user entered line is in editor
-				console.log("uh oh line number doesn't exist");
-				error = "Error: Please choose a line between 1 and " + newCmInstance.lineCount() + ".";
-				$("#annotateError").html(error);						
-			}
-			else {
-				console.log("should be setting guttermarker");
-				newCmInstance.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
-				$('#annotateModal').modal('hide');
-				$("#annotateError").html("");
-			}
-		}
-		else {
-			console.log(editor.lineCount());
-			if (line >= editor.lineCount() || line < 0) {					//check if user entered line is in editor
-				console.log("uh oh line number doesn't exist");
-				error = "Error: Please choose a line between 1 and " + editor.lineCount() + ".";
-				$("#annotateError").html(error);
-			}
-			else {
-				console.log("should be setting guttermarker");
-				editor.setGutterMarker(line, "annotation-gutter", makeMarker(src, typeGlyph));
-				$('#annotateModal').modal('hide');
-				$("#annotateError").html("");
-			}
-		}
+
 		squeak.addAction( startLine, endLine, startTime, endTime, action );
 	});
 
@@ -501,7 +392,6 @@ $(document).ready(function(global){
 		
 			
 		//end get codemirror lines into <p> tags
-		//pub.publish = function (media, fileContents, name, path)
 		
 		squeak.publish(media, lines);
 		
@@ -511,27 +401,6 @@ $(document).ready(function(global){
 
 	});
 				
-	//testing stuff
-	
-	//popcornjs example not working (startTime and end Time variables not accessible here)
-	//console.log(startTime);
-	//console.log(endTime);
-	//$("#test1").html("test area");
-	//$("#test1").html(endTime);
-	/*
-	var pop = Popcorn( "#video" );
-	
-	pop.code({
-		start: startTime,
-		end: endTime,
-		onStart: function( options ) {
-			document.getElementById( "test1" ).innerHTML = "Start Popcornjs";
-		},
-		onEnd: function( options ) {
-			document.getElementById( "test1" ).innerHTML = "Stop Popcornjs";
-		}
-	});
-	*/	
 });
 
 
@@ -593,13 +462,6 @@ var pip = (function() {
     pub.writeFile = function(location, contents) {
         "use strict";
         contents = contents == null ? "File generated by PIPSQUEAK\n" : contents;
-        //throw an error if the file exists for now.
-		/*
-        if (fs.existsSync(location)) {
-        	alert("Cannot overwrite an existing directory as of this version, please save as  unique filename");
-            throw "File already exists";
-        }
-		*/
         fs.writeFileSync(location, contents, 'ascii');
         return true;
     }
@@ -812,7 +674,7 @@ var squeak = (function () {
         	startTime = 0.01;
         }
         //add additional actions names here
-        if (action !== 'strike' && action !== 'highlight' && action !== 'focus' && action !== 'fadeIn' && action !== 'fadeOut' && action !== 'anchor' && action !== 'autoScroll' && action != 'annotate') {
+        if (action !== 'strike' && action !== 'highlight' && action !== 'focus' && action !== 'fadeIn' && action !== 'fade' && action !== 'anchor' && action !== 'autoScroll' && action != 'annotate') {
             throw action + " is not an allowed action";
         }
         id += 1;
@@ -934,21 +796,6 @@ var squeak = (function () {
 		var firstPart = pip.readFile("./templates/firstPart.txt");
 
 		html = firstPart;
-		/*
-        html = "<!DOCTYPE html>";
-        html += "\n<html>";
-        html += "\n\t<head>";
-        html += "\n\t\t<script src = \"js/pop.js\" type = \"text/javascript\"></script>";
-        html += "\n\t\t<link rel=\"stylesheet\" href=\"css/styles.css\">";
-        html += "\n\t\t<link rel=\"stylesheet\" href=\"css/PIPSQUEAK.css\">";
-        html += "\n\t\t<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">";
-        html += "\n\t</head>";
-        html += "\n\t<body>";
-		html += "\n\t\t<div class=\"panel panel-default\">";
-		html += "\n\t\t\t<div class=\"panel-heading\"><h4>Code</h4></div>";
-		html +=	"\n\t\t\t\t<div class=\"panel-body\" style=\"min-height: 400px; max-height: 400px; overflow-y: scroll;\">";
-		*/
-
 
 		//TODO: make this point to the published folder of the media
 		html += "<source type=\"video/mp4\" src=file:///" + media + " id=\"mp4\"></source>";
@@ -1038,35 +885,8 @@ var squeak = (function () {
             var start,
                 end,
                 ii = 0;
-                //durr;
-             //TODO - actual worker functions
-            /*annotate = function (line, startTime, endTime) {
-                return false;
-            };
-            anchor = function (line, startTime, endTime) {
-                return false;
-            };
-            //TODO 'codearea' is whatever the name for the scroll div where the code is.  Confirm 
-            //TODO If possible to get all the lines for this one instead of individual actions per line
-            //        so we can get the first line to the last line (just need those two) to set the autoScroll bounds
-            autoScroll = function (line, startTime, endTime) {
-                var start,
-                    end,
-                    durr;
-                durr = end - start;
-                start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + startTime 
-                    + ",\n\tonStart: function() {\n\t\ttop = document.getElementById('"+line+"').offsetTop; 
-                    \n\t\tdocument.getElementById('codearea').scrollTop = topPos;\n
-                    \n\t\t$('body,html').animate({scrollTop: +line+},+durr+);\n
-                    \n\t\t$(\'"+line+"\').addClass(\"autoScroll\")\n\t}\n});\n";
-                end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime 
-                    + ",\n\tonStart: function() {\n\t\t$(\'"+line+"\').removeClass(\"autoScroll\")\n\t}\n});\n";
-                popcornFile += start;
-                popcornFile += end;
-                return true;
-            };*/
             
-            if (action === 'strike' || action === 'highlight' || action === 'focus' || action === 'fadeOut') {
+            if (action === 'strike' || action === 'highlight' || action === 'focus' || action === 'fade') {
                 //call any of the CSS adder functions
                 if(dev === true) console.log(action + "ing lines " + startLine + " - " + endLine + " from time " + startTime + " to time " + endTime + ".");
 				//var scroller = "\n\t\tdocument.getElementById(\'codearea\').scrollTop = (document.getElementById(\'line" + startLine + "\').offsetTop - 150);";
@@ -1089,10 +909,9 @@ var squeak = (function () {
             } else if (action === 'annotate') {
                 //call annotate function
                 if(dev === true) console.log("Annotating lines " + startLine + " to " + endLine + " from time " + startTime + " to time " + endTime + ".");
-                //TODO: Annotate function
                 for (ii = startLine; ii <= endLine; ii += 1) {
-                    start = "\n$(\'#line" + (startLine + 1) + "\').prepend(\"<span id='comment" + ii + "' data-toggle='modal' data-target='#annotateCommentModal' class='glyphicon glyphicon-comment'> </span>\");\n"
-						+ "$('#comment" + ii + "').click(function() {\n"
+                    start = "\n$(\'#line" + (startLine) + "\').prepend(\"<span id='comment" + (ii) + "' data-toggle='modal' data-target='#annotateCommentModal' class='glyphicon glyphicon-comment'> </span>\");\n"
+						+ "$('#comment" + (ii) + "').click(function() {\n"
 						+ "video.pause();\n"
 						+ "console.log('" + profComments[ii] + "');\n"
 						+ "$('#annotateCommentContent').html('" + profComments[ii] + "');\n"
@@ -1107,7 +926,6 @@ var squeak = (function () {
             } else if (action === 'anchor') {
                 //call anchor function
                 if(dev === true) console.log("Anchoring lines " + startLine + " to " + endLine + " from time " + startTime + " to time " + endTime + ".");
-                //TODO: Anchor function
 				for (ii = startLine; ii <= endLine; ii += 1) {
                     start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() { \n\t\tdocument.getElementById(\'codearea\').scrollTop = (document.getElementById(\'line" + startLine + "\').offsetTop - 150);"
@@ -1120,7 +938,6 @@ var squeak = (function () {
 				}
             } else if (action === 'autoScroll') {
                 //call autoScroll function
-                //TODO: Luke should look at this and make sure I refactored it correctly.
                 if(dev === true) console.log("Scrolling from line " + startLine + " to line " + endLine + " from time " + startTime + " to time " + endTime + ".");
                 //durr = end - start; never used?
                 start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
@@ -1140,7 +957,6 @@ var squeak = (function () {
             return true;
         };
         //when they hit publish run through the codemirror div and assign each individual LINE to an array location, with arr[0] being empty for simplicity 
-        //TODO - read in codemirror portion and parse into individual lines for wrapping or class adding.
         for (i = 0; i < id; i += 1) {
             //this is assuming that each line will have a class of "line<lineNumber>"
             sinAction = listOfActions[i];
@@ -1150,7 +966,6 @@ var squeak = (function () {
             }
         }
         popcornFile += "});";
-        //TODO - write the media and input code to a template file
         //write the popcorn functions to a javascript file
 		
         pip.writeFile(path + "/" + name + "/js/pop.js", popcornFile);
@@ -1171,7 +986,6 @@ var squeak = (function () {
 
         if(dev === true) alert("Publish took approximately " + (endTime - startTime)/1000 + " seconds to complete");
         
-        //TODO Should handle the if/else publish logic differences above... just not now.
         setTimeout( function() {
         	var newWin = gui.Window.open(path + "/" + name + "/index.html", {
 	  			position: 'center',
@@ -1194,7 +1008,6 @@ var squeak = (function () {
     if(dev === true) console.log("Squeak has initialized");
     return pub;
 }());
-//TODO Remove or comment this out before final version (this is for testing purposes only and throws an error running)
-//exports.squeak = squeak;
+
 
 

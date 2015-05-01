@@ -12,7 +12,6 @@
 		
 		<!--jquery-->
         <script src="node_modules/jquery/dist/jquery.min.js"></script>
-        <!-- <script src="node_modules/blueimp-file-upload/js/jquery.fileupload.js"></script> -->
 		
         <!--jquery-ui-->
         <link rel="stylesheet" href="node_modules/jquery-ui/themes/smoothness/jquery-ui.css">
@@ -119,11 +118,6 @@
     <!--middle column-->
 			
     <div id="videoHouse" class="col-md-5">
-<!--
-			<strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong> 
-
-      	<hr>
--->
 			
 		<!--video-->	
 
@@ -138,9 +132,7 @@
 						
 							<source type="video/webm" src="" id="webm" autoplay="false"></source>
 							<source type="video/ogg" src="" id="ogv" autoplay="false"></source>
-							<!--
-							<source src="http://playground.html5rocks.com/samples/html5_misc/chrome_japan.ogv" type='video/ogg; codecs="theora, vorbis"' />
-							-->
+
 							Your browser does not support HTML5 video.
 						</video>
 						
@@ -157,7 +149,7 @@
 					<div hidden>Total Time: <span id="totalTime">0</span></div> <!--jsfiddle-->
 					<!--/end jsfiddle code-->
 
-					<!--tests-->
+					<!--tests (required for program to work - DO NOT REMOVE!!!)-->
 					<div id = "printInfo" hidden></div> <!--for testing output to backend-->
 					<div id = "newCM" hidden></div>
 					<div id = "printInfo2" hidden></div> <!--for testing popcornjs-->
@@ -210,31 +202,6 @@ code.
 	</div>
 			
 	<!--/middle column-->
-			
-	<!--right column-->
-<!--
-	<div class="col-sm-3" >
-
-		<strong><i class="glyphicon glyphicon-time"></i> History</strong>  
-
-		<hr>
-      
-		
-	  	<div style="height:768px;width:100%;overflow:auto;">
-		<table class="table table-striped actionsTable">
-			<thead>
-				<tr><th>Line #</th><th>Time (s)</th><th>Tool</th><th>Delete</th></tr>
-			</thead>
-			
-			<tbody>
-			</tbody>
-		</table>
-		</div>				
-		
-	  
-	</div>
--->
-	<!--/right column-->
 	
 			<!--popup to get duration-->
 
@@ -255,7 +222,6 @@ code.
 				</div>
 				<br>
 				<div class="modal-footer">
-					<!--<span id = "error"></span>-->
 					<span id="error"></span>
 					<button id="durationClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<button id="durationSubmit" type="button" class="btn btn-primary">Add</button>
@@ -304,7 +270,7 @@ code.
             		</ul>
 				</div>
 				<br>
-				<div class="modal-footer">
+				<div class="row-fluid modal-footer">
 					<span id="annotateError"></span>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<button id="annotateSubmit" type="button" class="btn btn-primary">Add</button>
@@ -362,7 +328,6 @@ code.
 	  
 	</div>
 				<div class="modal-footer">
-					<!--<span id = "error"></span>-->
 					<span id="error"></span>
 					<button id="durationClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
@@ -371,7 +336,7 @@ code.
 		  </div>
 		</div>
 
-		<!--/end popup to get duration-->
+		<!--/end popup for history-->
 	
 </div>
 
@@ -381,9 +346,6 @@ code.
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-3">
-				<!--
-				<button type="submit" id="save" name="save" class="btn btn-primary btn-block buttons">Save <span class="glyphicon glyphicon-save"></span></button>
-				-->
 			</div> <!--end left column-->
 			<div class="col-md-6">
 			</div> <!--end middle column-->
@@ -402,8 +364,5 @@ code.
 	    window.onbeforeunload = function() {
 	        return "Dude, are you sure you want to leave? Think of the kittens!";
 	    }
-	    /*window.onload = function() {
-  			pip.removeDirectory('publish');
-		};*/
 	</script>
 </html>

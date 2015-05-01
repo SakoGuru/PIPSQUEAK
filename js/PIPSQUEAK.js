@@ -29,8 +29,7 @@ return entityMap[s];
 }
 
 profComments = [];		
-profCommentsBackup = [];
-profCommentsCounter = 0;
+annotateLineNum = 0;
 
 $(document).ready(function(global){
 
@@ -198,13 +197,13 @@ $(document).ready(function(global){
 		if ($.isNumeric(dur) != true) { //is input numeric
 			error = "Error: please enter the number of seconds."
 			$("#error").html(error);
-			exit();
+			return;
 		}
 		else if (dur > (Number(document.getElementById("totalTime").innerHTML) - Number(document.getElementById("currentTime").innerHTML))) {
 			//is input less than time left in video
 			error = "Error: duration entered exceeds length of film."
 			$("#error").html(error);
-			exit();
+			return;
 		}
 		else {
 			
@@ -277,24 +276,28 @@ $(document).ready(function(global){
 
 	$("#annotate").click(function() {
 		video.pause();
-	});
-
-	$('#annotateDropMenu li a').click(function() {
-		var selText = $(this).text();
-		$('#annotateType').html(selText+' <span class="caret"></span>');
-		$('#annotateType').val(selText);
+		$("#annotateError").html("");
 	});
 
 	$('#annotateSubmit').click(function() {
 		
 		
-		var line = parseInt($('#annotateLine').val());
+		annotateLineNum = parseInt($('#annotateLine').val());
 		var error = "";
-		var error2 = "";
-		
+		//console.log("typeof profComments[annotateLineNum] = " + typeof profComments[annotateLineNum]);
+		if(typeof profComments[annotateLineNum] === 'undefined'){ //check if there is already a comment on the line
+			console.log("we are good to go annotating this line");
+		}
+		else{
+			error = "Error: Remove previous comment from line " + annotateLineNum + " to continue.";
+			$("#annotateError").html(error);
+			return;
+		}
+
+		//profComments[annotateLineNum] = $('#annotateComment').val();
+
 		if ($("#newCM").html() == "upload button clicked") {
-			console.log(newCmInstance.lineCount());
-			if (line >= newCmInstance.lineCount() || line < 0) {					//check if user entered line is in editor
+			if (annotateLineNum > newCmInstance.lineCount() || annotateLineNum < 1) {					//check if user entered line is in editor
 				error = "Error: Please choose a line between 1 and " + newCmInstance.lineCount() + ".";
 				$("#annotateError").html(error);	
 				return;
@@ -306,8 +309,7 @@ $(document).ready(function(global){
 			}
 		}
 		else {
-			if (line >= editor.lineCount() || line < 0) {					//check if user entered line is in editor
-				console.log("uh oh line number doesn't exist");
+			if (annotateLineNum > editor.lineCount() || annotateLineNum < 1) {					//check if user entered line is in editor
 				error = "Error: Please choose a line between 1 and " + editor.lineCount() + ".";
 				$("#annotateError").html(error);
 				return;
@@ -320,17 +322,13 @@ $(document).ready(function(global){
 		}
 
 		//add professor comment to global variable to write into pop.js
-		profComments[line] = $('#annotateComment').val();
-		profCommentsBackup[profCommentsCounter] = (profCommentsCounter + " " + $('#annotateLine').val() + " " + $('#annotateComment').val());
-		console.log(profCommentsBackup[profCommentsCounter]);
-		profCommentsCounter++;
 
-		$("#annotateCommentContent").html(profComments[line]);
+		$("#annotateCommentContent").html(profComments[annotateLineNum]);
 
 		
 		action = "annotate";
-		startLine = line;
-		endLine = line;
+		startLine = annotateLineNum;
+		endLine = annotateLineNum;
 		startTime = $('#currentTime').html();
 		startTime = Number(startTime);
 		endTime = $('#totalTime').html();
@@ -646,6 +644,7 @@ var squeak = (function () {
         return listOfActions.length;
     };
     //adds an action to the list of actions
+	
     pub.addAction = function (startLine, endLine, startTime, endTime, action) {
         var i,
             actionNode = {};
@@ -684,6 +683,14 @@ var squeak = (function () {
         actionNode.startTime = startTime;
         actionNode.endTime = endTime;
         actionNode.id = id;
+		console.log("id = " + id);
+		
+		//added for annotation add
+		if (actionNode.tool == "annotate") {
+			profComments[annotateLineNum] = $('#annotateComment').val();
+		}
+		//end annotation add
+		
         listOfActions.push(actionNode);
         this.writeListToFrontend();
         if(dev === true) console.log("Added the action " + action);
@@ -693,6 +700,13 @@ var squeak = (function () {
     };
     //deletes a node from the list.  
     pub.deleteAction = function (remId) {
+
+		//added for annotation delete
+		if (listOfActions[(remId - 1)].tool == "annotate") {
+			delete profComments[listOfActions[(remId - 1)].startLine]; //sets profComments[annotateLineNum] to undefined
+		}
+		//end annotation delete
+		
         var ii = 0;
         if (remId <= 0 || remId > id) {
             throw "Id was not found";

@@ -131,7 +131,6 @@ $(document).ready(function(global){
 			
 		}
 		else {
-			console.log("first time upload button was clicked");
 
 			if(typeof editor === "undefined") {
 				console.log("editor is undefined");
@@ -172,7 +171,7 @@ $(document).ready(function(global){
 	});
 
 	var codesize = $(".codeSizer").height();
-	console.log(codesize);
+
 	$(".videoSizer").height(codesize);
 
 	$('#durationModal').on('shown.bs.modal', function () {
@@ -321,17 +320,15 @@ $(document).ready(function(global){
 		
 		annotateLineNum = parseInt($('#annotateLine').val());
 		var error = "";
-		//console.log("typeof profComments[annotateLineNum] = " + typeof profComments[annotateLineNum]);
+
 		if(typeof profComments[annotateLineNum] === 'undefined'){ //check if there is already a comment on the line
-			console.log("we are good to go annotating this line");
+			//console.log("we are good to go annotating this line");
 		}
 		else{
 			error = "Error: Remove previous comment from line " + annotateLineNum + " to continue.";
 			$("#annotateError").html(error);
 			return;
 		}
-
-		//profComments[annotateLineNum] = $('#annotateComment').val();
 
 		if ($("#newCM").html() == "upload button clicked") {
 			if (annotateLineNum > newCmInstance.lineCount() || annotateLineNum < 1) {					//check if user entered line is in editor
@@ -712,7 +709,6 @@ var squeak = (function () {
         actionNode.startTime = startTime;
         actionNode.endTime = endTime;
         actionNode.id = id;
-		console.log("id = " + id);
 		
 		//added for annotation add
 		if (actionNode.tool == "annotate") {
@@ -771,7 +767,7 @@ var squeak = (function () {
         var i;
 
         //clear the table - extremely hamfisted
-        $('.actionsTable').html("<thead><tr><th>Line #</th><th>Time</th><th>Tool</th><th>Delete</th></tr></thead><tbody></tbody>");
+        $('.actionsTable').html("<thead><tr><th>Line #</th><th>Time (s)</th><th>Tool</th><th>Delete</th></tr></thead><tbody></tbody>");
         //run through the list.
         for (i = 0; i < listOfActions.length; i += 1) {
             if (listOfActions[i].startLine === listOfActions[i].endLine) {
@@ -957,7 +953,6 @@ var squeak = (function () {
                     start = "\n$(\'#line" + (startLine) + "\').prepend(\"<span id='comment" + (ii) + "' data-toggle='modal' data-target='#annotateCommentModal' class='glyphicon glyphicon-comment'> </span>\");\n"
 						+ "$('#comment" + (ii) + "').click(function() {\n"
 						+ "video.pause();\n"
-						+ "console.log('" + profComments[ii] + "');\n"
 						+ "$('#annotateCommentContent').html('" + profComments[ii] + "');\n"
 						+ "});\n"
 						+ "$('#comment" + (ii) + "').hover(function() {\n"

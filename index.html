@@ -47,349 +47,300 @@
 	</head>
 	<body ng-controller="TestController as test">
 	
-<!--header-->
-<div id="top-nav" class="navbar navbar-inverse navbar-static-top">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#">PIPSQUEAK</a>
-		</div>
-		<div class="navbar-collapse collapse">
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown">
-					<a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-eye-open"></i> View <span class="caret"></span></a>
-					<ul id="g-account-menu" class="dropdown-menu" role="menu">
-						<li><a href="#" data-toggle="modal" data-target="#historyModal"><span class="glyphicon glyphicon-time"></span> History</a>
+		<!--header-->
+		<div id="top-nav" class="navbar navbar-inverse navbar-static-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">PIPSQUEAK</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-eye-open"></i> View <span class="caret"></span></a>
+							<ul id="g-account-menu" class="dropdown-menu" role="menu">
+							<li><a href="#" data-toggle="modal" data-target="#historyModal"><span class="glyphicon glyphicon-time"></span> History</a>
+							</li>
+							</ul>
 						</li>
 					</ul>
-				</li>
-			</ul>
-		</div>
-	</div>
-</div>
-
-<!--header-->
-
-<!--main-->
-<div id="wrapper">
-<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-2">
-				<strong><i class="glyphicon glyphicon-wrench"></i> Toolbox</strong>  
-				<hr>
-			</div>
-			<div class="col-md-10">
-				<strong><i class="glyphicon glyphicon-dashboard"></i> Dashboard</strong>  
-				<hr>
+				</div>
 			</div>
 		</div>
-<div class="row">
+		<!--/header-->
 
-	<!--left column-->
-	
-	<div class="col-sm-2 goaway">
-
-		<div>
-			<div>
-				<button type="submit" id="highlight" name="highlight" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">Highlight <span class="glyphicon glyphicon-pencil"></span></button>
-				<br>
-				<button type="submit" id="focus" name="focus" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">Focus <span class="glyphicon glyphicon-screenshot"></span></button>			
-				<br>
-				<button type="submit"id="fade" name="fade" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">Fade <span class="glyphicon glyphicon-edit"></span></button>			
-				<br>
-				<button type="button" id="annotate" name="annotate" class="btn btn-primary btn-block" data-toggle="modal" data-target="#annotateModal">Annotate <span class="glyphicon glyphicon-comment"></span></button>
-				<br>
-				<button type="submit"id="strikethrough" name="strikethrough" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">Strikethrough <span class="glyphicon glyphicon-minus"></span></button>
-				<br>
-				<button type="submit"id="collapse" name="collapse" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">Collapse <span class="glyphicon glyphicon-collapse-down"></span></button>	
-				<br>
-				<button type="submit"id="autoScroll" name="autoScroll" class="btn btn-primary btn-block" data-toggle="modal" data-target="#autoScrollModal">Scroll <span class="glyphicon glyphicon-resize-vertical"></span></button>	
-			</div>
-		</div>
-		
-	</div>
-	
-	<!--/left column-->
-      
-    <!--middle column-->
+		<!--wrapper for everything between header and footer of body-->
+		<div id="wrapper">
+			<div class="container-fluid">
 			
-    <div id="videoHouse" class="col-md-5">
-			
-		<!--video-->	
-
-        <div  class="panel panel-default">
-			<div class="panel-heading"><h4>Video</h4></div>
-				<div class="panel-body videoSizer">
-				
-					<!--jsfiddle code for current time grabber-->
-                    <div id="video_container" style="position: absolute; padding-top: 15px; padding-left: 15px; padding-right: 45px"> <!--jsfiddle-->
-					
-						<video class="vid" id="video" style="position: relative; height: 100%;" controls>
-						
-							<source type="video/webm" src="" id="webm" autoplay="false"></source>
-							<source type="video/ogg" src="" id="ogv" autoplay="false"></source>
-							<source type="video/wav" src="" id="wav" autoplay="false"></source>
-
-							Your browser does not support HTML5 video.
-						</video>
-						
-						<span class="btn btn-success btn-file buttons" id="uploadVid">
-							<p style="display: inline; position: relative; z-index: 1" class="mid">Upload Video </p><span style="position: relative; z-index: 1" class="glyphicon glyphicon-upload"></span>
-							<input style="z-index: 2" type="file" id="myVidFile" onchange="loadVideo()" class="btn btn-default btn-block buttons">
-						</span>
-						<br>
-						<br>
-				
+				<!--titles row-->
+				<div class="row">
+					<div class="col-md-2">
+						<strong><i class="glyphicon glyphicon-wrench"></i> Toolbox</strong>  
+						<hr>
 					</div>
+					<div class="col-md-10">
+						<strong><i class="glyphicon glyphicon-dashboard"></i> Dashboard</strong>  
+						<hr>
+					</div>
+				</div>
+				<!--/titles-->
+				
+				<!--main row with tools column, video column, and code column-->
+				<div class="row">
 
-					<div hidden>Current Time: <span  id="currentTime">0</span></div> <!--jsfiddle-->
-					<div hidden>Total Time: <span id="totalTime">0</span></div> <!--jsfiddle-->
-					<!--/end jsfiddle code-->
+					<!--left (tools) column-->
+					<div class="col-sm-2 goaway">
+						<div>
+							<div>
+								<button type="submit" id="highlight" name="highlight" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">Highlight <span class="glyphicon glyphicon-pencil"></span></button>
+								<br>
+								<button type="submit" id="focus" name="focus" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">Focus <span class="glyphicon glyphicon-screenshot"></span></button>			
+								<br>
+								<button type="submit"id="fade" name="fade" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">Fade <span class="glyphicon glyphicon-edit"></span></button>			
+								<br>
+								<button type="button" id="annotate" name="annotate" class="btn btn-primary btn-block" data-toggle="modal" data-target="#annotateModal">Annotate <span class="glyphicon glyphicon-comment"></span></button>
+								<br>
+								<button type="submit"id="strikethrough" name="strikethrough" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">Strikethrough <span class="glyphicon glyphicon-minus"></span></button>
+								<br>
+								<button type="submit"id="collapse" name="collapse" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">Collapse <span class="glyphicon glyphicon-collapse-down"></span></button>	
+								<br>
+								<button type="submit"id="autoScroll" name="autoScroll" class="btn btn-primary btn-block" data-toggle="modal" data-target="#autoScrollModal">Scroll <span class="glyphicon glyphicon-resize-vertical"></span></button>	
+							</div>
+						</div>
+					</div>
+					<!--/left column-->
+      
+					<!--middle (video) column-->
+					<div id="videoHouse" class="col-md-5">	
+						<div  class="panel panel-default">
+						<div class="panel-heading"><h4>Video</h4></div>
+						<div class="panel-body videoSizer">
+				
+							<!--requirements for time grabber-->
+							<div id="video_container" style="position: absolute; padding-top: 15px; padding-left: 15px; padding-right: 45px">
+								<video class="vid" id="video" style="position: relative; height: 100%;" controls>
+									<source type="video/webm" src="" id="webm" autoplay="false"></source>
+									<source type="video/ogg" src="" id="ogv" autoplay="false"></source>
+									<source type="video/wav" src="" id="wav" autoplay="false"></source>
+									Your browser does not support HTML5 video.
+								</video>
+								<span class="btn btn-success btn-file buttons" id="uploadVid">
+									<p style="display: inline; position: relative; z-index: 1" class="mid">Upload Video </p><span style="position: relative; z-index: 1" class="glyphicon glyphicon-upload"></span>
+									<input style="z-index: 2" type="file" id="myVidFile" onchange="loadVideo()" class="btn btn-default btn-block buttons">
+								</span>
+								<br>
+								<br>
+							</div>
+							<div hidden>Current Time: <span  id="currentTime">0</span></div>
+							<div hidden>Total Time: <span id="totalTime">0</span></div>
+							<!--/requirements-->
 
-					<!--tests (required for program to work - DO NOT REMOVE!!!)-->
-					<div id = "printInfo" hidden></div> <!--for testing output to backend-->
-					<div id = "newCM" hidden></div>
-					<div id = "printInfo2" hidden></div> <!--for testing popcornjs-->
-					<!--end tests-->
+							<!--tests (required for program to work - DO NOT REMOVE!!!)-->
+							<div id = "printInfo" hidden></div> <!--for testing output to backend-->
+							<div id = "newCM" hidden></div>
+							<div id = "printInfo2" hidden></div> <!--for testing popcornjs-->
+							<!--/tests-->
 					
-			</div>
-		</div>
-		
-		</div>
-              
-		
+						</div>
+						</div>
+					</div>  
+					<!--/middle (video) column-->
 			  
-		<!--/video-->
-			  
-		<!--codemirror-->
-		<div id="codeHouse" class="col-md-5">
-              
-		<div class="panel panel-default" id="codeMirror">
-			<div class="panel-heading"><h4>CodeMirror</h4></div>
-			<div class="panel-body codeSizer">
-			<div id="video_container" >
-			<div id="wrapHouse" style="position: relative; padding-left: 15px; padding-right: 15px; padding-top: 15px;">
-			<div id="wrappingDiv">
-
-			<textarea id="codearea" name="codearea" style="min-height: 400px; max-height: 400px; overflow-y: scroll;">
+					<!--right (codemirror) column-->
+					<div id="codeHouse" class="col-md-5">
+						<div class="panel panel-default" id="codeMirror">
+						<div class="panel-heading"><h4>CodeMirror</h4></div>
+						<div class="panel-body codeSizer">
+							<div id="code_container" >
+							<div id="wrapHouse" style="position: relative; padding-left: 15px; padding-right: 15px; padding-top: 15px;">
+							<div id="wrappingDiv">
+								<textarea id="codearea" name="codearea" style="min-height: 400px; max-height: 400px; overflow-y: scroll;">
 Here is
 some sample
 code.
-			</textarea> 
-
-			</div>
-			</div>
-			<div style="padding-top: 5px; padding-left: 15px; padding-right: 15px">
-			<span class="btn btn-success btn-file buttons" id="uploadCode">
-				<p style="display: inline; position: relative; z-index: 1" class="mid">Upload Code </p><span style="position: relative; z-index: 1" class="glyphicon glyphicon-upload"></span>
-				<input style="z-index: 2" type="file" id="myFile" onchange="loadFile(this)" class="btn btn-default btn-block buttons">
-			</span>
-			<br>
-			<br>
-			
-			</div>
-			</div>
-			</div>
-		</div>
-		
-		</div>
-			  
-		<!--/codemirror-->
+								</textarea> 
+							</div>
+							</div>
+							<div style="padding-top: 5px; padding-left: 15px; padding-right: 15px">
+								<span class="btn btn-success btn-file buttons" id="uploadCode">
+									<p style="display: inline; position: relative; z-index: 1" class="mid">Upload Code </p><span style="position: relative; z-index: 1" class="glyphicon glyphicon-upload"></span>
+									<input style="z-index: 2" type="file" id="myFile" onchange="loadFile(this)" class="btn btn-default btn-block buttons">
+								</span>
+								<br>
+								<br>
+							</div>
+							</div>
+						</div>
+						</div>
+					</div> 
+					<!--/right (codemirror) column-->
    
-	</div>
-			
-	<!--/middle column-->
+				</div>
+				<!--/main row with tools column, video column, and code column-->
 	
-		<!--popup to get duration-->
-
-		<div class="modal fade" id="durationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="durationModalLabel">Add Duration</h4>
-			  </div>
-			  <div class="modal-body">
-				<div id="contentBox">
-					<div id="tool" hidden></div>
-					<label class="control-label">Please enter the duration of the selected function:</label>
-				<form id="durationForm">
-					<input type="text" name="dur" id="dur" class="form-control" maxlength = 20 placeholder="Duration (in seconds)" required="" autofocus>
-				</form>
+				<!--popup to get duration-->
+				<div class="modal fade" id="durationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="durationModalLabel">Add Duration</h4>
+					</div>
+					<div class="modal-body">
+						<div id="contentBox">
+							<div id="tool" hidden></div>
+							<label class="control-label">Please enter the duration of the selected function:</label>
+							<form id="durationForm">
+								<input type="text" name="dur" id="dur" class="form-control" maxlength = 20 placeholder="Duration (in seconds)" required="" autofocus>
+							</form>
+						</div>
+						<br>
+						<div class="modal-footer">
+							<span id="error"></span>
+							<button id="durationClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button id="durationSubmit" type="button" class="btn btn-primary">Add</button>
+						</div>
+					</div>
 				</div>
-				<br>
-				<div class="modal-footer">
-					<span id="error"></span>
-					<button id="durationClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button id="durationSubmit" type="button" class="btn btn-primary">Add</button>
 				</div>
-			  </div>
-			</div>
-		  </div>
-		</div>
-
-		<!--/end popup to get duration-->
+				</div>
+				<!--/popup to get duration-->
 				
-		<!--popup for create annotation-->
-		<div class="modal fade" id="annotateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="annontateModalLabel">Add Annotation</h4>
-			  </div>
-			  <div class="modal-body">
-				<form>
-				  <div class="form-group">
-					<label class="control-label">Line:</label>
-					<input type="text" class="form-control" id="annotateLine" placeholder="Line Number">
-				  </div>
-				  <div class="form-group" hidden>
-					<label class="control-label">Source:</label>
-					<input type="text" class="form-control" id="annotateSource" placeholder="Source URL">
-				  </div>
-				  <div class="form-group">
-					<label class="control-label">Comment:</label>
-					<input type="text" class="form-control" id="annotateComment" placeholder="Comment">
-				  </div>
-				  
-				  <div class="dropdown" hidden>
-				  	<label class="control-label">Type:</label>
-  					<button class="btn btn-default dropdown-toggle" id="annotateType" name="annotationType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            		Choose one...
-            		<span class="caret"></span>
-            		</button>
-            		<ul id="annotateDropMenu" class="dropdown-menu">
-                  		<li><a href="#">Video</a></li>
-                 		<li><a href="#">Picture</a></li>
-                  		<li><a href="#">Article</a></li>
-                  		<li><a href="#">Other</a></li>
-            		</ul>
+				<!--popup for create annotation-->
+				<div class="modal fade" id="annotateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="annontateModalLabel">Add Annotation</h4>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label class="control-label">Line:</label>
+								<input type="text" class="form-control" id="annotateLine" placeholder="Line Number">
+							</div>
+							<div class="form-group">
+								<label class="control-label">Comment:</label>
+								<input type="text" class="form-control" id="annotateComment" placeholder="Comment">
+							</div>
+							<br>
+							<div class="row-fluid modal-footer">
+								<span id="annotateError"></span>
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								<button id="annotateSubmit" type="button" class="btn btn-primary">Add</button>
+							</div>
+						</form>
+					</div>
 				</div>
-				<br>
-				<div class="row-fluid modal-footer">
-					<span id="annotateError"></span>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button id="annotateSubmit" type="button" class="btn btn-primary">Add</button>
-			  	</div>
-				</form>
-			  </div>
-			</div>
-		  </div>
-		</div>
-		<!--end popup for create annotation-->
-		
-		<!-- popup for view annotation -->
-		<div class="modal fade" id="annotateCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="annotateCommentModalLabel">Note</h4>
-			  </div>
-			  <div class="modal-body">
-				<p id="annotateCommentContent"></p>
-			  </div>
-			</div>
-		  </div>
-		</div>
-		<!-- end popup for view annotation -->
-		
-		<!-- popup for autoScroll -->
-		<div class="modal fade" id="autoScrollModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="autoScrollModalLabel">Add Line</h4>
-			  </div>
-			  <div class="modal-body">
-				<form>
-				  <div class="form-group">
-					<label class="control-label">Line to scroll to:</label>
-					<input type="text" class="form-control" id="autoScrollLine" placeholder="Line Number">
-				  </div>
-				</form>
-			  </div>
-			  <div class="row-fluid modal-footer">
-				<span id="autoScrollError"></span>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button id="autoScrollSubmit" type="button" class="btn btn-primary">Add</button>
-			  </div>
-			</div>
-		  </div>
-		</div>
-		<!-- end popup for autoscroll -->
-		
-	</div>
-			
-	<!--/middle column-->
-			
-	<!--right column-->
-			
-		<!--popup for history-->
-		<div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="historyModalLabel"><span class="glyphicon glyphicon-time"></span> History</h4>
-			  </div>
-			  <div class="modal-body">
-	<div>   
-		
-	  	<div style="height:500px;width:100%;overflow:auto;">
-		<table class="table table-striped actionsTable">
-			<thead>
-				<tr><th>Line #</th><th>Time (s)</th><th>Tool</th><th>Delete</th></tr>
-			</thead>
-			
-			<tbody>
-			</tbody>
-		</table>
-		</div>				
-		
-	  
-	</div>
-				<div class="modal-footer">
-					<button id="durationClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
-			  </div>
+				</div>
+				<!--/popup for create annotation-->
+		
+				<!-- popup for view annotation -->
+				<div class="modal fade" id="annotateCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="annotateCommentModalLabel">Note</h4>
+					</div>
+					<div class="modal-body">
+						<p id="annotateCommentContent"></p>
+					</div>
+				</div>
+				</div>
+				</div>
+				<!--/popup for view annotation -->
+		
+				<!-- popup for autoScroll -->
+				<div class="modal fade" id="autoScrollModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="autoScrollModalLabel">Add Line</h4>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label class="control-label">Line to scroll to:</label>
+								<input type="text" class="form-control" id="autoScrollLine" placeholder="Line Number">
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<span id="autoScrollError"></span>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button id="autoScrollSubmit" type="button" class="btn btn-primary">Add</button>
+					</div>
+				</div>
+				</div>
+				</div>
+				<!--/popup for autoscroll -->
+				
+				<!--popup for history-->
+				<div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="historyModalLabel"><span class="glyphicon glyphicon-time"></span> History</h4>
+					</div>
+					<div class="modal-body">
+						<div>   
+						<div style="height:500px;width:100%;overflow:auto;">
+						<table class="table table-striped actionsTable">
+							<thead>
+								<tr><th>Line #</th><th>Time (s)</th><th>Tool</th><th>Delete</th></tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+						</div>				
+						</div>
+						<div class="modal-footer">
+							<button id="durationClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+				</div>
+				</div>
+				<!--/popup for history-->
+		
 			</div>
-		  </div>
 		</div>
+		<!--/wrapper for everything between header and footer of body-->
 
-		<!--/end popup for history-->
-	
-</div>
-
-<!--/main-->
-<div id="footer">
-<footer>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-3">
-			</div> <!--end left column-->
-			<div class="col-md-6">
-			</div> <!--end middle column-->
-			<div class="col-sm-3">
-				<div align="right">
-					<button type="submit" align="right" id="publish" name="publish" class="btn btn-primary btn-block buttons">Publish <span class="glyphicon glyphicon-new-window"></span></button>	
-				</div>
-			</div> <!--end right column-->
+		<!--footer-->
+		<div id="footer">
+		<footer>
+			<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-3">
+				</div> <!--end left column-->
+				<div class="col-md-6">
+				</div> <!--end middle column-->
+				<div class="col-sm-3">
+					<div align="right">
+						<button type="submit" align="right" id="publish" name="publish" class="btn btn-primary btn-block buttons">Publish <span class="glyphicon glyphicon-new-window"></span></button>	
+					</div>
+				</div> <!--end right column-->
+			</div>
+			</div>
+		</footer>
 		</div>
-	</div>
-</footer>
-</div>
+		<!--/footer-->
 	
 	</body>
 	<script type="text/javascript">
-	    window.onbeforeunload = function() {
-	        return "Dude, are you sure you want to leave? Think of the kittens!";
-	    }
+		window.onbeforeunload = function() {
+			return "Dude, are you sure you want to leave? Think of the kittens!";
+		}
 	</script>
 </html>

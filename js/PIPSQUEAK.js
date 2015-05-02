@@ -246,16 +246,19 @@ $(document).ready(function(global){
 	});
 					
 	$("#highlight").click(function() {
+		$("#error").html("");
 		$("#tool").html("highlight");
 		video.pause();
 	});
 					
 	$("#focus").click(function() {
+		$("#error").html("");
 		$("#tool").html("focus");
 		video.pause();
 	});
 
 	$("#fade").click(function() {
+		$("#error").html("");
 		$("#tool").html("fade");
 		video.pause();
 	});
@@ -368,17 +371,15 @@ $(document).ready(function(global){
 	});
 
 	$("#strikethrough").click(function() {
-
+		$("#error").html("");
 		$("#tool").html("strikethrough");
 		video.pause();
-
 	});
 
 	$("#collapse").click(function() {
-
+		$("#error").html("");
 		$("#tool").html("collapse");
 		video.pause();
-
 	});
 				
 	$("#publish").click(function() {

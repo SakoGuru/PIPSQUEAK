@@ -303,7 +303,7 @@ $(document).ready(function(global){
 			}
 		}
 		
-		action = "autoScroll";
+		action = "auto scroll";
 		startLine = autoScrollNum;
 		endLine = autoScrollNum;
 		startTime = $('#currentTime').html();
@@ -697,7 +697,7 @@ var squeak = (function () {
         	startTime = 0.01;
         }
         //add additional actions names here
-        if (action !== 'strikethrough' && action !== 'highlight' && action !== 'focus' && action !== 'fadeIn' && action !== 'fade' && action !== 'collapse' && action !== 'autoScroll' && action != 'annotate') {
+        if (action !== 'strikethrough' && action !== 'highlight' && action !== 'focus' && action !== 'fadeIn' && action !== 'fade' && action !== 'collapse' && action !== 'auto scroll' && action != 'annotate') {
             throw action + " is not an allowed action";
         }
         id += 1;
@@ -979,7 +979,7 @@ var squeak = (function () {
                     popcornFile += start;
                     //popcornFile += end;
 				}
-            } else if (action === 'autoScroll') {
+            } else if (action === 'auto scroll') {
                 //call autoScroll function
                 if(dev === true) console.log("Scrolling from line " + startLine + " to line " + endLine + " from time " + startTime + " to time " + endTime + ".");
                 //durr = end - start; never used?

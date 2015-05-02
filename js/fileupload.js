@@ -5,21 +5,7 @@ var $ = require('jquery');
 			
 // Uploads user file and loads it into CodeMirror editor
 function loadFile(input) {
-	//console.log("loadfile function is running");
-	//console.log(editor);
-	//var c = $("#codearea").html();
-	//console.log(c);
-	//console.log(e);
-	/*
-	if (editor) {
-		//console.log(wrappingDiv);
-		$('#wrappingDiv').remove(); //remove the textarea DOM element
-	}
-	else if (newCmInstance){
-		//console.log(wrappingDiv);
-		$('#wrappingDiv').remove(); //remove the textarea DOM element
-	}
-	*/
+
 	$('#wrappingDiv').remove(); //remove the textarea DOM element
 	$('#wrapHouse').append("<div id='wrappingDiv'></div>"); //add new textarea DOM element
 	$('#wrappingDiv').append("<textarea id='codearea' name='codearea'>" + e + "</textarea> "); //add new textarea DOM element
@@ -51,15 +37,30 @@ function loadFile(input) {
 	//transfer new codemirror instance back to PIPSQUEAK.js
 	$('#codearea').data('CodeMirrorInstance', editor); //save new editor and name it CodeMirrorInstance
 	newCmInstance = $('#codearea').data('CodeMirrorInstance'); //put new editor in global javascript variable to be accessed in PIPSQUEAK.js
-	//console.log("newCM = " + newCM);
 	
 }
 
 // Uploads user video file and loads it into video player
 function loadVideo(oldVid) {
 
-	var fullPath = document.getElementById("myFile").value;
-	if (oldVid != null) fullPath = oldVid;
+	var fullPath = document.getElementById("myVidFile").value;
+	var vidExt = fullPath.split('.').pop();
+	
+	//check for acceptable video types
+	if (vidExt == "webm" || vidExt == "ogv"){ //testing plan also includes || vidExt == "mkt"  || vidExt == "wav"
+		console.log("video file type is acceptable");
+	}
+	else if (vidExt == ""){
+		console.log("video upload was cancelled");
+		return;
+	}
+	else{
+		alert("Please select one of the following types of files: webm, ogv"); //testing plan also includes mkt, or wav
+		throw "Incorrect filetype.";
+	}
+	//end check for acceptable video types
+	
+	if (oldVid != null) fullPath = oldVid; //note: oldVid is always null
 	media = fullPath;
 	if (fullPath) {
 		var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
@@ -68,7 +69,7 @@ function loadVideo(oldVid) {
 			filename = filename.substring(1);
 		}
 	}
-
+	
 	var player = document.getElementById("video");
 	var webmvid = document.getElementById("webm");
 	var ogvvid = document.getElementById("ogv");
@@ -79,4 +80,5 @@ function loadVideo(oldVid) {
 	$(ogvvid).attr('autoplay', false);
 	player.load();
 	//squeak.saveFile(media, code);
+	
 }

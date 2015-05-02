@@ -408,11 +408,11 @@ $(document).ready(function(global){
 			var i;
 			var firstPTag = "<span id='line";
 			var lastPTag = "</span>";
-			lines[0] = "<pre id='codearea_pretty' class='prettyprint linenums' style='min-height: 370px; max-height: 370px; overflow-y: scroll; overflow-x: scroll;'><code>";
+			lines[0] = "\n\t\t\t\t\t<pre id='codearea_pretty' class='prettyprint linenums' style='min-height: 370px; max-height: 370px; overflow-y: scroll; overflow-x: scroll;'><code>";
 			for (i = 0; i < numLines; i++) {
-				lines[i+1] =  firstPTag + (i + 1) + "'>" + escapeHtml(doc.getLine(i)) + lastPTag + '\n';
+				lines[i+1] = firstPTag + (i + 1) + "'>" + escapeHtml(doc.getLine(i)) + lastPTag + '\n';
 			}
-			lines[numLines+1] = "</code></pre>";
+			lines[numLines+1] = "</code></pre>\n";
 		
 			
 		//end get codemirror lines into <p> tags
@@ -832,15 +832,14 @@ var squeak = (function () {
 		pip.copyDir("./js/",path + "/" + name + "/js/");
 		pip.copyDir("./fonts/",path + "/" + name + "/fonts/");
         //pip.copyDir("./node_modules", path + "/" + name + "/node_modules/");
-		//first attempt at reading in basic publish view from file
+
 		var firstPart = pip.readFile("./templates/firstPart.txt");
 
 		html = firstPart;
 
-		//TODO: make this point to the published folder of the media
-		html += "<source type=\"video/mp4\" src=file:///" + media + " id=\"mp4\"></source>";
-		html += "<source type=\"video/webm\" src=file:///" + media + " id=\"webm\"></source>";
-		html += "<source type=\"video/ogg\" src=file:///" + media + " id=\"ogv\"></source>";
+		html += "\n\t\t\t\t\t\t\t<source type=\"video/mp4\" src=file:///" + media + " id=\"mp4\"></source>\n";
+		html += "\t\t\t\t\t\t\t<source type=\"video/webm\" src=file:///" + media + " id=\"webm\"></source>\n";
+		html += "\t\t\t\t\t\t\t<source type=\"video/ogg\" src=file:///" + media + " id=\"ogv\"></source>\n";
 		
 		var secondPart = pip.readFile("./templates/secondPart.txt");
 		html += secondPart;

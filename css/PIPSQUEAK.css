@@ -27,10 +27,8 @@
 }
 
 .highlight {
-	
 	-webkit-animation-fill-mode: forwards;
 	-webkit-animation: highlight-fade 0.25s;
-	
 	background: yellow;
 }
 
@@ -40,18 +38,10 @@
 }
 
 .focus {
-	/*
-	-webkit-animation-fill-mode: forwards;
-	-webkit-animation: focus-fade 0.25s;
-	*/
-	
 	font-size: 200%;
-
-	
     transition: font-size .25s ease-in-out;
    -moz-transition: font-size .25s ease-in-out;
    -webkit-transition: font-size .25s ease-in-out;
-	
 }
 
 .fadeOut {
@@ -63,10 +53,6 @@
 
 .hidden {
 	transform: scale(0,0);
-	/*
-	display: none;
-	visibility: hidden;
-	*/
 }
 
 /*end popcorn classes*/

@@ -1,19 +1,31 @@
-</div>
-</div>
+					</div>
+					</div>
+				</div>
+				<!--/right (code) column-->
+			
+				</div>
+				<!--/main row with video column and code column-->
+	
+				<!-- popup for view annotation -->
+				<div class="modal fade" id="annotateCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+					<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="annotateCommentModalLabel">Note</h4>
+					</div>
+					<div class="modal-body">
+						<p id="annotateCommentContent"></p>
+					</div>
+					</div>
+					</div>
+				</div>
+				<!-- end popup for view annotation -->	
+				
 			</div>
 		</div>
+		<!--/wrapper for everything between header and footer of body-->
 		
-		<!--/codemirror-->
-   
-	</div>
-			
-	<!--/middle column-->
-			
-</div>
-</div>
-
-<!--/main-->
-<div id="footer">
-<footer >
-	<div class="container-fluid text-center">
-		
+		<div id="footer">
+		<footer >
+			<div class="container-fluid text-center">

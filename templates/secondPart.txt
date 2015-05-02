@@ -1,58 +1,12 @@
-</video>
+						</video>
+					</div>		
 					</div>
-					
-					
-					
-			</div>
-		</div>
-			  
-		<!--/video-->
-		
-		<!--popup to get duration-->
-		<!--
-		<div id="dialog">
-		
-		<div class="center">
-				<div id="mid" class="form-group">
-					<div id="contentBox">
-						<div id="tool" hidden></div>
-						<p>	Please enter the duration of the selected function:</p>
-						<br>
-						<input type="text" name="dur" id="dur" style = "width: 200px; height: 30px;" class="form-control mid" maxlength = 20 placeholder="Answer here" required="" autofocus>
-						<br>
-						<button id="answer" type="submit" name="answer" class="btn btn-primary">Answer</button>
 					</div>
-				</div>
-			</div>
-		
-		</div>
-		-->
-		<!--/end popup to get duration-->
-		
-		<!-- popup for view annotation -->
-		<div class="modal fade" id="annotateCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="annotateCommentModalLabel">Note</h4>
-			  </div>
-			  <div class="modal-body">
-				<p id="annotateCommentContent"></p>
-			  </div>
-			</div>
-		  </div>
-		</div>
-		<!-- end popup for view annotation -->
-			  
-		<!--codemirror-->
-		
-		</div>
-	
-	 <div class="col-md-6">
+				</div>	
+				<!--/left (video) column-->
 
-        
-		<div class="panel panel-default">
-			<div class="panel-heading"><h4>Code</h4></div>
-				<div >
-				<div id="codearea" class="panel-body" style="min-height: 400px; max-height: 400px;">
+				<!--right (code) column-->
+				<div class="col-md-6">
+					<div class="panel panel-default">
+					<div class="panel-heading"><h4>Code</h4></div>
+					<div id="codearea" class="panel-body" style="min-height: 400px; max-height: 400px;">

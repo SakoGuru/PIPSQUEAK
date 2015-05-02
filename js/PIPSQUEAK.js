@@ -86,10 +86,14 @@ $(document).ready(function(global){
 	},500);
 
 	//end jsfiddle 
+	
+	$('#uploadVid').click(function() {
+		video.pause();
+	});
 
 	$('#uploadCode').click(function() {
+		video.pause();
 		var c = $("#codearea").html();
-		//console.log(c)
 		
 		if ($("#newCM").html() === "upload button clicked") {
 
@@ -303,7 +307,7 @@ $(document).ready(function(global){
 			}
 		}
 		
-		action = "auto scroll";
+		action = "scroll";
 		startLine = autoScrollNum;
 		endLine = autoScrollNum;
 		startTime = $('#currentTime').html();
@@ -383,6 +387,7 @@ $(document).ready(function(global){
 	});
 				
 	$("#publish").click(function() {
+		video.pause();
 		$("#printInfo").html("published");
 
 		var doc;
@@ -697,7 +702,7 @@ var squeak = (function () {
         	startTime = 0.01;
         }
         //add additional actions names here
-        if (action !== 'strikethrough' && action !== 'highlight' && action !== 'focus' && action !== 'fadeIn' && action !== 'fade' && action !== 'collapse' && action !== 'auto scroll' && action != 'annotate') {
+        if (action !== 'strikethrough' && action !== 'highlight' && action !== 'focus' && action !== 'fadeIn' && action !== 'fade' && action !== 'collapse' && action !== 'scroll' && action != 'annotate') {
             throw action + " is not an allowed action";
         }
         id += 1;
@@ -979,7 +984,7 @@ var squeak = (function () {
                     popcornFile += start;
                     //popcornFile += end;
 				}
-            } else if (action === 'auto scroll') {
+            } else if (action === 'scroll') {
                 //call autoScroll function
                 if(dev === true) console.log("Scrolling from line " + startLine + " to line " + endLine + " from time " + startTime + " to time " + endTime + ".");
                 //durr = end - start; never used?
@@ -1027,7 +1032,8 @@ var squeak = (function () {
 
         // pip.removeFile('./recoveryFile.pipsqueak');
 
-        if(dev === true) alert("Publish took approximately " + (endTime - startTime)/1000 + " seconds to complete");
+		//alert for testing publish time
+        //if(dev === true) alert("Publish took approximately " + (endTime - startTime)/1000 + " seconds to complete");
         
         setTimeout( function() {
         	var newWin = gui.Window.open(path + "/" + name + "/index.html", {

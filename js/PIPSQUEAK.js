@@ -178,6 +178,10 @@ $(document).ready(function(global){
 	$('#annotateModal').on('shown.bs.modal', function () {
 		$('#annotateLine').focus();
 	})
+	
+	$('#autoScrollModal').on('shown.bs.modal', function () {
+		$('#autoScrollLine').focus();
+	})
 
 	$('#durationClose').click(function() {
 		$("#error").html("");
@@ -241,41 +245,71 @@ $(document).ready(function(global){
 	});
 					
 	$("#highlight").click(function() {
-
 		$("#tool").html("highlight");
 		video.pause();
-		
-
 	});
 					
 	$("#focus").click(function() {
-
 		$("#tool").html("focus");
 		video.pause();
-
 	});
 
 	$("#fade").click(function() {
-
 		$("#tool").html("fade");
 		video.pause();
-
 	});
-
-	$("#fadeIn").click(function() {
-
-		$("#tool").html("fadeIn");
+	
+	$("#autoScroll").click(function() {
 		video.pause();
-
+		$("#autoScrollError").html("");
 	});
 
 	$("#annotate").click(function() {
 		video.pause();
 		$("#annotateError").html("");
 	});
+	
+	$('#autoScrollSubmit').click(function() {
+
+		var autoScrollNum = parseInt($('#autoScrollLine').val());
+		var error = "";
+
+		if ($("#newCM").html() == "upload button clicked") {
+			if (autoScrollNum > newCmInstance.lineCount() || autoScrollNum < 1) {					//check if user entered line is in editor
+				error = "Error: Please choose a line between 1 and " + newCmInstance.lineCount() + ".";
+				$("#autoScrollError").html(error);	
+				return;
+			}
+			else {
+
+				$('#autoScrollModal').modal('hide');
+				$("#autoScrollError").html("");
+			}
+		}
+		else {
+			if (autoScrollNum > editor.lineCount() || autoScrollNum < 1) {					//check if user entered line is in editor
+				error = "Error: Please choose a line between 1 and " + editor.lineCount() + ".";
+				$("#autoScrollError").html(error);
+				return;
+			}
+			else {
+
+				$('#autoScrollModal').modal('hide');
+				$("#autoScrollError").html("");
+			}
+		}
+		
+		action = "autoScroll";
+		startLine = autoScrollNum;
+		endLine = autoScrollNum;
+		startTime = $('#currentTime').html();
+		startTime = Number(startTime);
+		endTime = (startTime + 1);
+
+		squeak.addAction( startLine, endLine, startTime, endTime, action );
+	});
 
 	$('#annotateSubmit').click(function() {
-		
 		
 		annotateLineNum = parseInt($('#annotateLine').val());
 		var error = "";
@@ -334,21 +368,14 @@ $(document).ready(function(global){
 
 	$("#strikethrough").click(function() {
 
-		$("#tool").html("strike");
+		$("#tool").html("strikethrough");
 		video.pause();
 
 	});
 
-	$("#anchor").click(function() {
+	$("#collapse").click(function() {
 
-		$("#tool").html("anchor");
-		video.pause();
-
-	});
-
-	$("#autoScroll").click(function() {
-
-		$("#tool").html("autoScroll");
+		$("#tool").html("collapse");
 		video.pause();
 
 	});
@@ -668,7 +695,7 @@ var squeak = (function () {
         	startTime = 0.01;
         }
         //add additional actions names here
-        if (action !== 'strike' && action !== 'highlight' && action !== 'focus' && action !== 'fadeIn' && action !== 'fade' && action !== 'anchor' && action !== 'autoScroll' && action != 'annotate') {
+        if (action !== 'strikethrough' && action !== 'highlight' && action !== 'focus' && action !== 'fadeIn' && action !== 'fade' && action !== 'collapse' && action !== 'autoScroll' && action != 'annotate') {
             throw action + " is not an allowed action";
         }
         id += 1;
@@ -896,7 +923,7 @@ var squeak = (function () {
                 end,
                 ii = 0;
             
-            if (action === 'strike' || action === 'highlight' || action === 'focus' || action === 'fade') {
+            if (action === 'strikethrough' || action === 'highlight' || action === 'focus' || action === 'fade') {
                 //call any of the CSS adder functions
                 if(dev === true) console.log(action + "ing lines " + startLine + " - " + endLine + " from time " + startTime + " to time " + endTime + ".");
 				//var scroller = "\n\t\tdocument.getElementById(\'codearea\').scrollTop = (document.getElementById(\'line" + startLine + "\').offsetTop - 150);";
@@ -937,9 +964,9 @@ var squeak = (function () {
                     popcornFile += start;
                     //popcornFile += end;
 				}
-            } else if (action === 'anchor') {
-                //call anchor function
-                if(dev === true) console.log("Anchoring lines " + startLine + " to " + endLine + " from time " + startTime + " to time " + endTime + ".");
+            } else if (action === 'collapse') {
+                //call collapse function
+                if(dev === true) console.log("collapsing lines " + startLine + " to " + endLine + " from time " + startTime + " to time " + endTime + ".");
 				for (ii = startLine; ii <= endLine; ii += 1) {
                     start = "pop.code ({\n\tstart: " + startTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() { \n\t\tdocument.getElementById(\'codearea\').scrollTop = (document.getElementById(\'line" + startLine + "\').offsetTop - 150);"

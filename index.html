@@ -101,13 +101,13 @@
 				<br>
 				<button type="submit"id="fade" name="fade" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">Fade <span class="glyphicon glyphicon-edit"></span></button>			
 				<br>
-				<button type="button" id="annotate" name="annotate" class="btn btn-primary btn-block" data-toggle="modal" data-target="#annotateModal">Annotation <span class="glyphicon glyphicon-comment"></span></button>
+				<button type="button" id="annotate" name="annotate" class="btn btn-primary btn-block" data-toggle="modal" data-target="#annotateModal">Annotate <span class="glyphicon glyphicon-comment"></span></button>
 				<br>
 				<button type="submit"id="strikethrough" name="strikethrough" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">Strikethrough <span class="glyphicon glyphicon-minus"></span></button>
 				<br>
-				<button type="submit"id="anchor" name="anchor" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">Anchor <span class="glyphicon glyphicon-lock"></span></button>	
+				<button type="submit"id="collapse" name="collapse" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">Collapse <span class="glyphicon glyphicon-collapse-down"></span></button>	
 				<br>
-				<button type="submit"id="autoScroll" name="autoScroll" class="btn btn-primary btn-block" data-toggle="modal" data-target="#durationModal">AutoScroll <span class="glyphicon glyphicon-resize-vertical"></span></button>	
+				<button type="submit"id="autoScroll" name="autoScroll" class="btn btn-primary btn-block" data-toggle="modal" data-target="#autoScrollModal">Auto Scroll <span class="glyphicon glyphicon-resize-vertical"></span></button>	
 			</div>
 		</div>
 		
@@ -204,7 +204,7 @@ code.
 			
 	<!--/middle column-->
 	
-			<!--popup to get duration-->
+		<!--popup to get duration-->
 
 		<div class="modal fade" id="durationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
@@ -298,6 +298,33 @@ code.
 		  </div>
 		</div>
 		<!-- end popup for view annotation -->
+		
+		<!-- popup for autoScroll -->
+		<div class="modal fade" id="autoScrollModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="autoScrollModalLabel">Add Line</h4>
+			  </div>
+			  <div class="modal-body">
+				<form>
+				  <div class="form-group">
+					<label class="control-label">Line to scroll to:</label>
+					<input type="text" class="form-control" id="autoScrollLine" placeholder="Line Number">
+				  </div>
+				</form>
+			  </div>
+			  <div class="row-fluid modal-footer">
+				<span id="autoScrollError"></span>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button id="autoScrollSubmit" type="button" class="btn btn-primary">Add</button>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		<!-- end popup for autoscroll -->
+		
 	</div>
 			
 	<!--/middle column-->

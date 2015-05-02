@@ -172,6 +172,7 @@ $(document).ready(function(global){
 	$(".videoSizer").height(codesize);
 
 	$('#durationModal').on('shown.bs.modal', function () {
+		$("#error").html("");
 		$('#dur').focus();
 	})
 

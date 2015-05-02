@@ -47,7 +47,7 @@ function loadVideo(oldVid) {
 	var vidExt = fullPath.split('.').pop();
 	
 	//check for acceptable video types
-	if (vidExt == "webm" || vidExt == "ogv"){ //testing plan also includes || vidExt == "mkt"  || vidExt == "wav"
+	if (vidExt == "webm" || vidExt == "ogv" || vidExt == "wav"){ //may want to include avi later
 		console.log("video file type is acceptable");
 	}
 	else if (vidExt == ""){
@@ -55,7 +55,7 @@ function loadVideo(oldVid) {
 		return;
 	}
 	else{
-		alert("Please select one of the following types of files: webm, ogv"); //testing plan also includes mkt, or wav
+		alert("Please select one of the following types of files: webm, ogv, or wav."); //may want to include avi later
 		throw "Incorrect filetype.";
 	}
 	//end check for acceptable video types
@@ -73,11 +73,17 @@ function loadVideo(oldVid) {
 	var player = document.getElementById("video");
 	var webmvid = document.getElementById("webm");
 	var ogvvid = document.getElementById("ogv");
-
+	//var avivid = document.getElementById("avi");	//if we want to include avi later
+	var wavvid = document.getElementById("wav");
+	
 	$(webmvid).attr('src', fullPath);
 	$(ogvvid).attr('src', fullPath);
 	$(webmvid).attr('autoplay', false);
 	$(ogvvid).attr('autoplay', false);
+	//$(avivid).attr('src', fullPath);	//if we want to include avi later
+	$(wavvid).attr('src', fullPath);
+	//$(avivid).attr('autoplay', false);	//if we want to include avi later
+	$(wavvid).attr('autoplay', false);
 	player.load();
 	//squeak.saveFile(media, code);
 	

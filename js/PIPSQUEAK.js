@@ -33,7 +33,6 @@ annotateLineNum = 0;
 
 $(document).ready(function(global){
 
-
 	//create global variables
 
 	var startLine,
@@ -926,8 +925,12 @@ var squeak = (function () {
 						+ "video.pause();\n"
 						+ "console.log('" + profComments[ii] + "');\n"
 						+ "$('#annotateCommentContent').html('" + profComments[ii] + "');\n"
+						+ "});\n"
+						+ "$('#comment" + (ii) + "').hover(function() {\n"
+						+ "\t$('#comment" + (ii) + "').css('cursor', 'pointer');\n"
+						+ "}, function(){"
+						+ "\t$('#comment" + (ii) + "').css('cursor', 'auto');\n"
 						+ "});\n";
-
 						
 					/*end = "pop.code ({\n\tstart: " + endTime + ",\n\tend: " + endTime
                         + ",\n\tonStart: function() {\n\t\t$(\'line" + i  + "\').removeClass(\"" + action + "\")\n\t}\n});\n";*/

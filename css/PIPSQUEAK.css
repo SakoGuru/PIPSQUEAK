@@ -61,6 +61,7 @@
 pre {
     overflow-x: auto;
     tab-size: 2;
+    -moz-tab-size: 2;
 }
 pre code {
     overflow-wrap: normal;

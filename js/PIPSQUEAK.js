@@ -280,6 +280,12 @@ $(document).ready(function(global){
 
 		var autoScrollNum = parseInt($('#autoScrollLine').val());
 		var error = "";
+		
+		if ($.isNumeric(autoScrollNum) != true) { //is input numeric
+			error = "Error: please enter number of line to scroll to."
+			$("#autoScrollError").html(error);
+			return;
+		}
 
 		if ($("#newCM").html() == "upload button clicked") {
 			if (autoScrollNum > newCmInstance.lineCount() || autoScrollNum < 1) {					//check if user entered line is in editor
@@ -320,6 +326,12 @@ $(document).ready(function(global){
 		
 		annotateLineNum = parseInt($('#annotateLine').val());
 		var error = "";
+		
+		if ($.isNumeric(annotateLineNum) != true) { //is input numeric
+			error = "Error: please enter number of line to annotate."
+			$("#annotateError").html(error);
+			return;
+		}
 
 		if(typeof profComments[annotateLineNum] === 'undefined'){ //check if there is already a comment on the line
 			//console.log("we are good to go annotating this line");
@@ -712,7 +724,7 @@ var squeak = (function () {
 		
 		//added for annotation add
 		if (actionNode.tool == "annotate") {
-			profComments[annotateLineNum] = $('#annotateComment').val();
+			profComments[annotateLineNum] = escapeHtml($('#annotateComment').val());
 		}
 		//end annotation add
 		

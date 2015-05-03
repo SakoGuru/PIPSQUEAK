@@ -724,7 +724,7 @@ var squeak = (function () {
 		
 		//added for annotation add
 		if (actionNode.tool == "annotate") {
-			profComments[annotateLineNum] = $('#annotateComment').val();
+			profComments[annotateLineNum] = escapeHtml($('#annotateComment').val());
 		}
 		//end annotation add
 		

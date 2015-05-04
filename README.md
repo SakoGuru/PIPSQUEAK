@@ -15,7 +15,13 @@ On Windows: Double-click PIPSQUEAK-Install.bat wait for it to install.
 On all the platforms: open a terminal and type "npm start" from the project directory.  
   
 -----------------------   
-
+The following are required for our project, but were not created by us  
+js/bootstrap.min.js  
+js/jquery-2.1.3.min.js  
+js/jquery-ui.min.js  
+js/run_prettify.js  
+js/ui-codemirror.js  
+js/popcorn-complete.js  
 -----------------------   
   
 TESTING:  

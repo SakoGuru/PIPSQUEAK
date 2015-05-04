@@ -9,7 +9,7 @@
   },
   "author": "Luke, Scott, Andrew, Bill, Avery",
   "window": {
-    "toolbar": true,
+    "toolbar": false,
     "width": 1280,
     "height": 720
   },
